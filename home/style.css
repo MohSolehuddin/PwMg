@@ -1,0 +1,137 @@
+*,
+*:before,
+*:after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+:root {
+  --bcb: black;
+  --bcba: #080710; 
+  --bca: white;
+  --bcwt: rgba(255,255,255,0.11);
+}
+
+body{
+  background-color: var(--bcba);
+  color: var(--bca);
+  font-family: 'Poppins',sans-serif;
+}
+#categoryForm #category{
+  color: aqua;
+}
+.container {
+  text-align: center;
+  max-width: 600px;
+  color: var(--bca);
+  padding: 50px 60px;
+  background-color: var(--bcwt) ;
+  border-radius: 25px;
+  border: .1px solid rgba(255,255,255,.3);
+  margin-bottom: 100px;
+}
+.container form h4{
+  color: aqua;
+}
+.container a,input{
+  color: aqua;
+}
+.container input {
+  height: 40px;
+}
+
+.addPass .input-group input{
+  backdrop-filter: blur;
+}
+.navbar ul li a {
+  color: aqua;
+}
+.container input, select{
+  border-radius: 10px;
+  border: .1px solid aqua;
+  background-color: black;
+  color: aqua;
+}
+.container form button{
+  color: aqua;
+  cursor: pointer;
+}
+h1 {
+  margin-bottom: 20px;
+}
+form {
+  margin-bottom: 20px;
+}
+
+.container-passwords {
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+.elementPw{
+  border-radius: 10px;
+  border: .1px solid rgba(255,255,255,.1);
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  height: 50px;
+  margin-bottom: 15px;
+}
+.elementPw p {
+  width: 40%;
+  text-align: start;
+  padding: 2px;
+}
+.elementPw p, .elementPw button{
+  display: flex;
+  height: 40px;
+  align-items: center;
+  overflow: auto;
+}
+.elementPw button{
+  justify-content: center;
+  flex-wrap: nowrap;
+  border: none;
+  width: 20%;
+  
+}
+
+.elementPw button.copy {
+  background-image: url(http://localhost:3000/src/icons/clipboard.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 50px;
+  height: 50px;
+  border: none;
+  cursor: pointer;
+}
+
+.elementPw button.copy:active {
+  background-image: url(http://localhost:3000/src/icons/clipboard-check.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+
+footer{
+  margin: 0px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+}
+footer div{
+  display: flex;
+  justify-content: space-around;
+  background-color: black;
+  padding: 20px;
+  color: aqua;
+}
+button{
+  border-radius: 10px;
+  border: .1px solid aqua;
+  background-color: var(--bcba);
+  color: aqua;
+}
+footer button {
+  border: none;
+}

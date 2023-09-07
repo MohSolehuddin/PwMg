@@ -115,6 +115,6 @@ button {
 }
 @media (max-width: 600px){
   form {
-    margin-top: 200px;
+    /* margin-top: 200px; */
   }
 }

@@ -266,7 +266,6 @@ function isDataPwPrintToHtml(category, data) {
   } else {
     document.getElementById('printData').innerHTML = 'Kategori tidak ditemukan';
   }
-  console.log("Selected Category: " + category);
 }
 // function menampilkan data ke html
 // const printDataCategory= async () => {
@@ -309,17 +308,17 @@ const printDataCategory = async () => {
     body: JSON.stringify(reqData)
   })
     .then(response => response.json())
-    // .then(decryptedData => {
+    .then(decryptedData => {
       // Mengambil data dari /home/pw.json
-    //   fetch("http://localhost:3000/home/pw.json")
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       isDataPwPrintToHtml(category, data, decryptedData);
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //     });
-    // })
+      fetch("http://localhost:3000/home/pw.json")
+        .then(response => response.json())
+        .then(data => {
+          isDataPwPrintToHtml(category, data, decryptedData);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    })
     .catch(err => {
       console.log(err);
     });

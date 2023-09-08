@@ -1,13 +1,6 @@
 const http = require('http');
 const url = require('url');
-const ReadFileJsonAndChangeToObject = require('./src/function/ReadFileJsonAndChangeToObject');
 const {routes, notFound} = require('./src/function/routes');
-
-//variabel inti
-const key = ReadFileJsonAndChangeToObject('./private/keySesion.json');
-const key1 = key.username;
-const key2 = key.password;
-const { session } = ReadFileJsonAndChangeToObject('./src/sessionLogin.json');
 
 // Membuat server
 const server = http.createServer((req, res) => {

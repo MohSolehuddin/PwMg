@@ -5,6 +5,7 @@ const addData = require('./addData');
 const {mySHA3} = require('./cryptojs');
 const deleteData = require('./deleteData');
 const updateData = require('./updateData');
+
 //API data
 function data(req, res) {
     const { method, url } = req;

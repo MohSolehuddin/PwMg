@@ -1,5 +1,6 @@
 const fs = require("fs");
 const {encr, decr} = require('./crypt.js')
+const oldData = require("./oldData");
 
 // function mendapatkan data lama
 // function mendapatkan data lama

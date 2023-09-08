@@ -5,32 +5,6 @@ const getData = async (data) => {
   const result = await response.json();
   return result;
 };
-
-// hapus data berdasarkan id
-async function deleteData(id) {
-  const confirmation = confirm('Apakah Anda yakin ingin menghapus data ini?');
-  
-  if (confirmation) {
-    const url = `http://localhost:3000/${id}`;
-
-    await fetch(url, {
-      method: 'DELETE',
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert('Data deleted successfully');
-        } else {
-          alert('Failed to delete data');
-        }
-      })
-      .catch((error) => {
-        alert('Error deleting data:', error);
-      });
-  } else {
-    alert('Penghapusan data dibatalkan');
-  }
-}
-
 //tampilan default
 const home = async ()=> {
   let dataPw;
@@ -65,6 +39,31 @@ const home = async ()=> {
     .catch((err)=>{
       alert(err);
     })
+}
+
+// hapus data berdasarkan id
+async function deleteData(id) {
+  const confirmation = confirm('Apakah Anda yakin ingin menghapus data ini?');
+  
+  if (confirmation) {
+    const url = `http://localhost:3000/${id}`;
+
+    await fetch(url, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert('Data deleted successfully');
+        } else {
+          alert('Failed to delete data');
+        }
+      })
+      .catch((error) => {
+        alert('Error deleting data:', error);
+      });
+  } else {
+    alert('Penghapusan data dibatalkan');
+  }
 }
 // form menambahkan data password
 const addForm = () => {
@@ -189,6 +188,7 @@ function isDataPwPrintToHtml(category, data) {
   let dataPrintHtml = `<h3>data password ${category}</h3>`;
   // membuat variabel i sebagai penanda id pada tag html
   let i=0;
+  console.log(category, data)
   
   if (category in data) {
     data["passwords"].forEach(function(element) {
@@ -267,34 +267,8 @@ function isDataPwPrintToHtml(category, data) {
     document.getElementById('printData').innerHTML = 'Kategori tidak ditemukan';
   }
 }
-// function menampilkan data ke html
-// const printDataCategory= async () => {
-//   //mendapatkan ketegori
-//   let category = document.getElementById('category').value;
-//   let reqData = {title: category};
-//   await fetch('http://localhost:3000/getPasswords', {
-//     method: "POST",
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(reqData)
-//   })
-//     .then(data => {
-//       console.log("data berhasil di decript");
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     })
-//   await fetch("http://localhost:3000/home/pw.json")
-//   .then(response => response.json())
-//   .then(data => {
-//     isDataPwPrintToHtml(category, data)
-//   })
-//   .catch(error => {
-//     console.log(error);
-//   });
-// };
-// Menampilkan data ke HTML
+
+// function untuk menampilkan data ke html 
 const printDataCategory = async () => {
   const category = document.getElementById('category').value;
   const reqData = { title: category };
@@ -307,20 +281,10 @@ const printDataCategory = async () => {
     },
     body: JSON.stringify(reqData)
   })
-    .then(response => response.json())
-    .then(decryptedData => {
-      // Mengambil data dari /home/pw.json
-      fetch("http://localhost:3000/home/pw.json")
-        .then(response => response.json())
-        .then(data => {
-          isDataPwPrintToHtml(category, data, decryptedData);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    })
-    .catch(err => {
-      console.log(err);
+  
+  fetch("http://localhost:3000/home/pw.json").then(res => res.json()).then(data => {
+      isDataPwPrintToHtml(category,data);}).catch(error => {
+      console.log(error);
     });
 };
 
@@ -329,25 +293,18 @@ const printDataCategory = async () => {
 function copyText(id) {
   // Membuat elemen textarea baru
   var textarea = document.createElement('textarea');
-  
   // Mengambil teks yang akan disalin
   var text = document.getElementById(`${id}`).innerText;
-  
   // Mengatur nilai teks pada elemen textarea
   textarea.value = text;
-  
   // Menambahkan elemen textarea ke dalam dokumen
   document.body.appendChild(textarea);
-  
   // Memilih teks di dalam textarea
   textarea.select();
-  
   // Menyalin teks ke clipboard
   document.execCommand('copy');
-  
   // Menghapus elemen textarea
   document.body.removeChild(textarea);
-  
   // Memberikan notifikasi
   alert(`Teks berhasil disalin (${text})`);
 }

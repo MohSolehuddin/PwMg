@@ -1,31 +1,45 @@
-const fs = require('fs');
+const fs = require('fs')
+const oldData = require("./oldData");
+const {encr, decr, mySHA3,} = require('./cryptojs');
 
-function addKategory(newData, file_path, callback) {
-  // membaca file JSON yang sudah ada
-  fs.readFile(file_path, 'utf8', (err, data) => {
-    if (err) return callback(err);
-
-    let parsedData = JSON.parse(data);
-
-    // menambahkan objek baru ke dalam array data
-    parsedData.passwords.push(newData);
-
-    // menulis kembali file JSON dengan data yang sudah ditambahkan
-    fs.writeFile(file_path, JSON.stringify(parsedData), (err) => {
-      if (err) return callback(err);
-      return callback(null, 'Data berhasil ditambahkan');
-    });
-  });
+// menambahkan data berdasarkan kategori
+function addData(res, title, name, username, pass, email, noHp) {
+    let oldDataObj = oldData();
+    // dapatkan waktu terkini untuk di jadikan id dalam sebuah data
+    const time = new Date();
+    //cek no hp
+    if (!noHp) {
+        noHp = "_";
+    }
+    // cek email
+    if (!email) {
+        email = "_";
+    }
+    // membuat struktur pass baru
+    const newData = {
+        id: time.getTime(),
+        title: title,
+        name: encr(name, key1, key2),
+        username: encr(username, key1, key2),
+        pw: encr(pass, key1, key2),
+        email: encr(email, key1, key2),
+        no: encr(noHp, key1, key2)
+    };
+    console.log(newData);
+    oldDataObj.passwords.push(newData);
+    fs.writeFile(
+        "/sdcard/PwMg/private/pw.json",
+        JSON.stringify(oldDataObj),
+        (err) => {
+            if (err) {
+                console.log("password gagal di tambahkan!!");
+            } else {
+                res.statusCode = 302;
+                res.setHeader('Location', '/home');
+                res.end();
+                console.log("password berhasil di tambahkan");
+            }
+        }
+    );
 }
-
-// contoh penggunaan function
-let newData = {
-  nama: "kamu",
-  kamu: "hahah "
-}
-addKategory(newData,'/sdcard/Termux/pw.json',
-  (err, message) => {
-    if (err) return console.error(err);
-    console.log(message);
-  }
-);
+module.exports = addData;

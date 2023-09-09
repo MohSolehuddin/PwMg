@@ -22,12 +22,10 @@ const home = async ()=> {
             <h4>Select Category</h4>
             <div class="input-group">
               <label for="category">Category</label>
-              <select id="category" required>
+              <select id="category" required onchange="printDataCategory()">
                 ${optValue}
               </select>
             </div>
-            <button type="submit" class=" mt-2 w-100"
-             onclick="printDataCategory()">Pilih</button>
           </div>
           <br/>
           <br/>
@@ -193,7 +191,7 @@ function isDataPwPrintToHtml(category, data) {
   let i=0;
   console.log(category, data)
   
-  if (category in data) {
+  if ("passwords" in data) {
     data["passwords"].forEach(function(element) {
       dataPrintHtml += `
         <div id="container-passwords" class="container-passwords">
@@ -285,7 +283,7 @@ const printDataCategory = async () => {
   }).then(res => res.json())
   .then(data => {
     console.log(data);
-    isDataPwPrintToHtml("passwords",data);
+    isDataPwPrintToHtml(category,data);
   }).catch(error => {
       console.log(error);
   });

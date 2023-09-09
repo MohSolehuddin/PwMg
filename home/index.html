@@ -61,7 +61,11 @@
 
    <script src="http://localhost:3000/home/script.js" type="text/javascript" charset="utf-8"></script>
    <script type="text/javascript" charset="utf-8">
-   home();
+   async function pr() {
+     await home();
+     await printDataCategory();
+   }
+   pr();
    </script>
 </body>
 </html>

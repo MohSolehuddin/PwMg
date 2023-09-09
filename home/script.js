@@ -44,16 +44,19 @@ const home = async ()=> {
 // hapus data berdasarkan id
 async function deleteData(id) {
   const confirmation = confirm('Apakah Anda yakin ingin menghapus data ini?');
-  
+  const reqData = {id: id};
   if (confirmation) {
-    const url = `http://localhost:3000/${id}`;
-
+    const url = `http://localhost:3000/deletePassword`;
+    
     await fetch(url, {
       method: 'DELETE',
-    })
-      .then((response) => {
+      headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(reqData)
+    }).then((response) => {
         if (response.ok) {
-          alert('Data deleted successfully');
+          home();
         } else {
           alert('Failed to delete data');
         }
@@ -195,57 +198,56 @@ function isDataPwPrintToHtml(category, data) {
       dataPrintHtml += `
         <div id="container-passwords" class="container-passwords">
         
-          <div id="${element.id}" class="container-password">
+          <div class="container-password">
           
-            <div id="${element.name}" class="elementPw">
-              <p id="${element.name}${i}">
+            <div class="elementPw">
+              <p>
                 nama:
               </p>
-              <p id="name${element.name}${i}">
+              <p id="${element.name}">
                 ${element.name}
-                
               </p>
-              <button class="copy" onclick="copyText('name${element.name}${i}')"></button>
+              <button class="copy" onclick="copyText('${element.name}')"></button>
             </div>
             
-            <div id="${element.username}" class="elementPw">
-              <p id="${element.username}${i}">
+            <div class="elementPw">
+              <p>
                 Username:
               </p>
-              <p id="un${element.username}${i}">
+              <p id="${element.username}">
                 ${element.username}
               </p>
-              <button class="copy" onclick="copyText('un${element.username}${i}')"></button>
+              <button class="copy" onclick="copyText('${element.username}')"></button>
             </div>
             
-            <div id="${element.password}" class="elementPw">
-              <p id="${element.password}${i}">
+            <div class="elementPw">
+              <p>
                 Password:
               </p>
-              <p id="pw${element.password}${i}">
-                ${element.password}
+              <p id="${element.pw}">
+                ${element.pw}
               </p>
-              <button class="copy" onclick="copyText('pw${element.password}${i}')"></button>
+              <button class="copy" onclick="copyText('${element.pw}')"></button>
             </div>
             
-            <div id="${element.gmail}" class="elementPw">
-              <p id="${element.gmail}${i}">
+            <div class="elementPw">
+              <p>
                 Gmail:
               </p>
-              <p id="gmail${i}${i}">
-                ${element.gmail}
+              <p id="${element.email}">
+                ${element.email}
               </p>
-              <button class="copy" onclick="copyText('gmail${i}${i}')"></button>
+              <button class="copy" onclick="copyText('${element.email}')"></button>
             </div>
             
-            <div id="${element.no}" class="elementPw">
-              <p id="${element.no}${i}">
+            <div class="elementPw">
+              <p>
                 no hp:
               </p>
-              <p id="no${element.no}${i}">
+              <p id="${element.no}">
                 ${element.no}
               </p>
-              <button class="copy" onclick="copyText('no${element.no}${i}')"></button>
+              <button class="copy" onclick="copyText('${element.no}')"></button>
             </div>
             
             
@@ -280,12 +282,13 @@ const printDataCategory = async () => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(reqData)
-  })
-  
-  fetch("http://localhost:3000/home/pw.json").then(res => res.json()).then(data => {
-      isDataPwPrintToHtml(category,data);}).catch(error => {
+  }).then(res => res.json())
+  .then(data => {
+    console.log(data);
+    isDataPwPrintToHtml("passwords",data);
+  }).catch(error => {
       console.log(error);
-    });
+  });
 };
 
 

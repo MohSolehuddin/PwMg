@@ -15,9 +15,9 @@ function data(req, res) {
             body += chunk.toString();
         });
         req.on('end', () => {
-            const data = querystring.parse(body);
-            const { category, name, username, password, gmail, no } = data;
-            addData(res, category, name, username, password, gmail, no);
+          const data = querystring.parse(body);
+          const { category, name, username, password, gmail, no } = data;
+          addData(res, category, name, username, password, gmail, no);
         });
     }
     if (method === "DELETE" && url === "/deletePassword") {
@@ -26,7 +26,8 @@ function data(req, res) {
             body += chunk.toString();
         });
         req.on('end', () => {
-          const data = querystring.parse(body);
+          const data = JSON.parse(body);
+          console.log(data);
           const {id} = data;
           deleteData(res, id);
         });
@@ -49,8 +50,10 @@ function data(req, res) {
         });
         req.on('end', async () => {
           let data = JSON.parse(body);
-          console.log(data.title);
           let originalData = await plainTextData(data.title);
+          res.writeHead(200, {"Content-Type": "text/json"});
+          res.write(originalData);
+          res.end();
         });
     }
 }
@@ -173,7 +176,7 @@ function handleLogin(req, res) {
                     res.statusCode = 500;
                     res.end('Internal Server Error');
                 } else {
-                    console.log('data berhasil ditambahkan');
+                    console.log('Login Successfull!');
                     res.statusCode = 302;
                     res.setHeader('Location', '/home');
                     res.end();

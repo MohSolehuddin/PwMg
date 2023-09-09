@@ -7,8 +7,8 @@ async function deleteData(res, id) {
     const index = OldData.passwords.findIndex((data) => data.id === Number(id));
     
     if (index === -1) {
-        console.log("Data tidak ditemukan");
-        return;
+      console.log("Data tidak ditemukan");
+      return;
     }
 
     OldData.passwords.splice(index, 1);

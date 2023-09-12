@@ -1,38 +1,76 @@
-const CryptoJS = require('crypto-js');
+const crypto = require('crypto');
 
-// function hashing SHA3 customisasi
+// Function untuk hashing SHA3 dengan kustomisasi
 function mySHA3(msg) {
     const salt = "b94ddf1415258bd4b1fa236339bce8ab";
     const salt2 = "dff3d4e76569b8834a9b1b82e6e23f1e";
     const salt3 = "f64636289ae073fc82ca11db54c7eeb2";
-    let resultSHA3 = CryptoJS.SHA3(`${salt}.${salt3}.${msg}.${salt2}`).toString();
-    let hash = CryptoJS.MD5(resultSHA3).toString();
+    const data = `${salt}.${salt3}.${msg}.${salt2}`;
+    const hash = crypto.createHash('sha3-256').update(data).digest('hex');
     return hash;
 }
-//function encrypt
+
+// Function untuk mengenkripsi
 function enc(msg, key) {
-    let text = CryptoJS.AES.encrypt(msg, key);
-    return text;
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key, 'hex'), iv);
+    let encrypted = cipher.update(msg, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return {
+        encryptedData: encrypted,
+        iv: iv.toString('hex')
+    };
 }
-//function decrypt
-function dec(msg, key) {
-    const bytes = CryptoJS.AES.decrypt(msg.toString(), key);
-    const text = bytes.toString(CryptoJS.enc.Utf8);
-    return text;
+
+// Function untuk mendekripsi
+function dec(encryptedData, key, savedIv) {
+    try {
+        // Mengonversi IV yang disimpan dari heksadesimal kembali ke buffer
+        const iv = Buffer.from(savedIv, 'hex');
+        const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key, 'hex'), iv);
+        let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
+        decrypted += decipher.final('utf8');
+        return decrypted;
+    } catch (e) {
+        console.error(e);
+        return "dekripsi gagal, tolong login dengan benar";
+    }
 }
-//function encrypt lanjutan
+
+// Function untuk mengenkripsi lanjutan
 function encr(msg, key1, key2) {
-    let myKey = `${key1}j3k72l29${key2}`;
-    let plainText = enc(msg, myKey).toString();
-    return plainText;
+    try {
+        // Gabungkan kunci key1 dan key2 dengan separator yang sesuai
+        let myKey = `${key1}j3k72l29${key2}`;
+        // Konversi kunci menjadi panjang yang sesuai untuk AES-256-CBC (32 byte)
+        myKey = mySHA3(myKey).substring(0, 64); // Gunakan SHA3 untuk menghasilkan kunci 256-bit
+        const { encryptedData, iv } = enc(msg, myKey); // Enkripsi dengan IV yang dihasilkan
+        return {
+            encryptedData,
+            iv
+        };
+    } catch (e) {
+        console.error(e);
+        return "enkripsi gagal";
+    }
 }
-// function decrypt lanjutan
-function decr(msg, key1, key2) {
-    let mykey = `${key1}j3k72l29${key2}`;
-    let plainText = dec(msg, mykey);
-    return plainText;
+
+// Function untuk mendekripsi lanjutan
+function decr(encryptedData, key1, key2, savedIv) {
+    try {
+        // Gabungkan kunci key1 dan key2 dengan separator yang sesuai
+        let myKey = `${key1}j3k72l29${key2}`;
+        // Konversi kunci menjadi panjang yang sesuai untuk AES-256-CBC (32 byte)
+        myKey = mySHA3(myKey).substring(0, 64); // Gunakan SHA3 untuk menghasilkan kunci 256-bit
+        return dec(encryptedData, myKey, savedIv);
+    } catch (e) {
+        console.error(e);
+        return "dekripsi gagal, tolong login dengan benar";
+    }
 }
 
 module.exports = {
-  encr, decr, mySHA3,
-}
+    encr,
+    decr,
+    mySHA3,
+};

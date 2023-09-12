@@ -1,6 +1,6 @@
 const fs = require("fs").promises;
 const { encr, decr, mySHA3 } = require('./cryptojs');
-const { key1, key2, session } = require('./key');
+const { key1, key2 } = require('./key');
 
 //function menampilkan data json
 async function plainTextData(title) {
@@ -15,11 +15,11 @@ async function plainTextData(title) {
       .map(password => {
         return {
           id: password.id,
-          name: decr(password.name, key1, key2),
-          username: decr(password.username, key1, key2),
-          pw: decr(password.pw, key1, key2),
-          email: decr(password.email, key1, key2),
-          no: decr(password.no, key1, key2)
+          name: decr(password.name.encryptedData, key1, key2,password.name.iv),
+          username: decr(password.username.encryptedData, key1, key2, password.username.iv),
+          pw: decr(password.pw.encryptedData, key1, key2,password.pw.iv),
+          email: decr(password.email.encryptedData, key1, key2,password.email.iv),
+          no: decr(password.no.encryptedData, key1, key2, password.no.iv)
         };
       });
     let obj = {};

@@ -1,7 +1,7 @@
 const fs = require('fs')
 const oldData = require("./oldData");
 const {encr, decr, mySHA3,} = require('./cryptojs');
-const {key1, key2, session} = require('./key');
+const {key1, key2} = require('./key');
 // menambahkan data berdasarkan kategori
 function addData(res, title, name, username, pass, email, noHp) {
     let oldDataObj = oldData();

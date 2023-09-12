@@ -12,7 +12,5 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "crypto-js": "^4.1.1",
-    "cryptojs": "^2.5.3"
   }
 }

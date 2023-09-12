@@ -19,11 +19,11 @@ function addData(res, title, name, username, pass, email, noHp) {
     const newData = {
         id: time.getTime(),
         title: title,
-        name: encr(name, key1, key2),
-        username: encr(username, key1, key2),
-        pw: encr(pass, key1, key2),
-        email: encr(email, key1, key2),
-        no: encr(noHp, key1, key2)
+        name: encr(name, key1(), key2()),
+        username: encr(username, key1(), key2()),
+        pw: encr(pass, key1(), key2()),
+        email: encr(email, key1(), key2()),
+        no: encr(noHp, key1(), key2())
     };
     console.log(newData);
     oldDataObj.passwords.push(newData);

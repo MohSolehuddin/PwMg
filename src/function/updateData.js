@@ -1,5 +1,5 @@
 const fs = require("fs");
-
+const {key1,key2} = require('./key');
 // function untuk update data berdasarkan id
 async function updateData(res, id, title, username, pass, email, noHp) {
     let OldData = oldData();
@@ -14,11 +14,11 @@ async function updateData(res, id, title, username, pass, email, noHp) {
     const updatedData = {
         id: OldData.passwords[index].id,
         title: title,
-        name: encr(name, key1, key2),
-        username: encr(username, key1, key2),
-        pw: encr(pass, key1, key2),
-        email: encr(email, key1, key2),
-        no: encr(noHp, key1, key2)
+        name: encr(name, key1(), key2()),
+        username: encr(username, key1(), key2()),
+        pw: encr(pass, key1(), key2()),
+        email: encr(email, key1(), key2()),
+        no: encr(noHp, key1(), key2())
     };
 
     OldData.passwords.splice(index, 1, updatedData);

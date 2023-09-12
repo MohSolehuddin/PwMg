@@ -6,8 +6,7 @@ const deleteData = require('./deleteData');
 const updateData = require('./updateData');
 const sendToClient = require('./sendToClient');
 const {mySHA3} = require('./cryptojs');
-
-
+const category = require('./category');
 //API data
 function data(req, res) {
     const { method, url } = req;
@@ -34,7 +33,7 @@ function data(req, res) {
           deleteData(res, id);
         });
     }
-    if (method === "PUSH" && url === "/pushPassword") {
+    if (method === "PUSH" && url === "/updatePassword") {
       let body = '';
         req.on('data', chunk => {
             body += chunk.toString();
@@ -131,10 +130,9 @@ function handleLogin(req, res) {
         });
         req.on('end', () => {
             const data = querystring.parse(body);
-            console.log(data);
             let obj = {
-                username: mySHA3(data.username),
-                password: mySHA3(data.password)
+              username: mySHA3(data.username),
+              password: mySHA3(data.password)
             }
             fs.writeFile('/sdcard/PwMg/private/keySesion.json', JSON.stringify(obj), err => {
                 if (err) {

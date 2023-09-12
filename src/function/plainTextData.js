@@ -15,11 +15,11 @@ async function plainTextData(title) {
       .map(password => {
         return {
           id: password.id,
-          name: decr(password.name.encryptedData, key1, key2,password.name.iv),
-          username: decr(password.username.encryptedData, key1, key2, password.username.iv),
-          pw: decr(password.pw.encryptedData, key1, key2,password.pw.iv),
-          email: decr(password.email.encryptedData, key1, key2,password.email.iv),
-          no: decr(password.no.encryptedData, key1, key2, password.no.iv)
+          name: decr(password.name.encryptedData, key1(), key2(),password.name.iv),
+          username: decr(password.username.encryptedData, key1(), key2(), password.username.iv),
+          pw: decr(password.pw.encryptedData, key1(), key2(),password.pw.iv),
+          email: decr(password.email.encryptedData, key1(), key2(),password.email.iv),
+          no: decr(password.no.encryptedData, key1(), key2(), password.no.iv)
         };
       });
     let obj = {};

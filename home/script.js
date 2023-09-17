@@ -8,10 +8,13 @@ const getData = async (data) => {
 //tampilan default
 const home = async ()=> {
   let dataPw;
-  await getData('http://localhost:3000/home/categoryData.json')
+  // await fetch('http://localhost:3000/category',{
+  //   method: "GET"
+  // }).then(res => res.json())
+  getData('http://localhost:3000/category')
     .then((data)=>{
       let optValue;
-      data.category.forEach((data) => {
+      data.titles.forEach((data) => {
         optValue += `
           <option value="${data}">${data}</option>
         `
@@ -25,7 +28,9 @@ const home = async ()=> {
               <select id="category" required onchange="printDataCategory()">
                 ${optValue}
               </select>
+              
             </div>
+            <button type="submit" onclick="printDataCategory()">lihat</button>
           </div>
           <br/>
           <br/>

@@ -14,7 +14,7 @@ async function deleteData(res, id) {
     OldData.passwords.splice(index, 1);
 
     fs.writeFile(
-        "/sdcard/PwMg/private/pw.json",
+        "./private/pw.json",
         JSON.stringify(OldData),
         (err) => {
             if (err) {

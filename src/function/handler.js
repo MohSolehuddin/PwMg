@@ -6,64 +6,85 @@ const deleteData = require('./deleteData');
 const updateData = require('./updateData');
 const sendToClient = require('./sendToClient');
 const {mySHA3} = require('./cryptojs');
-const category = require('./category');
+const mainDir = require('./mainDir');
 //API data
 function data(req, res) {
-    const { method, url } = req;
-    if (method === "POST" && url === "/addPassword") {
-        let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
-        req.on('end', () => {
-          const data = querystring.parse(body);
-          const { category, name, username, password, gmail, no } = data;
-          addData(res, category, name, username, password, gmail, no);
-        });
-    }
-    if (method === "DELETE" && url === "/deletePassword") {
+  const { method, url } = req;
+  if (method === "POST" && url === "/addPassword") {
       let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
-        req.on('end', () => {
-          const data = JSON.parse(body);
-          console.log(data);
-          const {id} = data;
-          deleteData(res, id);
-        });
-    }
-    if (method === "PUSH" && url === "/updatePassword") {
-      let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
-        req.on('end', () => {
-          const data = querystring.parse(body);
-          const {id} = data;
-          deleteData(res, id);
-        });
-    }
-    if (method === "POST" && url === "/getPasswords") {
-      let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
-        req.on('end', async () => {
-          let data = JSON.parse(body);
-          let originalData = await plainTextData(data.title);
-          res.writeHead(200, {"Content-Type": "text/json"});
-          res.write(originalData);
-          res.end();
-        });
-    }
+      req.on('data', chunk => {
+          body += chunk.toString();
+      });
+      req.on('end', () => {
+        const data = querystring.parse(body);
+        const { category, name, username, password, gmail, no } = data;
+        addData(res, category, name, username, password, gmail, no);
+      });
+  }
+  if (method === "DELETE" && url === "/deletePassword") {
+    let body = '';
+      req.on('data', chunk => {
+          body += chunk.toString();
+      });
+      req.on('end', () => {
+        const data = JSON.parse(body);
+        console.log(data);
+        const {id} = data;
+        deleteData(res, id);
+      });
+  }
+  if (method === "PUSH" && url === "/updatePassword") {
+    let body = '';
+      req.on('data', chunk => {
+          body += chunk.toString();
+      });
+      req.on('end', () => {
+        const data = querystring.parse(body);
+        const {id} = data;
+        deleteData(res, id);
+      });
+  }
+  if (method === "POST" && url === "/getPasswords") {
+    let body = '';
+      req.on('data', chunk => {
+          body += chunk.toString();
+      });
+      req.on('end', async () => {
+        let data = JSON.parse(body);
+        let originalData = await plainTextData(data.title);
+        res.writeHead(200, {"Content-Type": "text/json"});
+        res.write(originalData);
+        res.end();
+      });
+  }
 }
-
+function Category(req, res) {
+  fs.readFile('./private/pw.json', 'utf8', (err, data) => {
+      if (err) {
+          console.error('Gagal membaca data password:', err);
+          return ;
+      }
+      try {
+          // Parse JSON
+          const jsonData = JSON.parse(data);
+          // Dapatkan semua nilai "title" dari array "passwords" dan filter yang unik
+          const uniqueTitles = jsonData.passwords
+              .map(item => item.title)
+              .filter((value, index, self) => self.indexOf(value) === index);
+          // Cetak hasil
+          let dataJson = JSON.stringify({ titles: uniqueTitles }, null, 2);
+          res.writeHead(200, {"Content-Type": "text/json"});
+          res.write(dataJson);
+          res.end();
+      } catch (error) {
+          console.error('Gagal mengurai JSON:', error);
+      }
+  });
+}
 // PAGE 
 function style(req, res) {
     sendToClient('./style.css', 'text/css', res);
 }
-
 function script(req, res) {
     sendToClient('./script.js', 'text/javascript', res);
 }
@@ -71,23 +92,18 @@ function script(req, res) {
 function srcBootstrapJs(req, res) {
     sendToClient("./src/bootstrap.bundle.min.js", 'text/javascript', res);
 }
-
 function srcBootstrapCss(req, res) {
     sendToClient("./src/bootstrap.min.css", 'text/css', res);
 }
-
 function srcMilligramCss(req, res) {
     sendToClient("./src/milligram.css", 'text/css', res);
 }
-
 function copyIcon(req, res) {
     sendToClient('./src/icons/clipboard.svg', "image/svg+xml", res);
 }
-
 function copyIconCheck(req, res) {
     sendToClient('./src/icons/clipboard-check.svg', "image/svg+xml", res)
 }
-
 function styleHome(req, res) {
     sendToClient("./home/style.css", 'text/css', res);
 }
@@ -97,9 +113,6 @@ function homePage(req, res) {
 }
 function scriptHome(req, res) {
     sendToClient("./home/script.js", "text/javascript", res);
-}
-function categoryDataJSON(req, res) {
-    sendToClient("./home/categoryData.json", 'text/json', res);
 }
 //about
 function aboutPage(req, res) {
@@ -134,7 +147,7 @@ function handleLogin(req, res) {
               username: mySHA3(data.username),
               password: mySHA3(data.password)
             }
-            fs.writeFile('/sdcard/PwMg/private/keySesion.json', JSON.stringify(obj), err => {
+            fs.writeFile(`./private/keySesion.json`, JSON.stringify(obj), err => {
                 if (err) {
                     console.error('gagal menambahkan data:', err);
                     res.statusCode = 500;
@@ -152,4 +165,4 @@ function handleLogin(req, res) {
         res.end('Not Found');
     }
 }
-module.exports = {data, handleLogin, loginPage, style,script, srcBootstrapJs, srcBootstrapCss, srcMilligramCss, aboutPage, scriptAbout, styleAbout, styleHome,scriptHome, homePage, categoryDataJSON, copyIconCheck, copyIcon, notFound}
+module.exports = {data, handleLogin, loginPage, style,script, srcBootstrapJs, srcBootstrapCss, srcMilligramCss, aboutPage, scriptAbout, styleAbout, styleHome,scriptHome, homePage, copyIconCheck, copyIcon, notFound, Category}

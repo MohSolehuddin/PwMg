@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const uniqueCode = require('./uniqueCode');
 
 // Function untuk hashing SHA3 dengan kustomisasi
 function mySHA3(msg) {
@@ -33,7 +34,7 @@ function dec(encryptedData, key, savedIv) {
         return decrypted;
     } catch (e) {
         console.error(e);
-        return "dekripsi gagal, tolong login dengan benar";
+        return "username/password salah!!!";
     }
 }
 
@@ -41,7 +42,7 @@ function dec(encryptedData, key, savedIv) {
 function encr(msg, key1, key2) {
     try {
         // Gabungkan kunci key1 dan key2 dengan separator yang sesuai
-        let myKey = `${key1}j3k72l29${key2}`;
+        let myKey = `${key1}${uniqueCode}${key2}`;
         // Konversi kunci menjadi panjang yang sesuai untuk AES-256-CBC (32 byte)
         myKey = mySHA3(myKey).substring(0, 64); // Gunakan SHA3 untuk menghasilkan kunci 256-bit
         const { encryptedData, iv } = enc(msg, myKey); // Enkripsi dengan IV yang dihasilkan
@@ -59,7 +60,7 @@ function encr(msg, key1, key2) {
 function decr(encryptedData, key1, key2, savedIv) {
     try {
         // Gabungkan kunci key1 dan key2 dengan separator yang sesuai
-        let myKey = `${key1}j3k72l29${key2}`;
+        let myKey = `${key1}${uniqueCode}${key2}`;
         // Konversi kunci menjadi panjang yang sesuai untuk AES-256-CBC (32 byte)
         myKey = mySHA3(myKey).substring(0, 64); // Gunakan SHA3 untuk menghasilkan kunci 256-bit
         return dec(encryptedData, myKey, savedIv);

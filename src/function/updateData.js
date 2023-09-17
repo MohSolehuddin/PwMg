@@ -24,7 +24,7 @@ async function updateData(res, id, title, username, pass, email, noHp) {
     OldData.passwords.splice(index, 1, updatedData);
 
     fs.writeFile(
-        "/sdcard/PwMg/private/pw.json",
+        "./private/pw.json",
         JSON.stringify(OldData),
         (err) => {
             if (err) {

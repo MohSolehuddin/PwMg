@@ -1,6 +1,8 @@
 const http = require('http');
 const url = require('url');
 const {routes, notFound} = require('./src/function/routes');
+const mainDir = require('./src/function/mainDir');
+const uniqueCode = require('./src/function/uniqueCode');
 
 // Membuat server
 const server = http.createServer((req, res) => {
@@ -14,4 +16,6 @@ const server = http.createServer((req, res) => {
 server.listen(3000, () => {
     console.log('Server berjalan pada port 3000');
     console.log(`http://localhost:3000`);
+    console.log(mainDir);
+    console.log(uniqueCode);
 });

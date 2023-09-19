@@ -33,15 +33,15 @@ function data(req, res) {
         deleteData(res, id);
       });
   }
-  if (method === "PUSH" && url === "/updatePassword") {
+  if (method === "PUT" && url === "/update") {
     let body = '';
       req.on('data', chunk => {
           body += chunk.toString();
       });
       req.on('end', () => {
         const data = querystring.parse(body);
-        const {id} = data;
-        deleteData(res, id);
+        console.log(data);
+        updateData(res, data.id, data.title, data.name, data.username, data.pw, data.email, data.no);
       });
   }
   if (method === "POST" && url === "/getPasswords") {
@@ -79,6 +79,18 @@ function Category(req, res) {
       } catch (error) {
           console.error('Gagal mengurai JSON:', error);
       }
+  });
+}
+//update password
+function updatePw(req, res) {
+  let body = '';
+  req.on('data', chunk => {
+      body += chunk.toString();
+  });
+  req.on('end', () => {
+    const data = querystring.parse(body);
+    console.log(data);
+    updateData(res, data.id, data.category, data.name, data.username, data.password, data.email, data.no);
   });
 }
 // PAGE 
@@ -165,4 +177,4 @@ function handleLogin(req, res) {
         res.end('Not Found');
     }
 }
-module.exports = {data, handleLogin, loginPage, style,script, srcBootstrapJs, srcBootstrapCss, srcMilligramCss, aboutPage, scriptAbout, styleAbout, styleHome,scriptHome, homePage, copyIconCheck, copyIcon, notFound, Category}
+module.exports = {data, handleLogin, loginPage, style,script, srcBootstrapJs, srcBootstrapCss, srcMilligramCss, aboutPage, scriptAbout, styleAbout, styleHome,scriptHome, homePage, copyIconCheck, copyIcon, notFound, Category, updatePw}

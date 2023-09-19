@@ -1,12 +1,14 @@
 const fs = require("fs");
 const {key1,key2} = require('./key');
+const oldData = require('./oldData')
 // function untuk update data berdasarkan id
-async function updateData(res, id, title, username, pass, email, noHp) {
+async function updateData(res, id, title, name, username, pass, email, noHp) {
     let OldData = oldData();
-    const index = OldData.passwords.findIndex((data) => data.id === Number(id));
-
+    const index = OldData.passwords.findIndex((data) => data.id == Number(id));
+    console.log(index);
     if (index === -1) {
         console.log("Data tidak ditemukan");
+        console.log(id);
         return;
     }
 

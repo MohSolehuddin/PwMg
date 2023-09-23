@@ -17,10 +17,7 @@ function enc(msg, key) {
     const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key, 'hex'), iv);
     let encrypted = cipher.update(msg, 'utf8', 'hex');
     encrypted += cipher.final('hex');
-    return {
-        encryptedData: encrypted,
-        iv: iv.toString('hex')
-    };
+    return {encryptedData: encrypted, iv: iv.toString('hex')};
 }
 
 // Function untuk mendekripsi

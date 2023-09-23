@@ -25,7 +25,6 @@ function addData(res, title, name, username, pass, email, noHp) {
         email: encr(email, key1(), key2()),
         no: encr(noHp, key1(), key2())
     };
-    console.log(newData);
     oldDataObj.passwords.push(newData);
     fs.writeFile(
         "/sdcard/PwMg/private/pw.json",

@@ -10,7 +10,7 @@ const home = async ()=> {
   let dataPw;
   getData('http://localhost:3000/category')
     .then((data)=>{
-      let optValue;
+      let optValue = `<option value="none">Pilih kategori</option>`;
       data.titles.forEach((data) => {
         optValue += `
           <option value="${data}">${data}</option>
@@ -26,7 +26,6 @@ const home = async ()=> {
               </select>
               
             </div>
-            <button type="submit" onclick="printDataCategory()">lihat</button>
           </div>
           <br/>
           <br/>
@@ -117,50 +116,11 @@ const addForm = () => {
     </form>
   `
 }
-// function update data
-async function updateData(id) {
-  let category = document.getElementById("category").value;
-  let name = document.getElementById("name").value;
-  let username = document.getElementById("username").value;
-  let password = document.getElementById("password").value;
-  let email = document.getElementById("email").value;
-  let no = document.getElementById("no").value;
-  let reqData = {
-    id: id,
-    title: category,
-    name: name,
-    username: username,
-    pw: password,
-    email: email,
-    no: no,
-  }
-  
-  await fetch("http://localhost:3000/update",{
-    method: 'PUT',
-    headers: {
-      'Content-Type': "application/json",
-    },
-    body: JSON.stringify(reqData)
-  }).then((response) => {
-        if (response.ok) {
-          console.log(response);
-          home();
-        } else {
-          alert('Failed to update data');
-        }
-      })
-      .catch((error) => {
-        alert('Error updating data:', error);
-      });
-  
-}
-
 //form update data
 const updateForm = async (id) => {
   // mendapatkan category
   let category = document.getElementById('category').value ;
   const reqData = { title: category };
-
   // Menggunakan fetch untuk mengambil data terdekripsi
   await fetch('http://localhost:3000/getPasswords', {
     method: "POST",
@@ -177,56 +137,59 @@ const updateForm = async (id) => {
           <button type="submit" class="mt-3 w-30" onclick="home()">...kembali</button>
           
           
-          <form id="updateForm">
+          <form id="updateForm" action="/update" method="POST">
             <h4>Rubah Password</h4>
             
             <div class="input-group">
+              <label for="id">kategori</label>
+              <input type="text" id="id" value="${value.id}" name="id" readonly>
+            </div>
+            
+            <div class="input-group">
               <label for="category">kategori</label>
-              <input type="text" id="category" value="${category}" required>
+              <input type="text" id="category" value="${category}" name="category" required>
             </div>
             
             <br/>
             
             <div class="input-group">
               <label for="name">Nama</label>
-              <input type="text" id="name" value="${value.name}" required>
+              <input type="text" id="name" value="${value.name}" name="name" required>
             </div>
           
             <br/>
             
             <div class="input-group">
               <label for="username">nama pengguna</label>
-              <input type="text" id="username" value="${value.username}" required>
+              <input type="text" id="username" value="${value.username}" name="username" required>
             </div>
           
             <br/>
             
             <div class="input-group">
               <label for="password">password</label>
-              <input type="password" id="password" value="${value.pw}" required>
+              <input type="password" id="password" value="${value.pw}" name="password" required>
             </div>
             
             <br/>
             <div class="input-group">
               <label for="gmail">gmail</label>
-              <input type="text" id="email" value="${value.email}">
+              <input type="text" id="email" value="${value.email}" name="email">
             </div>
             
             <br/>
             <div class="input-group">
               <label for="no">nomer hp</label>
-              <input type="text" id="no" value="${value.no}">
+              <input type="text" id="no" value="${value.no}" name="no">
             </div>
             
             
-            <button type="submit" class="mt-3 w-100" onclick(updateData(${value.id}))>Rubah</button>
+            <button type="submit" class="mt-3 w-100">Rubah</button>
           </form>
         `;
     })
     .catch(err => {
-      console.log(err);
       alert(err + " kembali ke tampilan awal");
-      console.log(value);
       home();
     })
 }
@@ -236,7 +199,6 @@ function isDataPwPrintToHtml(category, data) {
   let dataPrintHtml = `<h3>data password ${category}</h3>`;
   // membuat variabel i sebagai penanda id pada tag html
   let i=0;
-  console.log(category, data)
   
   if ("passwords" in data) {
     data["passwords"].forEach(function(element) {
@@ -319,7 +281,6 @@ function isDataPwPrintToHtml(category, data) {
 const printDataCategory = async () => {
   const category = document.getElementById('category').value;
   const reqData = { title: category };
-
   // Menggunakan fetch untuk mengambil data terdekripsi
   await fetch('http://localhost:3000/getPasswords', {
     method: "POST",
@@ -329,13 +290,11 @@ const printDataCategory = async () => {
     body: JSON.stringify(reqData)
   }).then(res => res.json())
   .then(data => {
-    console.log(data);
     isDataPwPrintToHtml(category,data);
   }).catch(error => {
-      console.log(error);
+    alert(error);
   });
 };
-
 
 // fungsi copy text
 function copyText(id) {

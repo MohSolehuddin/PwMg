@@ -33,17 +33,6 @@ function data(req, res) {
         deleteData(res, id);
       });
   }
-  if (method === "PUT" && url === "/update") {
-    let body = '';
-      req.on('data', chunk => {
-          body += chunk.toString();
-      });
-      req.on('end', () => {
-        const data = querystring.parse(body);
-        console.log(data);
-        updateData(res, data.id, data.title, data.name, data.username, data.pw, data.email, data.no);
-      });
-  }
   if (method === "POST" && url === "/getPasswords") {
     let body = '';
       req.on('data', chunk => {
@@ -87,12 +76,13 @@ function updatePw(req, res) {
   req.on('data', chunk => {
       body += chunk.toString();
   });
-  req.on('end', () => {
+  req.on('end', async () => {
     const data = querystring.parse(body);
     console.log(data);
-    updateData(res, data.id, data.category, data.name, data.username, data.password, data.email, data.no);
+    let result = await updateData(res, data.id, data.category, data.name, data.username, data.password, data.email, data.no);
   });
 }
+
 // PAGE 
 function style(req, res) {
     sendToClient('./style.css', 'text/css', res);

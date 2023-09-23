@@ -28,7 +28,6 @@ function data(req, res) {
       });
       req.on('end', () => {
         const data = JSON.parse(body);
-        console.log(data);
         const {id} = data;
         deleteData(res, id);
       });

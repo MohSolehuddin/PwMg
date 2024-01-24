@@ -1,159 +1,47 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
   <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="text/html;charset=UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <!-- Instalasi bootstrap css-->
-  <link href="vendor/bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Akhir Instalasi bootstrap css -->
-  
-  <!-- Instalasi cdn framework mengetik -->
-  <script src="vendor/typed.js"></script>
-  <!-- akhir Instalasi cdn framework mengetik -->
-
-  <!-- Instalasi Google fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro" rel="stylesheet">
-  <!-- Akhir Instalasi Google fonts -->
-
-  <!-- Instalasi css pribadi -->
-  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
-  <!-- Akhir Instalasi css pribadi -->
-  <title>Web Portofolio</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible5" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
   </head>
-  <body style="font-family: 'Kdam Thmor Pro', sans-serif;">
-  <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
-  <!-- Instalasi bootstrap js -->
-    <script src="vandor/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Akhir Instalasi bootstrap js -->
 
-    <!-- Instalasi js  pribadi-->
-    <script src="script.js" type="text/javascript" charset="utf-8"></script>
-    <!-- Akhir Instalasi js  ppribadi-->
-</body>
-  <section id="loading" class="loading-container">
-    <div class="wrapper">
-      <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="shadow"></div>
-      <div class="shadow"></div>
-      <div class="shadow"></div>
-    </div>
-    <p>Loading bang sabarrrr...</p>
-  </section>
-  <main class="main">
-    <!-- Profil -->
-    <section id="Profil" class="Profil text-center pt-4">
-      <div>
-        <!-- blob decoration -->
-        <div class="d-flex justify-content-center">
-          <img src="icon/blob.svg" alt="blob decoration" class="profil-blob">
-        </div>
-        <!-- membuat class margin-custom untuk mengatur desain -->
-        <div class="margin-custom">
-          <img class="mb-3 logo d-flex justify-content-center m-auto" src="property/solehuddin.png" alt="profil img" />
-          <!-- my name -->
-          <h1 class="my-name"><span class="MOH-SOLEHUDDIN" id="my-name"></span></h1>
-          <!-- my title -->
-          <h6 id="profesi"><span class="im mb-4">I'M </span><span class="typing"></span></h6>
-        </div>
-      </div>
-      <!-- media sosial -->
-      <section class="mediaSosial text-center d-flex justify-content-center">
-        <div class="medsos">
-          <a class="instagram" href="https://instagram.com/moh.solehuddin001" about="_blank" ><img src="./icon/instagram.svg" alt="instagram logo" /></a>
-          <a class="youtube" href="https://youtube.com/@msytc-code" about="_blank"><img src="./icon/youtube.svg" alt="youtube logo" /></a>
-          <a class="tiktok" href="https://vm.tiktok.com/ZSNM8ctvS" about="_blank"><img src="./icon/tiktok.svg" alt="tiktok logo" /></a>
-          <a class="github" href="https://github.com/MohSolehuddin" about="_blank"><img src="./icon/github.svg" alt="github logo" /></a>
-        </div>
-      </section>
-      <!-- tentang saya / about me-->
-      <section class="aboutMe d-flex justify-content-center">
-        <!-- Experient -->
-        <div class="exp">
-          <h5><strong id="exp"></strong></h5>
-          <p class="keterangan" ><i>year experient</i></p>
-        </div>
-        <!-- Project -->
-        <div class="totalProject">
-          <h5><strong id="complete-project"></strong></h5>
-          <p><i class="keterangan">complete project</i></p>
-        </div>
-        <!-- more -->
-        <div class="more">
-          <h5><strong id="countSert"></strong></h5>
-          <p><i class="keterangan">learning certificate</i></p>
-        </div>
-      </section>
-      <!-- tombol untuk setiap tampilan -->
-      <section class="btn-group">
-        <button class="custom-btn p-2 active" id="portofolioButton" type="submit">Portofolio</button>
-        <button class="custom-btn p-2" id="skillsButton"type="submit">Skills</button>
-        <button class="custom-btn p-2" id="productButton" type="submit">Product</button>
-      </section>
-    </section>
-    <section class="output" id="output">
-    </section>
-  </main>
-  <!-- Setup library typing -->
-  <script>
-    window.onload = function() {
-      printPortofolio()
-      setTimeout(function() {
-        let typed = new Typed('.typing', {
-          strings: ['Front End Web Developer.','Back End Web Developer.','Full Stack Web Developer.','Content Creator.'],
-          delay: 1000,
-          typeSpeed: 60,
-          backSpeed: 30,
-          loop: true,
-        });
-        let mohSolehuddin = new Typed('.MOH-SOLEHUDDIN', {
-        strings: ['MSYTC','MOH. SOLEHUDDIN'],
-        startDelay: 900,
-        typeSpeed: 90,
-        backSpeed: 200,
-        });
-      }, 400);
-      const portfolioButton = document.getElementById('portofolioButton');
-      const productButton = document.getElementById('productButton');
-      const skillsButton = document.getElementById('skillsButton');
-      portfolioButton.addEventListener('click', () => {
-      portfolioButton.classList.add('active');
-      productButton.classList.remove('active');
-      skillsButton.classList.remove('active');
-      printPortofolio();
-    });
+  <body>
     
-    productButton.addEventListener('click', () => {
-      productButton.classList.add('active');
-      portfolioButton.classList.remove('active');
-      skillsButton.classList.remove('active');
-      printProduct();
-    });
-    skillsButton.addEventListener('click', () => {
-      skillsButton.classList.add('active');
-      portfolioButton.classList.remove('active');
-      productButton.classList.remove('active');
-      showSkillSet();
-    });
+    <script src="src/function/crypt.js" type="text/javascript" charset="utf-8"></script>
+      
+        <!-- <div class="background">
+        </div> -->
+        <form method="post" action="/login">
+            <h2 class="judul">Password Management</h2>
+            <h3>Login</h3>
+            <h5>Jika <span class="warning">username</span> dan <span
+            class="warning">password</span> <span style="color: red;">salah</span>, anda masih bisa masuk namun
+            hasil dari dekripsi lihat password tidak akan tampil atau error!!, jadi harap ingat
+            username dan password untuk memastikan username dan password yang
+            anda maskan benar dan tepat</h5>
+            <h4 class="warning">sensitif!!, perhatikan besar dan kecilnya</h4>
     
-    const containers = document.querySelectorAll('.container-img-sertificat');
-    containers.forEach(container => {
-      container.addEventListener('click', () => {
-        if (container.children.length === 1) {
-          container.style.backgroundColor = 'pink';
-        }
-      });
-    });
-    /* run function */
-      animationScrollReveal(100, ['main', '.profil-blob', '.logo', '.my-name', '#profesi', '.mediaSosial', '.aboutMe', '.btn-group', '.container-my-card']);
-      document.getElementById("complete-project").innerHTML = portofolio.length;
-      document.getElementById("countSert").innerHTML = programmingSkillSet.items[programmingSkillSet.items.length-1].skill.length;
-      exp();
-      hideLoading();
-    };
-    </script>
+            <label for="username">Username</label>
+            <input type="text" placeholder="username" id="username"
+            name="username">
+    
+            <label for="password">Password</label>
+            <input type="password" placeholder="Password" id="password"
+            name="password">
+            
+            <button type="submit">Log In</button>
+            <br />
+            <br />
+            <h5 class="creator warning">kunjungi pembuat: <a
+            href="http://msytc.site/">msytc.site</a></h5>
+        </form>
+        <script type="text/javascript" charset="utf-8">
+        const time = new Date();
+          console.log(time.getTime());
+        </script>
+
   </body>
 </html>

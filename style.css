@@ -1,512 +1,80 @@
-/* variable */
-:root{
-  /* color */
-  --bc: #7743DB;
-  --sc: #212121;
-  --bg-color:#e8e8e8 ;
-  --white:#efefef;
-  --text-color: #072541;
-  /*size */
-  --small-size: 10px;
-  --large-size: 20px;
-  --normal-size: 40px;
-  --big-size: 60px;
-}
-/* reset semua element */
-*{
+*,
+*:before,
+*:after {
+  padding: 0;
   margin: 0;
-  padding: 0;
-  box-sizing: border-box ;
-  color: var(--text-color);
+  box-sizing: border-box;
 }
-h1,h2,h3{
-  font-size: var(--big-font-size);
+h1,h2,h3,h4,h5{
+  text-align: center;
 }
-h4,h5,h6{
-  font-size: var(--normal-font-size);
+.warning{
+  color: #ff5;
 }
-.preloadImg{
-  width: 100%;
-  display: none;
+.judul {
+  text-shadow: .1px .1px 1px #000;
 }
-/* jarak dari konten btn */
-#output{
-  margin-top: var(--normal-size);
-}
-/* konfigurasi loading */
-.loading-container{
+body {
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 2rem;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  color: var(--bc);
-  background-color: var(--bg-color);
-  z-index: 99;
+  background-color: #080710;
 }
-.wrapper {
-  width: 200px;
-  height: 60px;
-  position: relative;
-  z-index: 1;
+form {
+  width: 400px;
+  background-color: rgba(255,255,255,0.13);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 40px rgba(8,7,16,0.6);
+  padding: 50px 35px;
 }
-
-.circle {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  border-radius: 50%;
-  background-color: #fff;
-  left: 15%;
-  transform-origin: 50%;
-  animation: circle7124 .5s alternate infinite ease;
-}
-
-@keyframes circle7124 {
-  0% {
-    top: 60px;
-    height: 5px;
-    border-radius: 50px 50px 25px 25px;
-    transform: scaleX(1.7);
-  }
-
-  40% {
-    height: 20px;
-    border-radius: 50%;
-    transform: scaleX(1);
-  }
-
-  100% {
-    top: 0%;
-  }
-}
-
-.circle:nth-child(2) {
-  left: 45%;
-  animation-delay: .2s;
-}
-
-.circle:nth-child(3) {
-  left: auto;
-  right: 15%;
-  animation-delay: .3s;
-}
-
-.shadow {
-  width: 20px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: rgba(0,0,0,0.9);
-  position: absolute;
-  top: 62px;
-  transform-origin: 50%;
-  z-index: -1;
-  left: 15%;
-  filter: blur(1px);
-  animation: shadow046 .5s alternate infinite ease;
-}
-
-@keyframes shadow046 {
-  0% {
-    transform: scaleX(1.5);
-  }
-
-  40% {
-    transform: scaleX(1);
-    opacity: .7;
-  }
-
-  100% {
-    transform: scaleX(.2);
-    opacity: .4;
-  }
-}
-
-.shadow:nth-child(4) {
-  left: 45%;
-  animation-delay: .2s
-}
-
-.shadow:nth-child(5) {
-  left: auto;
-  right: 15%;
-  animation-delay: .3s;
-}
-
-/* body style */
-body{
-  max-width: 100vw;
-  overflow-x: hidden;
-  background-color: var(--bg-color);
-}
-/* Profil */
-.Profil{
-  background-color: var(--bg-color);
-}
-/* logo Profil */
-.Profil img.logo{
-  width: 150px;
-  height: 150px;
-  border-radius: 1rem;
-}
-.margin-custom{
-  display: relative;
-  margin-top: -170px;
-}
-#my-product{
-  margin-top: var(--normal-size);
-  flex-direction: column;
-}
-.Profil div{
- position: relative;
- z-index: 0;
-}
-/* blob decoration */
-.profil-blob{
-  transform: rotate(-18deg);
-}
-/* title dan gelar */
-#profesi {
-  color : var(--sc);
-}
-/* nama pemilik */
-.MOH-SOLEHUDDIN{
-  color: var(--bc);
-}
-/* tentang saya */
-.aboutMe{
-  width: 90vw;
-  margin: auto;
-}
-/* setiap bagian tentang saya */
-.aboutMe div{
-  width: 110px;
-  background-color: var(--bg-color);
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  flex-direction: column;
-  margin: var(--small-size) 2px;
-}
-.aboutMe .more a{
-  color: var(--text-color);
-}
-/* link media sosial */
-.mediaSosial a {
-  margin: 0 var(--small-size);
-}
-/* pembungkus kartu */
-.container-my-card{
-  margin: auto;
-  display: flex;
-  gap: var(--normal-size);
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center; 
-  width: 80vw;
-}
-/* judul keseluruhan kartu */
-.title-group-card{
-  width: 100%;
-}
-/* judul per kartu */
-.title-card h3 {
-  color: var(--bg-color);
-}
-/* item dari pembungkus kartu */
-.my-card {
-  position: relative;
-  border-radius: 1rem;
-  height: 300px;
-  width: 300px;
-  overflow: hidden;
-}
-/* gambar pada kartu */
-.img-card {
-  z-index: 1;
-  position: relative;
-  width: 100%;
-}
-/* judul dari kartu */
-.my-card .title-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  align-items: start;
-  height: 300px;
-  padding: 15px;
-  position: relative;
-  z-index: 2;
-  background: linear-gradient(170deg, rgba(0, 0, 0, 0.2), rgba(0,0,0,.8));
-}
-/* efek ketika pembungkus di hover */
-.my-card:hover > .img-card + .title-card{
-  transform: translateY(-300px);
-  transition: all .8s cubic-bezier(.1, 1.5 , .3, 1.01);
-}
-/* tombol link ke website yang pernah saya buat */
-.my-card .title-card .show-portofolio{
-  padding: var(--small-size) var(--large-size);
-  border-radius: 1rem;
-  color: var(--bc);
-  text-decoration: none;
-  background-color: var(--bg-color);
-}
-.my-card .title-card .show-portofolio:hover{
-  transition: all .3s cubic-bezier(.1, .5 , .3, .1);
-  border: 1px solid var(--bc);
-  background-color: var(--bc);
-  color: var(--bg-color);
-}
-/* button */
-.btn-group{
-  padding: .5rem;
-  background-color: var(--bc);
-  border-radius: 1rem;
-  margin: auto;
-}
-.custom-btn{
-  background-color: transparent;
+form * {
+  font-family: 'Poppins',sans-serif;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  outline: none;
   border: none;
-  width: 140px;
-  height: var(--normal-size);
-  color: var(--bg-color);
-  font-weight: bold;
 }
-.custom-btn:hover{
-  position: relative;
-  top: 1px;
-}
-#skillsButton{
-  margin: 0 var(--small-size);
-}
-/* jika tombol di tekan */
-.active{
-  transition: .3s;
-  background-color: var(--bg-color);
-  color: var(--bc);
-  border-radius: var(--small-size);
-}
-/* media sosial */
-.medsos{
-  margin: var(--large-size) 0;
-}
-/** ANIMATION AND Effect **/
-.textRainbow{
-  background-image: linear-gradient(340deg, var(--bc),var(--sc));
-  background-clip: border-box;
-  background-clip: text;
-  -webkit-background-clip: text;
-  text-fill-color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-
-.keterangan{
-  font-size: 13px;
-}
-/* sertifikat */
-.container-sertificats{
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  width: 90vw;
-}
-.sertifikat,.title-sertificat{
-  color: var(--text-color);
-}
-.title-sertificat{
-  padding-bottom: var(--large-size);
-  padding-top: var(--normal-size);
-}
-.container-sertificats-item{
-  width: 100%;
-  margin: auto;
-}
-.container-img-sertificat{
-  display: flex;
-  justify-content: space-between;
-  align-content: space-between;
-  width: 100%;
-  height: 400px;
-  gap: 1rem;
-  padding: 1rem;
-  border-radius: 1rem;
-  background-color: var(--bc);
-}
-.container-img-sertificat.single-item{
-  margin: auto;
-  width: 80vw;
-  height: 53.3334vw;
-}
-.img-sertificat{
-  flex: 1;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: auto 100%;
-  border-radius: 1rem;
-  transition: all .8s cubic-bezier(.25, .4, .45, 1.4);
-}
-.img-sertificat:hover{
-  flex: 5.5;
-}
-.container-product{
-  width: 90vw;
-  margin: auto;
-}
-.title-container-product{
+form h3 {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
   text-align: center;
 }
-.container-product-item{
-  display: flex;
-  justify-content: space-around;
-  text-align: justify;
-  flex-wrap: wrap;
-  gap: 1rem;
+label {
+  display: block;
+  margin-top: 30px;
+  font-size: 16px;
+  font-weight: 500;
 }
-.container-product-item p{
-  margin-top: var(--large-size);
-}
-.product-item{
-  width: 350px;
-  background-color: var(--white);
-  /* border: .1px solid var(--text-color); */
-  padding: var(--large-size);
-  border-radius: 1rem;
-}
-.product-item h3{
-  text-align: center;
-  margin-bottom: var(--large-size);
-  
-}
-.product-item img{
+input {
+  display: block;
+  height: 50px;
   width: 100%;
-  border-radius: 1rem;
+  background-color: rgba(255,255,255,0.07);
+  border-radius: 5px;
+  padding: 0 10px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 300;
 }
-.product-item a{
-  color: var(--bg-color);
-  background-color: var(--bc);
-  text-decoration: none;
-  font-size: var(--normal-font-size);
-  padding: var(--small-size) var(--large-size);
-  border-radius: var(--small-size);
+::placeholder {
+  color: #ff5;
 }
-.container-skills{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 90vw;
-  margin: auto;
-  gap: var(--normal-size);
-}
-.skill-set{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 2rem;
+button {
+  margin-top: 50px;
   width: 100%;
+  background-color: #ffffff;
+  color: #080710;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
 }
-.skill{
-  border-radius: 1rem;
-  background-color: var(--white);
-  width: 45%;
-  padding: var(--large-size);
-  min-height: 300px;
+@media(min-width: 700px){
+  /* form {
+    margin-top: 200px;
+  } */
 }
-ul,li{
-  padding: 0;
-}
-.skill ul li{
-  list-style: none;
-}
-
-.skill ul li a{
-  color: var(--text-color);
-  text-decoration: none;
-}
-.skill ul li a:hover{
-  color: var(--sc);
-}
-.skillItem.download{
-  display: flex;
-  width: 80%;
-  justify-content: space-between;
-}
-/** Responsive**/
-@media screen and (max-width: 420px){
-  :root{
-    /* font size */
-  --small-font-size: .7rem ;
-  --normal-font-size: .85rem ;
-  --big-font-size: 1.1rem ;
-  }
-}
-@media screen and (max-width: 755px){
-  :root{
-    /* font size */
-  --small-font-size: .75rem ;
-  --normal-font-size: .9rem ;
-  --big-font-size: 1.2rem ;
-  }
-  .container-img-sertificat{
-    height: 250px;
-  }
-  .img-sertificat:hover{
-    flex: 20;
-  }
-  .container-sertificats{
-      width: 90vw;
-  }
-  .btn-group{
-    display: flex;
-    justify-content: space-between;
-    gap: .5rem;
-    flex: 1;
-    width: 90vw;
-  }
-  .custom-btn{
-    width: 33.3%;
-  }
-  .product-item{
-    width: 100%;
-  }
-  .container-img-sertificat.single-item{
-  margin: auto;
-  width: 90vw;
-  height: 60vw;
-  }
-  .container-my-card{
-    width: 90vw;
-  }
-  .my-card {
-    width: 90vw;
-    height: 90vw;
-  }
-  .img-card{
-    height: 90vw;
-  }
-  .my-card .title-card {
-    height: 90vw;
-  }
-  .my-card:hover > .img-card + .title-card{
-  transform: translateY(-90vw);
-  }
-}
-@media screen and (min-width: 756px){
-  :root{
-    /* font size */
-  --small-font-size: .8rem ;
-  --normal-font-size: 1rem ;
-  --big-font-size: 1.4rem ;
-  }
-  .container-sertificats{
-      width: 80vw;
-  }
-}
-@media screen and (min-width: 992px){}

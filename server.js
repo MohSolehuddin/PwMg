@@ -9,9 +9,15 @@ const server = http.createServer((req, res) => {
     const handler = routes[path] || notFound;
     handler(req, res);
 });
-
+const port = 3000;
 // Menjalankan server pada port 3000
-server.listen(3000, () => {
-    console.log('Server berjalan pada port 3000');
-    console.log(`http://localhost:3000`);
+server.listen(port, () => {
+    console.log(`
+aplikasi pengelola password Versi 1.0.0 berjalan di:
+http://localhost:${port}
+    
+Panduan pengguna:
+  -tekan CTRL + c, untuk keluar dari eksekusi aplikasi
+Media sosial kami: https://msytc.my.id/medsos
+`);
 });

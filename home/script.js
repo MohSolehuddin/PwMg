@@ -97,6 +97,7 @@ const addForm = () => {
         <div class="input-group">
           <label for="password">password</label>
           <input type="password" id="password" name="password" required>
+          <button onclick(showPassword(password))>show</button>
         </div>
         
         <br/>
@@ -314,4 +315,57 @@ function copyText(id) {
   document.body.removeChild(textarea);
   // Memberikan notifikasi
   alert(`Teks berhasil disalin (${text})`);
+}
+
+// // validasi input 
+// class ValidationInput {
+//   static isNotEmpty(input) {
+//     return input.trim() !== '';
+//   }
+
+//   static isSafeInput(charInput) {
+//     const dangerousChars = ["<", ">", "&", "'", "\""];
+//     return !dangerousChars.some(char => charInput.includes(char));
+//   }
+
+//   static isNotNumber(input) {
+//     return isNaN(input);
+//   }
+
+//   static isNotEmail(input) {
+//     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+//     return !emailRegex.test(input);
+//   }
+
+//   static isStrongPassword(password) {
+//     // ... implementasi yang sebelumnya
+//   }
+
+//   static isValidPhoneNumber(phoneNumber) {
+//     const phoneRegex = /^[0-9]{10}$/;
+//     return phoneRegex.test(phoneNumber);
+//   }
+
+//   static isNumericInRange(input, min, max) {
+//     if (isNaN(input)) {
+//       return false;
+//     }
+//     const numericInput = parseFloat(input);
+//     return numericInput >= min && numericInput <= max;
+//   }
+
+//   static isValidInputRange(input, min, max) {
+//     if (isNaN(input)) {
+//       return false;
+//     }
+//     return input >= min && input <= max;
+//   }
+// }
+
+function showPassword(id) {
+  document.getElementById(`${id}`).addEventListener('click', function(event) {
+    event.preventDefault(); 
+    let password = document.getElementById(`${id}`);
+    password.type = password.type === "password" ? "text" : "password";
+  })
 }

@@ -21,10 +21,13 @@ body{
   color: aqua;
 }
 .container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   text-align: center;
-  max-width: 600px;
+  width: 90vw;
   color: var(--bca);
-  padding: 50px 60px;
+  padding: 40px 20px;
   background-color: var(--bcwt) ;
   border-radius: 25px;
   border: .1px solid rgba(255,255,255,.3);
@@ -111,7 +114,6 @@ form {
   background-position: center center;
 }
 
-
 footer{
   margin: 0px;
   position: fixed;
@@ -134,4 +136,9 @@ button{
 }
 footer button {
   border: none;
+}
+@media(max-width: 650px){
+  .container{
+    width: 90vw;
+  }
 }

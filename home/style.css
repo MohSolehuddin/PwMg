@@ -13,24 +13,28 @@
 }
 
 body{
-  background-color: var(--bcba);
-  color: var(--bca);
+  background: rgb(0,0,0);
+  background: linear-gradient(45deg, rgba(0,0,0,1) 0%, rgba(47,48,50,1) 100%);
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  color: white;
   font-family: 'Poppins',sans-serif;
 }
 #categoryForm #category{
   color: aqua;
 }
+.container > h3{
+  font-size: 1.4rem;
+}
 .container {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  text-align: center;
+  margin: auto;
+  margin-top: 5vw;
   width: 90vw;
   color: var(--bca);
-  padding: 40px 20px;
+  padding: 40px;
   background-color: var(--bcwt) ;
-  border-radius: 25px;
-  border: .1px solid rgba(255,255,255,.3);
+  border-radius: 15px;
+  border: none;
   margin-bottom: 100px;
 }
 .container form h4{
@@ -40,39 +44,47 @@ body{
   color: aqua;
 }
 .container input {
-  height: 40px;
-}
-
-.addPass .input-group input{
-  backdrop-filter: blur;
-}
-.navbar ul li a {
-  color: aqua;
+  width: 100%;
 }
 .container input, select{
-  border-radius: 10px;
-  border: .1px solid aqua;
-  background-color: black;
+  display: block;
+  border-radius: 5px;
+  height: 50px;
+  margin: 4px 0;
+  padding: 0 10px;
+  font-size: 14px;
+  font-weight: 300;
+  border: none;
+  background-color: rgba(255,255,255,0.07);
+  color: aqua;
+}
+.container input:focus{
+  border: none;
+  outline: none;
+}
+.container button{
+  height: 50px;
+  padding: 0 40px;
+}
+/* pages add */
+.navbar ul li a {
   color: aqua;
 }
 .container form button{
   color: aqua;
   cursor: pointer;
 }
-h1 {
+/* input group */
+h1,form {
   margin-bottom: 20px;
 }
-form {
-  margin-bottom: 20px;
-}
-
 .container-passwords {
   margin-bottom: 50px;
   margin-top: 50px;
 }
 .elementPw{
   border-radius: 10px;
-  border: .1px solid rgba(255,255,255,.1);
+  border: none;
   display: flex;
   justify-content: space-around;
   padding: 0;
@@ -130,9 +142,16 @@ footer div{
 }
 button{
   border-radius: 10px;
-  border: .1px solid aqua;
-  background-color: var(--bcba);
+  border: none;
+  background-color: rgba(255, 255, 255, .07);
   color: aqua;
+}
+.button{
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(255, 255, 255, .07);
+  color: aqua;
+  height: 40px;
 }
 footer button {
   border: none;

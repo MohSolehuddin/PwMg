@@ -18,6 +18,6 @@ http://localhost:${port}
     
 Panduan pengguna:
   -tekan CTRL + c, untuk keluar dari eksekusi aplikasi
-Media sosial kami: https://msytc.my.id/medsos
+Media sosial kami: https://msytc.vercel.app
 `);
 });

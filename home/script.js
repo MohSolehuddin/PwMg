@@ -18,13 +18,10 @@ const home = async ()=> {
       })
       document.getElementById('output').innerHTML = `
         <div id="categoryForm">
-            <h4>Select Category</h4>
             <div class="input-group">
-              <label for="category">Category</label>
               <select id="category" required onchange="printDataCategory()">
                 ${optValue}
               </select>
-              
             </div>
           </div>
           <br/>
@@ -97,7 +94,7 @@ const addForm = () => {
         <div class="input-group">
           <label for="password">password</label>
           <input type="password" id="password" name="password" required>
-          <button onclick(showPassword(password))>show</button>
+          <button type="button" onclick="showPassword('password')">show</button>
         </div>
         
         <br/>
@@ -113,7 +110,7 @@ const addForm = () => {
         </div>
         
         
-        <button type="submit" class="mt-3 w-100">Tambahkan</button>
+        <button type="submit">Tambahkan</button>
     </form>
   `
 }
@@ -142,8 +139,8 @@ const updateForm = async (id) => {
             <h4>Rubah Password</h4>
             
             <div class="input-group">
-              <label for="id">kategori</label>
-              <input type="text" id="id" value="${value.id}" name="id" readonly>
+              <label for="id">id</label hidden>
+              <input type="text" id="id" value="${value.id}" name="id" readonly hidden>
             </div>
             
             <div class="input-group">
@@ -170,6 +167,7 @@ const updateForm = async (id) => {
             <div class="input-group">
               <label for="password">password</label>
               <input type="password" id="password" value="${value.pw}" name="password" required>
+              <button type="button" onclick="showPassword('password')">show</button>
             </div>
             
             <br/>
@@ -363,9 +361,7 @@ function copyText(id) {
 // }
 
 function showPassword(id) {
-  document.getElementById(`${id}`).addEventListener('click', function(event) {
-    event.preventDefault(); 
     let password = document.getElementById(`${id}`);
     password.type = password.type === "password" ? "text" : "password";
-  })
+    console.log(password.type);
 }

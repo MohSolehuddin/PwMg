@@ -68,48 +68,27 @@ const addForm = () => {
       <form id="addPass" action="/addPassword" method="post">
         <h4>Tambahkan Password</h4>
         
-        <br/>
-        
         <div class="input-group">
-          <label for="category">kategori</label>
-          <input type="text" id="category" name="category" required>
+          <input type="text" id="category" name="title" placeholder="kategori" required>
         </div>
         
-        <br/>
-        
         <div class="input-group">
-          <label for="name">Nama</label>
-          <input type="text" id="name" name="name" required>
-        </div>
-      
-        <br/>
-        
-        <div class="input-group">
-          <label for="username">Nama Pengguna</label>
-          <input type="text" id="username" name="username" required>
-        </div>
-      
-        <br/>
-        
-        <div class="input-group">
-          <label for="password">password</label>
-          <input type="password" id="password" name="password" required>
-          <button type="button" onclick="showPassword('password')">show</button>
+          <input type="text" id="username" name="username" placeholder="username" required>
         </div>
         
-        <br/>
         <div class="input-group">
-          <label for="gmail">gmail</label>
-          <input type="text" id="gmail" name="gmail" required>
+          <input type="password" id="password" name="password" placeholder="password" required>
+          <button id="showButton" type="button" onclick="showPassword('password')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+              <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+            </svg>
+          </button>
         </div>
         
-        <br/>
         <div class="input-group">
-          <label for="no">nomer hp</label>
-          <input type="text" id="no" name="no" required>
+          <input class="email" type="text" id="email" name="email" placeholder="email (opsional)">
         </div>
-        
-        
         <button type="submit">Tambahkan</button>
     </form>
   `
@@ -130,59 +109,55 @@ const updateForm = async (id) => {
   .then(data => {
       // mencari data dengan id tertentu 
       let value = data.passwords.find(item => item.id == id);
-      // mengganti tampilan ke update form dan mengisi nilai sebelumnya agar pengguna tidak mengisi data yang sama  2 kali 
-      document.getElementById('output').innerHTML = `
-          <button type="submit" class="mt-3 w-30" onclick="home()">...kembali</button>
-          
+      //var result untuk menampung hasil looping objek
+      let result= `
+          <button type="submit" class="back" onclick="home()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+          <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1"/>
+          </svg></button>
           
           <form id="updateForm" action="/update" method="POST">
             <h4>Rubah Password</h4>
             
             <div class="input-group">
-              <label for="id">id</label hidden>
-              <input type="text" id="id" value="${value.id}" name="id" readonly hidden>
+              <input type="text" id="category" value="${category}" name="title" required>
             </div>
             
+            `;
+      for (let key in value) {
+        if (value.hasOwnProperty(key) && key !== "email") {
+          if (key !== "password") {
+            result += key == "id" ? `
+            <div class="input-group none">
+              <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" readonly hidden>
+            </div>
+              `:`
+              <div class="input-group">
+                <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" required>
+              </div>
+              `;
+          } else {
+            result += `
             <div class="input-group">
-              <label for="category">kategori</label>
-              <input type="text" id="category" value="${category}" name="category" required>
+              <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" required>
             </div>
-            
-            <br/>
-            
-            <div class="input-group">
-              <label for="name">Nama</label>
-              <input type="text" id="name" value="${value.name}" name="name" required>
-            </div>
-          
-            <br/>
-            
-            <div class="input-group">
-              <label for="username">nama pengguna</label>
-              <input type="text" id="username" value="${value.username}" name="username" required>
-            </div>
-          
-            <br/>
-            
-            <div class="input-group">
-              <label for="password">password</label>
-              <input type="password" id="password" value="${value.pw}" name="password" required>
-              <button type="button" onclick="showPassword('password')">show</button>
-            </div>
-            
-            <br/>
-            <div class="input-group">
-              <label for="gmail">gmail</label>
-              <input type="text" id="email" value="${value.email}" name="email">
-            </div>
-            
-            <br/>
-            <div class="input-group">
-              <label for="no">nomer hp</label>
-              <input type="text" id="no" value="${value.no}" name="no">
-            </div>
-            
-            
+            <button id="showButton" type="button" onclick="showPassword('password')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                  </svg>
+                </button>
+            `
+          }
+        }else{
+          result += `<div class="input-group">
+              <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" required>
+            </div>`;
+        }
+      }
+      // mengganti tampilan ke update form dan mengisi nilai sebelumnya agar pengguna tidak mengisi data yang sama  2 kali 
+      document.getElementById('output').innerHTML = `
+            ${result}
             <button type="submit" class="mt-3 w-100">Rubah</button>
           </form>
         `;
@@ -203,61 +178,33 @@ function isDataPwPrintToHtml(category, data) {
     data["passwords"].forEach(function(element) {
       dataPrintHtml += `
         <div id="container-passwords" class="container-passwords">
-        
-          <div class="container-password">
+          <div class="container-password">`;
           
-            <div class="elementPw">
-              <p>
-                nama:
-              </p>
-              <p id="${element.name}">
-                ${element.name}
-              </p>
-              <button class="copy" onclick="copyText('${element.name}')"></button>
-            </div>
-            
-            <div class="elementPw">
-              <p>
-                Username:
-              </p>
-              <p id="${element.username}">
-                ${element.username}
-              </p>
-              <button class="copy" onclick="copyText('${element.username}')"></button>
-            </div>
-            
-            <div class="elementPw">
-              <p>
-                Password:
-              </p>
-              <p id="${element.pw}">
-                ${element.pw}
-              </p>
-              <button class="copy" onclick="copyText('${element.pw}')"></button>
-            </div>
-            
-            <div class="elementPw">
-              <p>
-                Gmail:
-              </p>
-              <p id="${element.email}">
-                ${element.email}
-              </p>
-              <button class="copy" onclick="copyText('${element.email}')"></button>
-            </div>
-            
-            <div class="elementPw">
-              <p>
-                no hp:
-              </p>
-              <p id="${element.no}">
-                ${element.no}
-              </p>
-              <button class="copy" onclick="copyText('${element.no}')"></button>
-            </div>
-            
-            
-          </div>
+        for (let key in element) {
+          if (element.hasOwnProperty(key) && key !== "id" && element[key] !== "") {
+            if (key !== "password") {
+              dataPrintHtml+= `
+                <label>${key}</label>
+                <input class="${key}" id="${element[key]}" type="${key}" value="${element[key]}" readonly>
+                <button class="copy" onclick="copyText('${element[key]}')"></button>
+                `
+            } else {
+              dataPrintHtml+= `
+                <label>${key}</label>
+                <input class="${key}" id="${element[key]}" type="${key}" value="${element[key]}" readonly>
+                <button id="showButton" type="button" onclick="showPassword('password')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                  </svg>
+                </button>
+                <button class="copy" onclick="copyText('${element[key]}')"></button>
+                `
+            }
+          }
+        }
+        dataPrintHtml+= `
+        </div>
           
           <button type="submit" onclick="updateForm('${element.id}')">
             edit
@@ -267,7 +214,7 @@ function isDataPwPrintToHtml(category, data) {
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="aqua" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/></svg>
           </button>    
         </div>
-      `;
+        `
       i++;
     });
     document.getElementById('printData').innerHTML = dataPrintHtml;
@@ -300,7 +247,7 @@ function copyText(id) {
   // Membuat elemen textarea baru
   var textarea = document.createElement('textarea');
   // Mengambil teks yang akan disalin
-  var text = document.getElementById(`${id}`).innerText;
+  var text = document.getElementById(`${id}`).value;
   // Mengatur nilai teks pada elemen textarea
   textarea.value = text;
   // Menambahkan elemen textarea ke dalam dokumen
@@ -362,6 +309,8 @@ function copyText(id) {
 
 function showPassword(id) {
     let password = document.getElementById(`${id}`);
+    let showButton = document.getElementById("showButton");
     password.type = password.type === "password" ? "text" : "password";
-    console.log(password.type);
+    showButton.innerHTML = password.type === "password" ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16"><path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/><path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/></svg>';
+    console.log(showButton);
 }

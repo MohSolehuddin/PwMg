@@ -7,6 +7,7 @@ const updateData = require('./updateData');
 const sendToClient = require('./sendToClient');
 const {mySHA3} = require('./cryptojs');
 const mainDir = require('./mainDir');
+const oldData = require('./oldData');
 //API data
 function data(req, res) {
   const { method, url } = req;
@@ -17,8 +18,7 @@ function data(req, res) {
       });
       req.on('end', () => {
         const data = querystring.parse(body);
-        const { category, name, username, password, gmail, no } = data;
-        addData(res, category, name, username, password, gmail, no);
+        addData(res, data, oldData());
       });
   }
   if (method === "DELETE" && url === "/deletePassword") {
@@ -77,8 +77,7 @@ function updatePw(req, res) {
   });
   req.on('end', async () => {
     const data = querystring.parse(body);
-    console.log(data);
-    let result = await updateData(res, data.id, data.category, data.name, data.username, data.password, data.email, data.no);
+    let result = await updateData(res, data, oldData());
   });
 }
 

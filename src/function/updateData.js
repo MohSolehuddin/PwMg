@@ -4,35 +4,25 @@ const oldData = require('./oldData');
 const {encr} = require("./cryptojs")
 
 // function untuk update data berdasarkan id
-async function updateData(res, id, title, name, username, pass, email, noHp) {
-    if (!id || !title || !name || !username || !pass || !email || !noHp) {
-        console.log("Input tidak lengkap");
-        res.statusCode = 500;
-        res.end("Data tidak lengkap");
-        return;
-    }
-
-    let OldData = oldData();
-    const index = OldData.passwords.findIndex((data) => data.id == Number(id));
+async function updateData(res, newData, OldData) {
+    newData.id = Number(newData.id);
+    const index = OldData.passwords.findIndex((data) => data.id == newData.id);
 
     if (index === -1) {
         console.log("Data tidak ditemukan");
         res.statusCode = 404;
         res.end("Data tidak ditemukan");
     }
+    // Enkripsi data sensitif secara dinamis
+    Object.keys(newData).forEach((property) => {
+        // Lewati properti 'id' selama proses enkripsi
+        if (property !== 'title' && property !== 'id') {
+            // Enkripsi nilai properti
+            newData[property] = encr(`${newData[property]}`, key1(), key2());
+        }
+    });
 
-    // membuat struktur pass baru
-    const updatedData = {
-        id: OldData.passwords[index].id,
-        title,
-        name: encr(name, key1(), key2()),
-        username: encr(username, key1(), key2()),
-        pw: encr(pass, key1(), key2()),
-        email: encr(email, key1(), key2()),
-        no: encr(noHp, key1(), key2())
-    };
-
-    OldData.passwords.splice(index, 1, updatedData);
+    OldData.passwords.splice(index, 1, newData);
 
     fs.writeFile(
         "./private/pw.json",

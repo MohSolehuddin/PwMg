@@ -129,29 +129,29 @@ const updateForm = async (id) => {
           if (key !== "password") {
             result += key == "id" ? `
             <div class="input-group none">
-              <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" readonly hidden>
+              <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" readonly hidden>
             </div>
               `:`
               <div class="input-group">
-                <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" required>
+                <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" required>
               </div>
               `;
           } else {
             result += `
-            <div class="input-group">
-              <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" required>
+            <div class="input-group ${key}">
+              <input type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" required>
+              <button id="showButton" type="button" onclick="showPassword('password')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                </svg>
+              </button>
             </div>
-            <button id="showButton" type="button" onclick="showPassword('password')">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-                  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-                  </svg>
-                </button>
             `
           }
         }else{
           result += `<div class="input-group">
-              <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" required>
+              <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" required>
             </div>`;
         }
       }
@@ -184,12 +184,15 @@ function isDataPwPrintToHtml(category, data) {
           if (element.hasOwnProperty(key) && key !== "id" && element[key] !== "") {
             if (key !== "password") {
               dataPrintHtml+= `
+              <div class="elementPw">
                 <label>${key}</label>
-                <input class="${key}" id="${element[key]}" type="${key}" value="${element[key]}" readonly>
+                <input id="${element[key]}" type="${key}" value="${element[key]}" readonly>
                 <button class="copy" onclick="copyText('${element[key]}')"></button>
-                `
+              </div>`
+              
             } else {
               dataPrintHtml+= `
+              <div class="elementPw">
                 <label>${key}</label>
                 <input class="${key}" id="${element[key]}" type="${key}" value="${element[key]}" readonly>
                 <button id="showButton" type="button" onclick="showPassword('password')">
@@ -198,8 +201,9 @@ function isDataPwPrintToHtml(category, data) {
                   <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
                   </svg>
                 </button>
-                <button class="copy" onclick="copyText('${element[key]}')"></button>
-                `
+                <button class="copy password" onclick="copyText('${element[key]}')"></button>
+                
+              </div>`
             }
           }
         }
@@ -245,9 +249,9 @@ const printDataCategory = async () => {
 // fungsi copy text
 function copyText(id) {
   // Membuat elemen textarea baru
-  var textarea = document.createElement('textarea');
+  let textarea = document.createElement('textarea');
   // Mengambil teks yang akan disalin
-  var text = document.getElementById(`${id}`).value;
+  let text = document.getElementById(`${id}`).value;
   // Mengatur nilai teks pada elemen textarea
   textarea.value = text;
   // Menambahkan elemen textarea ke dalam dokumen

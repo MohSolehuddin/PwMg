@@ -13,5 +13,7 @@
   "keywords": [],
   "author": "Moh Solehuddin",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "nodemon": "^3.0.3"
+  }
 }

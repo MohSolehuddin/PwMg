@@ -86,6 +86,12 @@ body{
 h1,form {
   margin-bottom: 20px;
 }
+.formInput{
+  background-color: var(--bcba);
+  padding: 40px;
+  margin: 20px 0 0 0;
+  border-radius: 15px;
+}
 .container-passwords {
   margin-bottom: 50px;
   background-color: #242a49;
@@ -97,14 +103,11 @@ h1,form {
 }
 .elementPw{
   height: 100px;
-  overflow: hidden;
   margin: 10px 0;
   color: var(--bca);
 }
-.elementPw button{
-}
 .elementPw label{
-  margin-bottom: -10pxpx;
+  margin-bottom: -10px;
 }
 .elementPw input{
   height: 50px;
@@ -126,12 +129,12 @@ h1,form {
 .elementPw button.copy.password{
   left: 86%;
 }
-.elementPw button.copy:hover {
+.elementPw button.copy:active {
   background-image: url(http://localhost:3000/src/icons/clipboard-check.svg);
   background-repeat: no-repeat;
   background-position: center center;
 }
-.elementPw > button#showButton{
+.elementPw > button.showButton{
   padding: 0;
   width: 20px;
   bottom: 80px;
@@ -161,12 +164,12 @@ button{
 .input-group.password{
   overflow: hidden;
 }
-button#showButton{
+button.showButton{
   background-color: transparent;
   position: relative;
   color: white;
   bottom: 65px;
-  left: 85%;
+  left: 90%;
 }
 button.back{
   background-color: transparent;
@@ -175,8 +178,8 @@ button.back{
   font-size: 2rem;
 }
 @media(max-width: 650px){
-  button#showButton{
-    left: 70%;
+  button.showButton{
+    left: 80%;
     padding: 0 21px;
   }
   .elementPw button.copy{
@@ -185,7 +188,23 @@ button.back{
   .elementPw  button.copy.password{
     left: 71%;
   }
-  .elementPw > button#showButton{
+  .elementPw > button.showButton{
   left: 70%;
+  }
+  .elementPw button.copy:hover {
+    background-image: url(http://localhost:3000/src/icons/clipboard-check.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  }
 }
+@media(min-width: 800px){
+  .elementPw > button.showButton{
+    left: 92%;
+    }
+  .elementPw button.copy{
+    left: 95%;
+  }
+  .elementPw  button.copy.password{
+    left: 92.5%;
+  }
 }

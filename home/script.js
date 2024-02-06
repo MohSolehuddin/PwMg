@@ -8,7 +8,7 @@ const getData = async (data) => {
 //tampilan default
 const home = async ()=> {
   let dataPw;
-  getData('http://localhost:3000/category')
+  getData('category')
     .then((data)=>{
       let optValue = `<option value="none">Pilih kategori</option>`;
       data.titles.forEach((data) => {
@@ -35,12 +35,14 @@ const home = async ()=> {
       alert(err);
     })
 }
+
+
 // hapus data berdasarkan id
 async function deleteData(id) {
   const confirmation = confirm('Apakah Anda yakin ingin menghapus data ini?');
   const reqData = {id: id};
   if (confirmation) {
-    const url = `http://localhost:3000/deletePassword`;
+    const url = `deletePassword`;
     
     await fetch(url, {
       method: 'DELETE',
@@ -62,10 +64,12 @@ async function deleteData(id) {
     alert('Penghapusan data dibatalkan');
   }
 }
+
+
 // form menambahkan data password
 const addForm = () => {
   document.getElementById('output'). innerHTML = `
-      <form id="addPass" action="/addPassword" method="post">
+      <form id="addPass" class="formInput" action="/addPassword" method="post">
         <h4>Tambahkan Password</h4>
         
         <div class="input-group">
@@ -78,7 +82,7 @@ const addForm = () => {
         
         <div class="input-group">
           <input type="password" id="password" name="password" placeholder="password" required>
-          <button id="showButton" type="button" onclick="showPassword('password')">
+          <button id="showButton" class="showButton" type="button" onclick="showPassword('password')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
               <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
               <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
@@ -99,7 +103,7 @@ const updateForm = async (id) => {
   let category = document.getElementById('category').value ;
   const reqData = { title: category };
   // Menggunakan fetch untuk mengambil data terdekripsi
-  await fetch('http://localhost:3000/getPasswords', {
+  await fetch('getPasswords', {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
@@ -112,18 +116,18 @@ const updateForm = async (id) => {
       //var result untuk menampung hasil looping objek
       let result= `
           <button type="submit" class="back" onclick="home()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
           <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1"/>
           </svg></button>
           
-          <form id="updateForm" action="/update" method="POST">
+          <form id="updateForm" class="formInput" action="/update" method="POST">
             <h4>Rubah Password</h4>
             
             <div class="input-group">
               <input type="text" id="category" value="${category}" name="title" required>
             </div>
             
-            `;
+        `;
       for (let key in value) {
         if (value.hasOwnProperty(key) && key !== "email") {
           if (key !== "password") {
@@ -140,7 +144,7 @@ const updateForm = async (id) => {
             result += `
             <div class="input-group ${key}">
               <input type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" required>
-              <button id="showButton" type="button" onclick="showPassword('password')">
+              <button id="showButton" class="showButton" type="button" onclick="showPassword('password', 'showButton')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
@@ -167,6 +171,8 @@ const updateForm = async (id) => {
       home();
     })
 }
+
+
 // function data yang akan di print ke html
 function isDataPwPrintToHtml(category, data) {
   //membuat variabel penampung data dan tag html yang akan di tampilkan
@@ -179,7 +185,6 @@ function isDataPwPrintToHtml(category, data) {
       dataPrintHtml += `
         <div id="container-passwords" class="container-passwords">
           <div class="container-password">`;
-          
         for (let key in element) {
           if (element.hasOwnProperty(key) && key !== "id" && element[key] !== "") {
             if (key !== "password") {
@@ -191,11 +196,12 @@ function isDataPwPrintToHtml(category, data) {
               </div>`
               
             } else {
+              let index = Math.floor(Math.random() * 1000000);
               dataPrintHtml+= `
               <div class="elementPw">
                 <label>${key}</label>
-                <input class="${key}" id="${element[key]}" type="${key}" value="${element[key]}" readonly>
-                <button id="showButton" type="button" onclick="showPassword('password')">
+                <input class="${key}" id="${key}${element[key]}" type="${key}" value="${element[key]}" readonly>
+                <button class="showButton" id="showButton${index}${element[key]}" type="button" onclick="showPassword('${key}${element[key]}', 'showButton${index}${element[key]}')">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
                   <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
@@ -203,7 +209,7 @@ function isDataPwPrintToHtml(category, data) {
                 </button>
                 <button class="copy password" onclick="copyText('${element[key]}')"></button>
                 
-              </div>`
+              </div>`;
             }
           }
         }
@@ -232,7 +238,7 @@ const printDataCategory = async () => {
   const category = document.getElementById('category').value;
   const reqData = { title: category };
   // Menggunakan fetch untuk mengambil data terdekripsi
-  await fetch('http://localhost:3000/getPasswords', {
+  await fetch('getPasswords', {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
@@ -311,9 +317,12 @@ function copyText(id) {
 //   }
 // }
 
-function showPassword(id) {
+function showPassword(id, buttonId) {
+    if (buttonId === undefined) {
+      buttonId = "showButton";
+    }
     let password = document.getElementById(`${id}`);
-    let showButton = document.getElementById("showButton");
+    let showButton = document.getElementById(`${buttonId}`);
     password.type = password.type === "password" ? "text" : "password";
     showButton.innerHTML = password.type === "password" ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16"><path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/><path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/></svg>';
     console.log(showButton);

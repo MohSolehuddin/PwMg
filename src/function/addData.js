@@ -23,7 +23,7 @@ function addData(res, newData, oldDataObj) {
 
     // Tulis objek data yang diperbarui ke file
     fs.writeFile(
-        "/sdcard/PwMg/private/pw.json",
+        "../PwMg/private/pw.json",
         JSON.stringify(oldDataObj),
         (err) => {
             if (err) {

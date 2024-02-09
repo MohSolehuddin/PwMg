@@ -11,7 +11,7 @@ async function plainTextData(title) {
     let parseData = JSON.parse(data);
     // dekripsi dan filter data berdasarkan judul
     let decryptedData = parseData.passwords
-      .filter(password => password.title === title)
+      .filter(password => password.title.toUpperCase() === title.toUpperCase())
       .map(password => {
         let result= {};
         for (let prop in password) {
@@ -21,7 +21,8 @@ async function plainTextData(title) {
                 result[prop] = decr(password[prop].encryptedData, key1(), key2(),password[prop].iv);
               }
             } else {
-              result[prop] = password[prop];
+              console.log(result["Password"]);
+              result[prop] = result["Password"] !== "" ? password[prop] : "username/password salah";
             }
           }
         }
@@ -32,7 +33,7 @@ async function plainTextData(title) {
     console.log("decrypted Data berhasil di buat");
     return JSON.stringify(obj);
   } catch (e) {
-    console.log("gagal mendapatkan data password, tolong login dengan username dan password yang benar, ingat bahwa passworddan username deckripsi tidak dapat di rubah, jika ingin merubah harus ingat dulu password dan username yang dulu");
+    console.error(e);
   }
 }
 

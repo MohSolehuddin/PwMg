@@ -30,8 +30,8 @@ function dec(encryptedData, key, savedIv) {
         decrypted += decipher.final('utf8');
         return decrypted;
     } catch (e) {
-        console.error(e);
-        return "username/password salah!!!";
+        console.log("decription passwod gagal");
+        return "";
     }
 }
 

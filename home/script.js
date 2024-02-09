@@ -77,11 +77,11 @@ const addForm = () => {
         </div>
         
         <div class="input-group">
-          <input type="text" id="username" name="username" placeholder="username" required>
+          <input type="text" id="username" name="Username" placeholder="username" required>
         </div>
         
         <div class="input-group">
-          <input type="password" id="password" name="password" placeholder="password" required>
+          <input type="password" id="password" name="Password" placeholder="password" required>
           <button id="showButton" class="showButton" type="button" onclick="showPassword('password')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
               <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
@@ -91,7 +91,17 @@ const addForm = () => {
         </div>
         
         <div class="input-group">
-          <input class="email" type="text" id="email" name="email" placeholder="email (opsional)">
+          <input type="Pin" id="pin" name="Pin" placeholder="Pin (opsional)">
+          <button id="showPin" class="showButton" type="button" onclick="showPassword('pin','showPin')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+              <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="input-group">
+          <input class="email" type="text" id="email" name="Email" placeholder="email (opsional)">
         </div>
         <button type="submit">Tambahkan</button>
     </form>
@@ -130,20 +140,20 @@ const updateForm = async (id) => {
         `;
       for (let key in value) {
         if (value.hasOwnProperty(key) && key !== "email") {
-          if (key !== "password") {
+          if (key.toUpperCase() !== "PASSWORD" && key.toUpperCase() !== "PIN") {
             result += key == "id" ? `
             <div class="input-group none">
               <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" readonly hidden>
             </div>
-              `:`
-              <div class="input-group">
-                <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" required>
+              `:
+              `<div class="input-group">
+                <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
               </div>
               `;
           } else {
             result += `
             <div class="input-group ${key}">
-              <input type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" required>
+              <input type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
               <button id="showButton" class="showButton" type="button" onclick="showPassword('password', 'showButton')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
@@ -176,7 +186,7 @@ const updateForm = async (id) => {
 // function data yang akan di print ke html
 function isDataPwPrintToHtml(category, data) {
   //membuat variabel penampung data dan tag html yang akan di tampilkan
-  let dataPrintHtml = `<h3>data password ${category}</h3>`;
+  let dataPrintHtml = `<h3>Data password ${category}</h3>`;
   // membuat variabel i sebagai penanda id pada tag html
   let i=0;
   
@@ -187,7 +197,7 @@ function isDataPwPrintToHtml(category, data) {
           <div class="container-password">`;
         for (let key in element) {
           if (element.hasOwnProperty(key) && key !== "id" && element[key] !== "") {
-            if (key !== "password") {
+            if (key.toUpperCase() !== "PASSWORD" && key.toUpperCase() !== "PIN") {
               dataPrintHtml+= `
               <div class="elementPw">
                 <label>${key}</label>

@@ -16,25 +16,18 @@ body{
   background-color: white;
   font-family: 'Poppins',sans-serif;
 }
-#categoryForm #category{
-  color: aqua;
-}
-.container > h3{
+h1, h2, h3, h4, h5, h6{
   font-size: 1.4rem;
+  margin: 10px 0;
 }
 .container {
   width: 100vw;
   color: var(--bcba);
-  padding: 40px;
-  background-color: var(--bcwt) ;
+  padding: 20px 10px;
+  padding-bottom: 70px;
   border: none;
-  overflow: scroll;
-  height: 100vh;
 }
-.container form h4{
-  color: aqua;
-}
-.container a,input{
+.container a,input, .container form h4{
   color: aqua;
 }
 .container input {
@@ -52,24 +45,29 @@ body{
   display: block;
   border-radius: 5px;
   height: 50px;
-  margin: 15px 0;
   padding: 0 10px;
   font-size: 14px;
   font-weight: 300;
   border: none;
-  background-color: rgba(0,0,0,0.7);
   color: aqua;
+}
+.container input{
+  margin: 15px 0;
+  background-color: rgba(0,0,0,0.7);
 }
 .container input:focus{
   border: none;
   outline: none;
 }
-.container input::placeholder{
-  outline-color: aqua;
+::placeholder {
+  color: #fff;
 }
 .container button{
   height: 50px;
   padding: 0 40px;
+}
+.output{
+  min-height: 50vh;
 }
 .none{
   display: none;
@@ -82,24 +80,20 @@ body{
   color: aqua;
   cursor: pointer;
 }
-/* input group */
-h1,form {
-  margin-bottom: 20px;
+.powerby{
+  margin-bottom: 70px;
 }
+/* input group */
 .formInput{
   background-color: var(--bcba);
   padding: 40px;
-  margin: 20px 0 0 0;
   border-radius: 15px;
 }
 .container-passwords {
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   background-color: #242a49;
   border-radius: 15px;
   padding: 40px;
-}
-.container .email{
-  margin-top: -50px;
 }
 .elementPw{
   height: 100px;
@@ -141,7 +135,6 @@ h1,form {
   left: 85%;
 }
 footer{
-  margin: 0px;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -161,7 +154,8 @@ button{
   background-color: rgba(255, 255, 255, .07);
   color: aqua;
 }
-.input-group.password{
+.input-group{
+  height: 70px;
   overflow: hidden;
 }
 button.showButton{

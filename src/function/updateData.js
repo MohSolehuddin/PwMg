@@ -18,7 +18,7 @@ async function updateData(res, newData, OldData) {
         // Lewati properti 'id' selama proses enkripsi
         if (property !== 'title' && property !== 'id') {
             // Enkripsi nilai properti
-            newData[property] = encr(`${newData[property]}`, key1(), key2());
+            newData[property] = encr(`${newData[property]}`, global.username, global.password);
         }
     });
 

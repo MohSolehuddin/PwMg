@@ -18,7 +18,7 @@ async function plainTextData(title) {
           if (password.hasOwnProperty(prop)) {
             if (prop != "id") {
               if (prop != "title") {
-                result[prop] = decr(password[prop].encryptedData, key1(), key2(), password[prop].iv);
+                result[prop] = decr(password[prop].encryptedData, global.username, global.password, password[prop].iv);
               }
             } else {
               console.log(result["Password"]);

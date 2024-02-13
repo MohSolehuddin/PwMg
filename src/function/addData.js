@@ -14,7 +14,7 @@ function addData(res, newData, oldDataObj) {
         // Lewati properti 'id' selama proses enkripsi
         if (property !== 'title' && property !== 'id') {
             // Enkripsi nilai properti
-            encryptedData[property] = encr(`${encryptedData[property]}`, key1(), key2());
+            encryptedData[property] = encr(`${encryptedData[property]}`, global.username, global.password);
         }
     });
 

@@ -143,22 +143,29 @@ function handleLogin(req, res) {
         });
         req.on('end', () => {
             const data = querystring.parse(body);
-            let obj = {
-                username: mySHA3(data.username),
-                password: mySHA3(data.password)
-            }
-            fs.writeFile(`./private/keySesion.json`, JSON.stringify(obj), err => {
-                if (err) {
-                    console.error('gagal menambahkan data:', err);
-                    res.statusCode = 500;
-                    res.end('Internal Server Error');
-                } else {
-                    console.log('Login Successfull!');
-                    res.statusCode = 302;
-                    res.setHeader('Location', '/home');
-                    res.end();
-                }
-            });
+            global.username = mySHA3(data.username);
+            global.password = mySHA3(data.password);
+            console.log('Login Successfull!');
+            res.statusCode = 302;
+            res.setHeader('Location', '/home');
+            res.end();
+
+            // let obj = {
+            //     username: mySHA3(data.username),
+            //     password: mySHA3(data.password)
+            // }
+            // fs.writeFile(`./private/keySesion.json`, JSON.stringify(obj), err => {
+            //     if (err) {
+            //         console.error('gagal menambahkan data:', err);
+            //         res.statusCode = 500;
+            //         res.end('Internal Server Error');
+            //     } else {
+            //         console.log('Login Successfull!');
+            //         res.statusCode = 302;
+            //         res.setHeader('Location', '/home');
+            //         res.end();
+            //     }
+            // });
         });
     } else {
         res.statusCode = 404;

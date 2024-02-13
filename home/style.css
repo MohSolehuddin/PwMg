@@ -5,21 +5,24 @@
   margin: 0;
   box-sizing: border-box;
 }
+
 :root {
   --bcb: black;
-  --bcba: #242a49; 
+  --bcba: #242a49;
   --bca: white;
-  --bcwt: rgba(255,255,255,0.11);
+  --bcwt: rgba(255, 255, 255, 0.11);
 }
 
-body{
+body {
   background-color: white;
-  font-family: 'Poppins',sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
-h1, h2, h3, h4, h5, h6{
+
+h1, h2, h3, h4, h5, h6 {
   font-size: 1.4rem;
   margin: 10px 0;
 }
+
 .container {
   width: 100vw;
   color: var(--bcba);
@@ -27,21 +30,26 @@ h1, h2, h3, h4, h5, h6{
   padding-bottom: 70px;
   border: none;
 }
-.container a,input, .container form h4{
+
+.container a, input, .container form h4 {
   color: aqua;
 }
+
 .container input {
   width: 100%;
 }
-.container select{
+
+.container select {
   background-color: var(--bcba);
 }
-.container a{
+
+.container a {
   background-color: var(--bcba);
   padding: 3px 10px;
   border-radius: 5px;
 }
-.container input, select{
+
+.container input, select {
   display: block;
   border-radius: 5px;
   height: 50px;
@@ -51,61 +59,76 @@ h1, h2, h3, h4, h5, h6{
   border: none;
   color: aqua;
 }
-.container input{
+
+.container input {
   margin: 15px 0;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0, 0, 0, 0.7);
 }
-.container input:focus{
+
+.container input:focus {
   border: none;
   outline: none;
 }
+
 ::placeholder {
   color: #fff;
 }
-.container button{
+
+.container button {
   height: 50px;
   padding: 0 40px;
 }
-.output{
+
+.output {
   min-height: 50vh;
 }
-.none{
+
+.none {
   display: none;
 }
+
 /* pages add */
 .navbar ul li a {
   color: aqua;
 }
-.container form button{
+
+.container form button {
   color: aqua;
   cursor: pointer;
 }
-.powerby{
+
+.powerby {
   margin-bottom: 70px;
 }
+
 /* input group */
-.formInput{
+.formInput {
   background-color: var(--bcba);
   padding: 40px;
   border-radius: 15px;
 }
+
 .container-passwords {
   margin-bottom: 40px;
   background-color: #242a49;
   border-radius: 15px;
   padding: 40px;
 }
-.elementPw{
+
+.elementPw {
   height: 100px;
   margin: 10px 0;
   color: var(--bca);
 }
-.elementPw label{
+
+.elementPw label {
   margin-bottom: -10px;
 }
-.elementPw input{
+
+.elementPw input {
   height: 50px;
 }
+
 .elementPw button.copy {
   margin: 0;
   padding: 0;
@@ -120,85 +143,102 @@ h1, h2, h3, h4, h5, h6{
   height: 50px;
   cursor: pointer;
 }
-.elementPw button.copy.password{
+
+.elementPw button.copy.password {
   left: 86%;
 }
+
 .elementPw button.copy:active {
   background-image: url(http://localhost:3000/src/icons/clipboard-check.svg);
   background-repeat: no-repeat;
   background-position: center center;
 }
-.elementPw > button.showButton{
+
+.elementPw>button.showButton {
   padding: 0;
   width: 20px;
   bottom: 80px;
   left: 85%;
 }
-footer{
+
+footer {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100vw;
   background-color: white;
 }
-footer div{
+
+footer div {
   display: flex;
   background-color: var(--bcba);
   justify-content: space-around;
   padding: 20px;
   color: aqua;
 }
-button{
+
+button {
   border-radius: 10px;
   border: none;
   background-color: rgba(255, 255, 255, .07);
   color: aqua;
 }
-.input-group{
+
+.input-group {
   height: 70px;
   overflow: hidden;
 }
-button.showButton{
+
+button.showButton {
   background-color: transparent;
   position: relative;
   color: white;
   bottom: 65px;
   left: 90%;
 }
-button.back{
+
+button.back {
   background-color: transparent;
   padding: 0;
   margin: 0;
   font-size: 2rem;
 }
-@media(max-width: 650px){
-  button.showButton{
+
+@media(max-width: 650px) {
+  button.showButton {
     left: 80%;
     padding: 0 21px;
   }
-  .elementPw button.copy{
+
+  .elementPw button.copy {
     left: 80%;
   }
-  .elementPw  button.copy.password{
+
+  .elementPw button.copy.password {
     left: 71%;
   }
-  .elementPw > button.showButton{
-  left: 70%;
+
+  .elementPw>button.showButton {
+    left: 70%;
   }
+
   .elementPw button.copy:hover {
     background-image: url(http://localhost:3000/src/icons/clipboard-check.svg);
-  background-repeat: no-repeat;
-  background-position: center center;
+    background-repeat: no-repeat;
+    background-position: center center;
   }
 }
-@media(min-width: 800px){
-  .elementPw > button.showButton{
+
+@media(min-width: 800px) {
+  .elementPw>button.showButton {
     left: 92%;
-    }
-  .elementPw button.copy{
+  }
+
+  .elementPw button.copy {
     left: 95%;
   }
-  .elementPw  button.copy.password{
+
+  .elementPw button.copy.password {
     left: 92.5%;
   }
 }

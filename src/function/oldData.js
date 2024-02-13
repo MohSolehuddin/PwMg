@@ -1,4 +1,4 @@
-const fs = require('fs') 
+const fs = require('fs')
 
 // function mendapatkan data lama
 function oldData() {

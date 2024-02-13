@@ -6,4 +6,4 @@ function key1() {
 function key2() {
   return ReadFileJsonAndChangeToObject('./private/keySesion.json').password;
 }
-module.exports = {key1, key2};
+module.exports = { key1, key2 };

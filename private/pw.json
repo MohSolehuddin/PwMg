@@ -1,1 +1,24 @@
-{"passwords":[]}
+{
+  "passwords": [
+    {
+      "title": "instagram",
+      "Username": {
+        "encryptedData": "e6ae654a71e98a7d399aafa6dfc588fb",
+        "iv": "1f4049960103f98de61565d739b957ec"
+      },
+      "Password": {
+        "encryptedData": "ea806af8933c94521ae43f7f1be8f120",
+        "iv": "d6ca18456caec760a148dcddfab86f92"
+      },
+      "Pin": {
+        "encryptedData": "ca3d94c37ca919436e06f3c39a88136f",
+        "iv": "ed69c0ec9b126e8b542e18c4a961689f"
+      },
+      "Email": {
+        "encryptedData": "b292996299e1b0f5bdd6d1115415b9b7",
+        "iv": "bd318741785e74b11aa480b71516660d"
+      },
+      "id": null
+    }
+  ]
+}

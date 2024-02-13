@@ -1,4 +1,4 @@
-const {data, handleLogin, loginPage, style,script, srcBootstrapJs, srcBootstrapCss, srcMilligramCss, aboutPage, scriptAbout, styleAbout, styleHome,scriptHome, homePage, copyIconCheck, copyIcon, notFound, Category, updatePw} = require('./handler');
+const { data, handleLogin, loginPage, style, script, srcBootstrapJs, srcBootstrapCss, srcMilligramCss, aboutPage, scriptAbout, styleAbout, styleHome, scriptHome, homePage, copyIconCheck, copyIcon, notFound, Category, updatePw } = require('./handler');
 
 
 // Object yang berisi path dan fungsi yang akan dipanggil ketika path tersebut diakses
@@ -13,7 +13,7 @@ const routes = {
     '/getPasswords': data,
     '/category': Category,
     '/update': updatePw,
-    
+
     // style and logic
     //login page
     '/style.css': style,
@@ -31,4 +31,4 @@ const routes = {
     '/src/icons/clipboard.svg': copyIcon,
     '/src/icons/clipboard-check.svg': copyIconCheck,
 }
-module.exports = {routes, notFound,};
+module.exports = { routes, notFound, };

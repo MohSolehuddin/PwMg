@@ -1,14 +1,16 @@
-*{
+* {
   margin: 0;
   padding: 0;
 }
-body{
+
+body {
   display: flex;
   justify-content: center;
   background-color: black;
   text-align: center;
 }
-.container{
+
+.container {
   max-width: 500px;
   background-color: pink;
   text-align: center;
@@ -16,30 +18,36 @@ body{
   border-radius: 25px;
   padding: 50px;
 }
-.profil{
+
+.profil {
   background-color: black;
   border-radius: 25px;
   padding: 20px;
 }
-.container-ket{
+
+.container-ket {
   background-color: black;
   border-radius: 25px;
   border: .1px solid blue;
   padding: 50px;
 }
+
 .container p {
   color: aqua;
   font-weight: bold;
 }
+
 .container div h3 {
   font-weight: bold;
   color: aqua;
 }
-.container blockquote{
+
+.container blockquote {
   background-color: black;
   border-radius: 25px;
   border: .1px solid aqua;
 }
+
 .container blockquote h3 {
   color: aqua;
 }

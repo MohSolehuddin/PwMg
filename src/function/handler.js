@@ -5,80 +5,80 @@ const addData = require('./addData');
 const deleteData = require('./deleteData');
 const updateData = require('./updateData');
 const sendToClient = require('./sendToClient');
-const {mySHA3} = require('./cryptojs');
+const { mySHA3 } = require('./cryptojs');
 const mainDir = require('./mainDir');
 const oldData = require('./oldData');
 //API data
 function data(req, res) {
-  const { method, url } = req;
-  if (method === "POST" && url === "/addPassword") {
-      let body = '';
-      req.on('data', chunk => {
-          body += chunk.toString();
-      });
-      req.on('end', () => {
-        const data = querystring.parse(body);
-        addData(res, data, oldData());
-      });
-  }
-  if (method === "DELETE" && url === "/deletePassword") {
-    let body = '';
-      req.on('data', chunk => {
-          body += chunk.toString();
-      });
-      req.on('end', () => {
-        const data = JSON.parse(body);
-        const {id} = data;
-        deleteData(res, id);
-      });
-  }
-  if (method === "POST" && url === "/getPasswords") {
-    let body = '';
-      req.on('data', chunk => {
-          body += chunk.toString();
-      });
-      req.on('end', async () => {
-        let data = JSON.parse(body);
-        let originalData = await plainTextData(data.title);
-        res.writeHead(200, {"Content-Type": "text/json"});
-        res.write(originalData);
-        res.end();
-      });
-  }
+    const { method, url } = req;
+    if (method === "POST" && url === "/addPassword") {
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        req.on('end', () => {
+            const data = querystring.parse(body);
+            addData(res, data, oldData());
+        });
+    }
+    if (method === "DELETE" && url === "/deletePassword") {
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        req.on('end', () => {
+            const data = JSON.parse(body);
+            const { id } = data;
+            deleteData(res, id);
+        });
+    }
+    if (method === "POST" && url === "/getPasswords") {
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        req.on('end', async () => {
+            let data = JSON.parse(body);
+            let originalData = await plainTextData(data.title);
+            res.writeHead(200, { "Content-Type": "text/json" });
+            res.write(originalData);
+            res.end();
+        });
+    }
 }
 function Category(req, res) {
-  fs.readFile('./private/pw.json', 'utf8', (err, data) => {
-      if (err) {
-          console.error('Gagal membaca data password:', err);
-          return ;
-      }
-      try {
-          // Parse JSON
-          const jsonData = JSON.parse(data);
-          // Dapatkan semua nilai "title" dari array "passwords" dan filter yang unik
-          const uniqueTitles = jsonData.passwords
-              .map(item => item.title)
-              .filter((value, index, self) => self.indexOf(value) === index);
-          // Cetak hasil
-          let dataJson = JSON.stringify({ titles: uniqueTitles }, null, 2);
-          res.writeHead(200, {"Content-Type": "text/json"});
-          res.write(dataJson);
-          res.end();
-      } catch (error) {
-          console.error('Gagal mengurai JSON:', error);
-      }
-  });
+    fs.readFile('./private/pw.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Gagal membaca data password:', err);
+            return;
+        }
+        try {
+            // Parse JSON
+            const jsonData = JSON.parse(data);
+            // Dapatkan semua nilai "title" dari array "passwords" dan filter yang unik
+            const uniqueTitles = jsonData.passwords
+                .map(item => item.title)
+                .filter((value, index, self) => self.indexOf(value) === index);
+            // Cetak hasil
+            let dataJson = JSON.stringify({ titles: uniqueTitles }, null, 2);
+            res.writeHead(200, { "Content-Type": "text/json" });
+            res.write(dataJson);
+            res.end();
+        } catch (error) {
+            console.error('Gagal mengurai JSON:', error);
+        }
+    });
 }
 //update password
 function updatePw(req, res) {
-  let body = '';
-  req.on('data', chunk => {
-      body += chunk.toString();
-  });
-  req.on('end', async () => {
-    const data = querystring.parse(body);
-    let result = await updateData(res, data, oldData());
-  });
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString();
+    });
+    req.on('end', async () => {
+        const data = querystring.parse(body);
+        let result = await updateData(res, data, oldData());
+    });
 }
 
 // PAGE 
@@ -144,8 +144,8 @@ function handleLogin(req, res) {
         req.on('end', () => {
             const data = querystring.parse(body);
             let obj = {
-              username: mySHA3(data.username),
-              password: mySHA3(data.password)
+                username: mySHA3(data.username),
+                password: mySHA3(data.password)
             }
             fs.writeFile(`./private/keySesion.json`, JSON.stringify(obj), err => {
                 if (err) {
@@ -165,4 +165,4 @@ function handleLogin(req, res) {
         res.end('Not Found');
     }
 }
-module.exports = {data, handleLogin, loginPage, style,script, srcBootstrapJs, srcBootstrapCss, srcMilligramCss, aboutPage, scriptAbout, styleAbout, styleHome,scriptHome, homePage, copyIconCheck, copyIcon, notFound, Category, updatePw}
+module.exports = { data, handleLogin, loginPage, style, script, srcBootstrapJs, srcBootstrapCss, srcMilligramCss, aboutPage, scriptAbout, styleAbout, styleHome, scriptHome, homePage, copyIconCheck, copyIcon, notFound, Category, updatePw }

@@ -13,12 +13,12 @@ async function plainTextData(title) {
     let decryptedData = parseData.passwords
       .filter(password => password.title.toUpperCase() === title.toUpperCase())
       .map(password => {
-        let result= {};
+        let result = {};
         for (let prop in password) {
           if (password.hasOwnProperty(prop)) {
             if (prop != "id") {
               if (prop != "title") {
-                result[prop] = decr(password[prop].encryptedData, key1(), key2(),password[prop].iv);
+                result[prop] = decr(password[prop].encryptedData, key1(), key2(), password[prop].iv);
               }
             } else {
               console.log(result["Password"]);

@@ -145,6 +145,7 @@ function handleLogin(req, res) {
             const data = querystring.parse(body);
             global.username = mySHA3(data.username);
             global.password = mySHA3(data.password);
+            console.log(global.username);
             console.log('Login Successfull!');
             res.statusCode = 302;
             res.setHeader('Location', '/home');

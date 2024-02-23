@@ -17,7 +17,7 @@ const home = async () => {
         `
       })
       document.getElementById('output').innerHTML = `
-        <div id="categoryForm">
+         <div id="categoryForm">
             <div class="input-group">
               <select id="category" required onchange="printDataCategory()">
                 ${optValue}
@@ -73,15 +73,15 @@ const addForm = () => {
         <h4>Tambahkan Password</h4>
         
         <div class="input-group">
-          <input type="text" id="category" name="title" placeholder="kategori" required>
+          <input autocomplete="on" type="text" id="category" name="title" placeholder="kategori" required>
         </div>
         
         <div class="input-group">
-          <input type="text" id="username" name="Username" placeholder="username" required>
+          <input autocomplete="off" type="text" id="username" name="Username" placeholder="username" required>
         </div>
         
         <div class="input-group">
-          <input type="password" id="password" name="Password" placeholder="password" required>
+          <input autocomplete="off" type="password" id="password" name="Password" placeholder="password" required>
           <button id="showButton" class="showButton" type="button" onclick="showPassword('password')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
               <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
@@ -91,7 +91,7 @@ const addForm = () => {
         </div>
         
         <div class="input-group">
-          <input type="Pin" id="pin" name="Pin" placeholder="Pin (opsional)">
+          <input autocomplete="off" type="Pin" id="pin" name="Pin" placeholder="Pin (opsional)">
           <button id="showPin" class="showButton" type="button" onclick="showPassword('pin','showPin')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
               <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
@@ -101,7 +101,7 @@ const addForm = () => {
         </div>
         
         <div class="input-group">
-          <input class="email" type="text" id="email" name="Email" placeholder="email (opsional)">
+          <input autocomplete="off" class="email" type="text" id="email" name="Email" placeholder="email (opsional)">
         </div>
         <button type="submit">Tambahkan</button>
     </form>
@@ -134,7 +134,7 @@ const updateForm = async (id) => {
             <h4>Rubah Password</h4>
             
             <div class="input-group">
-              <input type="text" id="category" value="${category}" name="title" required>
+              <input autocomplete="off" type="text" id="category" value="${category}" name="title" required>
             </div>
             
         `;
@@ -143,17 +143,17 @@ const updateForm = async (id) => {
           if (key.toUpperCase() !== "PASSWORD" && key.toUpperCase() !== "PIN") {
             result += key == "id" ? `
             <div class="input-group none">
-              <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" readonly hidden>
+              <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" readonly hidden>
             </div>
               `:
               `<div class="input-group">
-                <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
+                <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
               </div>
               `;
           } else {
             result += `
             <div class="input-group ${key}">
-              <input type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
+              <input autocomplete="off" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
               <button id="showButton" class="showButton" type="button" onclick="showPassword('password', 'showButton')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
@@ -165,7 +165,7 @@ const updateForm = async (id) => {
           }
         } else {
           result += `<div class="input-group">
-              <input class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" required>
+              <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" required>
             </div>`;
         }
       }
@@ -202,7 +202,7 @@ function isDataPwPrintToHtml(category, data) {
             dataPrintHtml += `
               <div class="elementPw">
                 <label>${key}</label>
-                <input id="${element[key]}" type="${key}" value="${element[key]}" readonly>
+                <input autocomplete="off" id="${element[key]}" type="${key}" value="${element[key]}" readonly>
                 <button class="copy" onclick="copyText('${element[key]}')"></button>
               </div>`
 
@@ -211,7 +211,7 @@ function isDataPwPrintToHtml(category, data) {
             dataPrintHtml += `
               <div class="elementPw">
                 <label>${key}</label>
-                <input class="${key}" id="${key}${element[key]}" type="${key}" value="${element[key]}" readonly>
+                <input autocomplete="off" class="${key}" id="${key}${element[key]}" type="${key}" value="${element[key]}" readonly>
                 <button class="showButton" id="showButton${index}${element[key]}" type="button" onclick="showPassword('${key}${element[key]}', 'showButton${index}${element[key]}')">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>

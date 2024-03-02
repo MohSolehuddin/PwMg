@@ -24,8 +24,6 @@ const home = async () => {
               </select>
             </div>
           </div>
-          <br/>
-          <br/>
           <div id="printData">
             
           <div/>
@@ -91,7 +89,7 @@ const addForm = () => {
         </div>
         
         <div class="input-group">
-          <input autocomplete="off" type="Pin" id="pin" name="Pin" placeholder="Pin (opsional)">
+          <input autocomplete="off" type="password" id="pin" name="Pin" placeholder="Pin (opsional)">
           <button id="showPin" class="showButton" type="button" onclick="showPassword('pin','showPin')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
               <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
@@ -151,10 +149,11 @@ const updateForm = async (id) => {
               </div>
               `;
           } else {
+            let uniqueIdShowButton = Math.floor(Math.random() * 1000000);
             result += `
             <div class="input-group ${key}">
-              <input autocomplete="off" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
-              <button id="showButton" class="showButton" type="button" onclick="showPassword('password', 'showButton')">
+              <input autocomplete="off" type="password" id="inputId${uniqueIdShowButton}${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
+              <button id="showButton${uniqueIdShowButton}${key}" class="showButton" type="button" onclick="showPassword('inputId${uniqueIdShowButton}${key}', 'showButton${uniqueIdShowButton}${key}')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
@@ -207,12 +206,12 @@ function isDataPwPrintToHtml(category, data) {
               </div>`
 
           } else {
-            let index = Math.floor(Math.random() * 1000000);
+            let uniqueIdShowButton = Math.floor(Math.random() * 1000000);
             dataPrintHtml += `
               <div class="elementPw">
                 <label>${key}</label>
-                <input autocomplete="off" class="${key}" id="${key}${element[key]}" type="${key}" value="${element[key]}" readonly>
-                <button class="showButton" id="showButton${index}${element[key]}" type="button" onclick="showPassword('${key}${element[key]}', 'showButton${index}${element[key]}')">
+                <input autocomplete="off" class="${key}" id="${key}${element[key]}" type="password" value="${element[key]}" readonly>
+                <button class="showButton" id="showButton${uniqueIdShowButton}${element[key]}" type="button" onclick="showPassword('${key}${element[key]}', 'showButton${uniqueIdShowButton}${element[key]}')">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
                   <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
@@ -227,7 +226,6 @@ function isDataPwPrintToHtml(category, data) {
       if (isNotZero !== 0) {
         dataPrintHtml += `
           </div>
-            
             <button type="submit" onclick="updateForm('${element.id}')">
               edit
             </button>

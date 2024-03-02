@@ -26,7 +26,7 @@ h1, h2, h3, h4, h5, h6 {
 .container {
   width: 100vw;
   color: var(--bcba);
-  padding: 20px 10px;
+  padding: 15px 10px;
   padding-bottom: 70px;
   border: none;
 }
@@ -71,16 +71,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::placeholder {
-  color: #fff;
+  color: rgba(255,255,255,.7);
 }
 
 .container button {
   height: 50px;
   padding: 0 40px;
 }
-
-.output {
-  min-height: 50vh;
+/* menghilangkan jarak margin h3 di output */
+.output h3{
+  margin: 0;
 }
 
 .none {
@@ -96,20 +96,15 @@ h1, h2, h3, h4, h5, h6 {
   color: aqua;
   cursor: pointer;
 }
-
-.powerby {
-  margin-bottom: 70px;
-}
-
 /* input group */
 .formInput {
   background-color: var(--bcba);
   padding: 40px;
   border-radius: 15px;
+  margin-bottom: 45px;
 }
-
 .container-passwords {
-  margin-bottom: 40px;
+  margin-bottom: 45px;
   background-color: #242a49;
   border-radius: 15px;
   padding: 40px;
@@ -166,7 +161,20 @@ footer {
   left: 0;
   bottom: 0;
   width: 100vw;
+  background-color: transparent;
+}
+footer .powerby{
   background-color: white;
+  border-top-right-radius: 10px;
+  width: 250px;
+  margin: 0;
+  padding: 15px 10px;
+}
+footer .powerby a{
+  background-color: var(--bcba);
+  padding: 3px 10px;
+  border-radius: 5px;
+  color: aqua;
 }
 
 footer div {
@@ -183,7 +191,9 @@ button {
   background-color: rgba(255, 255, 255, .07);
   color: aqua;
 }
-
+footer button{
+  background-color: none;
+}
 .input-group {
   height: 70px;
   overflow: hidden;

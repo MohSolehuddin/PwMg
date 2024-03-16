@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { key1, key2 } = require('./key');
 const oldData = require('./oldData');
 const { encr } = require("./cryptojs")
 

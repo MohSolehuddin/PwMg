@@ -11,9 +11,9 @@ const home = async () => {
   getData('category')
     .then((data) => {
       let optValue = `<option value="none">Pilih kategori</option>`;
-      data.titles.forEach((data) => {
+      data.titles.sort().forEach((data) => {
         optValue += `
-          <option value="${data}">${data}</option>
+          <option value="${data}">${data.toUpperCase()}</option>
         `
       })
       document.getElementById('output').innerHTML = `

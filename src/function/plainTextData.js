@@ -1,6 +1,5 @@
 const fs = require("fs").promises;
 const { encr, decr, mySHA3 } = require('./cryptojs');
-const { key1, key2 } = require('./key');
 
 //function menampilkan data json
 async function plainTextData(title) {
@@ -21,7 +20,6 @@ async function plainTextData(title) {
                 result[prop] = decr(password[prop].encryptedData, global.username, global.password, password[prop].iv);
               }
             } else {
-              console.log(result["Password"]);
               result[prop] = result["Password"] !== "" ? password[prop] : "username/password salah";
             }
           }
@@ -30,7 +28,7 @@ async function plainTextData(title) {
       });
     let obj = {};
     obj["passwords"] = decryptedData;
-    console.log("decrypted Data berhasil di buat");
+    console.log("Data berhasil di tampilkan");
     return JSON.stringify(obj);
   } catch (e) {
     console.error(e);

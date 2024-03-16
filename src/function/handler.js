@@ -89,15 +89,6 @@ function script(req, res) {
     sendToClient('./script.js', 'text/javascript', res);
 }
 // src
-function srcBootstrapJs(req, res) {
-    sendToClient("./src/bootstrap.bundle.min.js", 'text/javascript', res);
-}
-function srcBootstrapCss(req, res) {
-    sendToClient("./src/bootstrap.min.css", 'text/css', res);
-}
-function srcMilligramCss(req, res) {
-    sendToClient("./src/milligram.css", 'text/css', res);
-}
 function copyIcon(req, res) {
     sendToClient('./src/icons/clipboard.svg', "image/svg+xml", res);
 }
@@ -173,4 +164,4 @@ function handleLogin(req, res) {
         res.end('Not Found');
     }
 }
-module.exports = { data, handleLogin, loginPage, style, script, srcBootstrapJs, srcBootstrapCss, srcMilligramCss, aboutPage, scriptAbout, styleAbout, styleHome, scriptHome, homePage, copyIconCheck, copyIcon, notFound, Category, updatePw }
+module.exports = { data, handleLogin, loginPage, style, script, aboutPage, scriptAbout, styleAbout, styleHome, scriptHome, homePage, copyIconCheck, copyIcon, notFound, Category, updatePw }

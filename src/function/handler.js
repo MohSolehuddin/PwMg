@@ -6,7 +6,6 @@ const deleteData = require('./deleteData');
 const updateData = require('./updateData');
 const sendToClient = require('./sendToClient');
 const { mySHA3 } = require('./cryptojs');
-const mainDir = require('./mainDir');
 const oldData = require('./oldData');
 //API data
 function data(req, res) {

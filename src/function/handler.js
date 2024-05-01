@@ -17,6 +17,7 @@ function data(req, res) {
         });
         req.on('end', () => {
             const data = querystring.parse(body);
+            console.log(data);
             addData(res, data, oldData());
         });
     }
@@ -76,6 +77,7 @@ function updatePw(req, res) {
     });
     req.on('end', async () => {
         const data = querystring.parse(body);
+        console.log(data);
         let result = await updateData(res, data, oldData());
     });
 }

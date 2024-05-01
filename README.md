@@ -20,63 +20,51 @@ Disini yang perlu di ingat adalah username dan password yang kalian input ketika
 **Client:** HTML, CSS, JavaScript
 
 **Server:** Node
+## Requirement technologi for Installation
+- [Git](https://git.org)
+- [Node](https://nodejs.org/download)
 
 ## Installation
-###Install nodejs
-command for Termux android
+open terminal and run this command
+before conyinue to next step, preapere Installation Requirement
+
+click link requirement Installation and for your device
+
+Installation git for linux
 ```bash
-  pkg i nodejs-lts
+  sudo apt install git
 ```
-command for linux
-
+Installation git for Termux android
 ```bash
-  sudo apt install nodejs-lts
+  pkg install git
 ```
-for windows and MacOs you can download nodejs from original site
-[nodejs](https://nodejs.org/en/download)
 
-after nodejs Installation you can to next step
-Clone the project, open terminal and run this command
-
+Clone the project
 ```bash
   git clone https://github.com/MohSolehuddin/PwMg
 ```
-
 Go to the project directory
-
 ```bash
   cd PwMg
 ```
-
 Setup Installation
-
 ```bash
   ./install.sh
 ```
-
 Start the server
-
 ```bash
   ./run
 ```
 
 ## Run Locally
-
 Go to the project directory
-
 ```bash
   cd PwMg
 ```
-
 Start the server
-
 ```bash
   ./run
 ```
-
-
-## Screenshots
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
 ## 🔗 Links
 [![portofolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://msytc.vercel.app)

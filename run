@@ -1,1 +1,3 @@
+clear
+ls -a
 npm run start

@@ -30,14 +30,7 @@ before conyinue to next step, preapere Installation Requirement
 
 click link requirement Installation and for your device
 
-Installation git for linux
-```bash
-  sudo apt install git
-```
-Installation git for Termux android
-```bash
-  pkg install git
-```
+if requirement done you can continue to new step
 
 Clone the project
 ```bash

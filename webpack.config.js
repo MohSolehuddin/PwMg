@@ -10,6 +10,7 @@ module.exports = [
     }
   },
   {
+    target: "web",
     entry: './home/script.js',
     output: {
       filename: 'script.js',
@@ -17,6 +18,7 @@ module.exports = [
     },
   },
   {
+    target: "web",
     entry: './about/script.js',
     output: {
       filename: 'script.js',

@@ -62,9 +62,3 @@ function jquery() {
     $('.container').css('backgroundColor', 'white')
   });
 }
-
-//  AKHIR HOME
-
-
-
-

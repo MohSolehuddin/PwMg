@@ -5,7 +5,7 @@ const addData = require('./addData');
 const deleteData = require('./deleteData');
 const updateData = require('./updateData');
 const sendToClient = require('./sendToClient');
-const { mySHA3 } = require('./cryptojs');
+const { mySHA3, decr } = require('./cryptojs');
 const oldData = require('./oldData');
 //API data
 function data(req, res) {
@@ -137,28 +137,28 @@ function handleLogin(req, res) {
             const data = querystring.parse(body);
             global.username = mySHA3(data.username);
             global.password = mySHA3(data.password);
-            console.log(global.username);
-            console.log('Login Successfull!');
-            res.statusCode = 302;
-            res.setHeader('Location', '/home');
-            res.end();
-
-            // let obj = {
-            //     username: mySHA3(data.username),
-            //     password: mySHA3(data.password)
-            // }
-            // fs.writeFile(`./private/keySesion.json`, JSON.stringify(obj), err => {
-            //     if (err) {
-            //         console.error('gagal menambahkan data:', err);
-            //         res.statusCode = 500;
-            //         res.end('Internal Server Error');
-            //     } else {
-            //         console.log('Login Successfull!');
-            //         res.statusCode = 302;
-            //         res.setHeader('Location', '/home');
-            //         res.end();
-            //     }
-            // });
+            
+            
+            let sampleDataForLogin = oldData().passwords[0];
+            if (sampleDataForLogin!== undefined) {
+              let isLogin = decr(sampleDataForLogin.Password.encryptedData,global.username, global.password, sampleDataForLogin.Password.iv )
+              if (isLogin !== undefined) {
+                res.statusCode = 302;
+                res.setHeader('Location', '/home');
+                res.end();
+                console.log("Login succes");
+              } else {
+                res.statusCode = 302;
+                res.setHeader('Location', '/login');
+                res.end();
+                console.log("username atau password salah");
+              }
+            }else{
+              console.log('Create account!!!');
+              res.statusCode = 302;
+              res.setHeader('Location', '/home');
+              res.end();
+            }
         });
     } else {
         res.statusCode = 404;

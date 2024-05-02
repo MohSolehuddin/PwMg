@@ -30,8 +30,8 @@ function dec(encryptedData, key, savedIv) {
         decrypted += decipher.final('utf8');
         return decrypted;
     } catch (e) {
-        console.log("decription passwod gagal");
-        return "";
+        console.log("Gagal melihat password");
+        return undefined;
     }
 }
 

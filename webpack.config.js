@@ -5,7 +5,7 @@ module.exports = [
     target: 'node',
     entry: './server.js', // Masukkan entri proyek Anda di sini
     output: {
-      filename: 'bundle.js', // Nama file output
+      filename: '[name].js', // Nama file output
       path: path.resolve(__dirname, 'dist'), // Direktori output
     }
   },

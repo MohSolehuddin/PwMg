@@ -127,6 +127,7 @@ function notFound(req, res) {
 function loginPage(req, res) {
     sendToClient('./index.html', 'text/html', res)
 }
+
 function handleLogin(req, res) {
     if (req.method === 'POST' && req.url === '/login') {
         let body = '';
@@ -140,20 +141,59 @@ function handleLogin(req, res) {
             
             
             let sampleDataForLogin = oldData().passwords[0];
-            if (sampleDataForLogin!== undefined) {
+            if (sampleDataForLogin !== undefined) {
               let isLogin = decr(sampleDataForLogin.Password.encryptedData,global.username, global.password, sampleDataForLogin.Password.iv )
               if (isLogin !== undefined) {
                 res.statusCode = 302;
                 res.setHeader('Location', '/home');
                 res.end();
-                console.log("Login succes");
+                console.log("Login success");
               } else {
-                res.statusCode = 302;
-                res.setHeader('Location', '/login');
+                res.setHeader('Content-Type', 'text/html');
+                res.write(`<!DOCTYPE html>
+                            <html lang="en">
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <title>Login</title>
+                                <link rel="stylesheet" href="style.css">
+                            </head>
+                            <body class="container">
+                                <form method="post" action="/login" class="formInput">
+                                    <h2 class="judul">Password Management</h2>
+                                    <h3>Login</h3>
+                                    <h5 style="color: red;">Username atau password salah!</h5>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="username" id="username" name="username" autocomplete="off">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="password" placeholder="Password" id="password" name="password" autocomplete="off">
+                                        <button id="showButton" class="showButton" type="button" onclick="showPassword('password')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>
+                                        </button>
+                                    </div>
+                                    <button type="submit" class="button">Log In</button>
+                                    <h5 class="creator warning">kunjungi pembuat: <a href="https://msytc.vercel.app/">msytc.vercel.app</a></h5>
+                                </form>
+                                <script type="text/javascript" charset="utf-8">
+                                    function showPassword(id, buttonId) {
+                                        if (buttonId === undefined) {
+                                            buttonId = "showButton";
+                                        }
+                                        let password = document.getElementById(\`\${id}\`);
+                                        let showButton = document.getElementById(\`\${buttonId}\`);
+                                        password.type = password.type === "password" ? "text" : "password";
+                                        showButton.innerHTML = password.type === "password" ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16"><path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/><path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/></svg>';
+                                    }
+                                </script>
+                            </body>
+                            </html>`);
                 res.end();
                 console.log("username atau password salah");
               }
-            }else{
+            } else {
               console.log('Create account!!!');
               res.statusCode = 302;
               res.setHeader('Location', '/home');

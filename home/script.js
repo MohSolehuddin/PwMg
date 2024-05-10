@@ -149,11 +149,11 @@ const updateForm = async (id) => {
               </div>
               `;
           } else {
-            let uniqueIdShowButton = Math.floor(Math.random() * 1000000);
+            let uniqueId = Math.floor(Math.random() * 1000000);
             result += `
             <div class="input-group ${key}">
-              <input autocomplete="off" type="password" id="inputId${uniqueIdShowButton}${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
-              <button id="showButton${uniqueIdShowButton}${key}" class="showButton" type="button" onclick="showPassword('inputId${uniqueIdShowButton}${key}', 'showButton${uniqueIdShowButton}${key}')">
+              <input autocomplete="off" type="password" id="inputId${uniqueId}${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
+              <button id="showButton${uniqueId}${key}" class="showButton" type="button" onclick="showPassword('inputId${uniqueId}${key}', 'showButton${uniqueId}${key}')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
@@ -183,10 +183,8 @@ const updateForm = async (id) => {
 
 
 // function data yang akan di print ke html
-function isDataPwPrintToHtml(category, data) {
-  //membuat variabel penampung data dan tag html yang akan di tampilkan
+const isDataPwPrintToHtml = (category, data) => {
   let dataPrintHtml = `<h3>Data password ${category}</h3>`;
-  // membuat variabel i sebagai penanda id pada tag html
   let isNotZero = 0;
 
   if ("passwords" in data) {
@@ -206,19 +204,21 @@ function isDataPwPrintToHtml(category, data) {
               </div>`
 
           } else {
-            let uniqueIdShowButton = Math.floor(Math.random() * 1000000);
+            let uniqueId = Math.floor(Math.random() * 1000000);
             dataPrintHtml += `
               <div class="elementPw">
                 <label>${key}</label>
-                <input autocomplete="off" class="${key}" id="${key}${element[key]}" type="password" value="${element[key]}" readonly>
-                <button class="showButton" id="showButton${uniqueIdShowButton}${element[key]}" type="button" onclick="showPassword('${key}${element[key]}', 'showButton${uniqueIdShowButton}${element[key]}')">
+                <input autocomplete="off" class="${key}" id="inputId${uniqueId}" type="password" value="${element[key]}" readonly>
+                <button class="showButton" id="showButton${uniqueId}"
+                type="button" onclick="showPassword('inputId${uniqueId}',
+                'showButton${uniqueId}')">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
                   <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
                   </svg>
                 </button>
-                <button class="copy password" onclick="copyText('${element[key]}')"></button>
-                
+                <button class="copy password"
+                onclick="copyText('inputId${uniqueId}')"></button>
               </div>`;
           }
         }
@@ -232,16 +232,17 @@ function isDataPwPrintToHtml(category, data) {
             
             <button type="submit" onclick="deleteData('${element.id}')">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="aqua" class="bi bi-trash3-fill" viewBox="0 0 16 16"><path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/></svg>
-            </button>    
+            </button>
           </div>
-          `;
+          </div>`;
       }
+      isNotZero = 0;
     });
-    document.getElementById('printData').innerHTML = dataPrintHtml;
   } else {
-    document.getElementById('printData').innerHTML = 'Kategori tidak ditemukan';
+    dataPrintHtml += `<p>Tidak ada data pada kategori ini.</p>`;
   }
-}
+  document.getElementById('printData').innerHTML = dataPrintHtml;
+};
 
 // function untuk menampilkan data ke html 
 const printDataCategory = async () => {

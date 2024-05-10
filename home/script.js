@@ -149,7 +149,7 @@ const updateForm = async (id) => {
               `;
           } else {
             let uniqueId = `${Math.floor(Math.random() *
-            1000000)}${key}${element[key]}``;
+            1000000)}${key}${element[key]}`;
             result += `
             <div class="input-group ${key}">
               <input autocomplete="off" type="password" id="inputId${uniqueId}${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">

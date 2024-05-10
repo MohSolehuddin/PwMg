@@ -34,7 +34,6 @@ const home = async () => {
     })
 }
 
-
 // hapus data berdasarkan id
 async function deleteData(id) {
   const confirmation = confirm('Apakah Anda yakin ingin menghapus data ini?');
@@ -149,7 +148,8 @@ const updateForm = async (id) => {
               </div>
               `;
           } else {
-            let uniqueId = Math.floor(Math.random() * 1000000);
+            let uniqueId = `${Math.floor(Math.random() *
+            1000000)}${key}${element[key]}``;
             result += `
             <div class="input-group ${key}">
               <input autocomplete="off" type="password" id="inputId${uniqueId}${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
@@ -188,11 +188,12 @@ const isDataPwPrintToHtml = (category, data) => {
   let isNotZero = 0;
 
   if ("passwords" in data) {
-    data["passwords"].forEach(function (element) {
+    data["passwords"].forEach((element) =>{
       dataPrintHtml += `
         <div id="container-passwords" class="container-passwords">
           <div class="container-password">`;
       for (let key in element) {
+        //jika elemnt mempunyai properti, bukan id dan bukan String kosong
         if (element.hasOwnProperty(key) && key !== "id" && element[key] !== "") {
           isNotZero++;
           if (key.toUpperCase() !== "PASSWORD" && key.toUpperCase() !== "PIN") {

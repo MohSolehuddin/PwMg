@@ -1,10 +1,10 @@
 class ValidationInput {
   static isNotEmpty(input) {
-    return input.trim() !== '';
+    return input.trim() !== "";
   }
   static isSafeInput(charInput) {
-    const dangerousChars = ["<", ">", "&", "'", "\""];
-    return !dangerousChars.some(char => charInput.includes(char));
+    const dangerousChars = ["<", ">", "&", "'", '"'];
+    return !dangerousChars.some((char) => charInput.includes(char));
   }
   static isNotNumber(input) {
     return isNaN(input);

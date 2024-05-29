@@ -14,7 +14,7 @@ body {
   max-width: 500px;
   background-color: pink;
   text-align: center;
-  border: .1px solid white;
+  border: 0.1px solid white;
   border-radius: 25px;
   padding: 50px;
 }
@@ -28,7 +28,7 @@ body {
 .container-ket {
   background-color: black;
   border-radius: 25px;
-  border: .1px solid blue;
+  border: 0.1px solid blue;
   padding: 50px;
 }
 
@@ -45,7 +45,7 @@ body {
 .container blockquote {
   background-color: black;
   border-radius: 25px;
-  border: .1px solid aqua;
+  border: 0.1px solid aqua;
 }
 
 .container blockquote h3 {

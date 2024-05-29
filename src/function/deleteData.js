@@ -13,20 +13,16 @@ async function deleteData(res, id) {
 
   OldData.passwords.splice(index, 1);
 
-  fs.writeFile(
-    "./private/pw.json",
-    JSON.stringify(OldData),
-    (err) => {
-      if (err) {
-        console.log("password gagal dihapus!!");
-      } else {
-        res.statusCode = 302;
-        res.setHeader('Location', '/home');
-        res.end();
-        console.log("password berhasil dihapus");
-      }
+  fs.writeFile("./private/pw.json", JSON.stringify(OldData), (err) => {
+    if (err) {
+      console.log("password gagal dihapus!!");
+    } else {
+      res.statusCode = 302;
+      res.setHeader("Location", "/home");
+      res.end();
+      console.log("password berhasil dihapus");
     }
-  );
+  });
 }
 
 module.exports = deleteData;

@@ -1,11 +1,11 @@
 class ValidationInput {
   static isNotEmpty(input) {
-    return input.trim() !== '';
+    return input.trim() !== "";
   }
 
   static isSafeInput(charInput) {
-    const dangerousChars = ["<", ">", "&", "'", "\""];
-    return !dangerousChars.some(char => charInput.includes(char));
+    const dangerousChars = ["<", ">", "&", "'", '"'];
+    return !dangerousChars.some((char) => charInput.includes(char));
   }
 
   static isNotNumber(input) {
@@ -44,7 +44,7 @@ class ValidationInput {
   // Tambahkan metode validasi tambahan di sini sesuai kebutuhan
 
   static validateInput(input, validationRules) {
-    return validationRules.every(rule => rule(input));
+    return validationRules.every((rule) => rule(input));
   }
 }
 

@@ -1,6 +1,6 @@
-const http = require('http');
-const url = require('url');
-const { routes, notFound } = require('./src/function/routes');
+const http = require("http");
+const url = require("url");
+const { routes, notFound } = require("./src/function/routes");
 
 // Membuat server
 const server = http.createServer((req, res) => {

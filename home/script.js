@@ -1,22 +1,22 @@
 const getData = async (data) => {
   const response = await fetch(data, {
-    method: 'GET'
-  })
+    method: "GET",
+  });
   const result = await response.json();
   return result;
 };
 //tampilan default
 const home = async () => {
   let dataPw;
-  getData('category')
+  getData("category")
     .then((data) => {
       let optValue = `<option value="none">Pilih kategori</option>`;
       data.titles.sort().forEach((data) => {
         optValue += `
           <option value="${data}">${data.toUpperCase()}</option>
-        `
-      })
-      document.getElementById('output').innerHTML = `
+        `;
+      });
+      document.getElementById("output").innerHTML = `
          <div id="categoryForm">
             <div class="input-group">
               <select id="category" required onchange="printDataCategory()">
@@ -31,41 +31,41 @@ const home = async () => {
     })
     .catch((err) => {
       alert(err);
-    })
-}
+    });
+};
 
 // hapus data berdasarkan id
 async function deleteData(id) {
-  const confirmation = confirm('Apakah Anda yakin ingin menghapus data ini?');
+  const confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
   const reqData = { id: id };
   if (confirmation) {
     const url = `deletePassword`;
 
     await fetch(url, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(reqData)
-    }).then((response) => {
-      if (response.ok) {
-        home();
-      } else {
-        alert('Failed to delete data');
-      }
+      body: JSON.stringify(reqData),
     })
+      .then((response) => {
+        if (response.ok) {
+          home();
+        } else {
+          alert("Failed to delete data");
+        }
+      })
       .catch((error) => {
-        alert('Error deleting data:', error);
+        alert("Error deleting data:", error);
       });
   } else {
-    alert('Penghapusan data dibatalkan');
+    alert("Penghapusan data dibatalkan");
   }
 }
 
-
 // form menambahkan data password
 const addForm = () => {
-  document.getElementById('output').innerHTML = `
+  document.getElementById("output").innerHTML = `
       <form id="addPass" class="formInput" action="/addPassword" method="post">
         <h4>Tambahkan Password</h4>
         
@@ -102,24 +102,25 @@ const addForm = () => {
         </div>
         <button type="submit">Tambahkan</button>
     </form>
-  `
-}
+  `;
+};
 //form update data
 const updateForm = async (id) => {
   // mendapatkan category
-  let category = document.getElementById('category').value;
+  let category = document.getElementById("category").value;
   const reqData = { title: category };
   // Menggunakan fetch untuk mengambil data terdekripsi
-  await fetch('getPasswords', {
+  await fetch("getPasswords", {
     method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(reqData)
-  }).then(res => res.json())
-    .then(data => {
-      // mencari data dengan id tertentu 
-      let value = data.passwords.find(item => item.id == id);
+    body: JSON.stringify(reqData),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // mencari data dengan id tertentu
+      let value = data.passwords.find((item) => item.id == id);
       //var result untuk menampung hasil looping objek
       let result = `
           <button type="submit" class="back" onclick="home()">
@@ -138,18 +139,21 @@ const updateForm = async (id) => {
       for (let key in value) {
         if (value.hasOwnProperty(key) && key !== "email") {
           if (key.toUpperCase() !== "PASSWORD" && key.toUpperCase() !== "PIN") {
-            result += key == "id" ? `
+            result +=
+              key == "id"
+                ? `
             <div class="input-group none">
               <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" readonly hidden>
             </div>
-              `:
-              `<div class="input-group">
+              `
+                : `<div class="input-group">
                 <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
               </div>
               `;
           } else {
-            let uniqueId = `${Math.floor(Math.random() *
-            1000000)}${key}${element[key]}`;
+            let uniqueId = `${Math.floor(Math.random() * 1000000)}${key}${
+              element[key]
+            }`;
             result += `
             <div class="input-group ${key}">
               <input autocomplete="off" type="password" id="inputId${uniqueId}${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
@@ -160,7 +164,7 @@ const updateForm = async (id) => {
                 </svg>
               </button>
             </div>
-            `
+            `;
           }
         } else {
           result += `<div class="input-group">
@@ -168,19 +172,18 @@ const updateForm = async (id) => {
             </div>`;
         }
       }
-      // mengganti tampilan ke update form dan mengisi nilai sebelumnya agar pengguna tidak mengisi data yang sama  2 kali 
-      document.getElementById('output').innerHTML = `
+      // mengganti tampilan ke update form dan mengisi nilai sebelumnya agar pengguna tidak mengisi data yang sama  2 kali
+      document.getElementById("output").innerHTML = `
             ${result}
             <button type="submit" class="mt-3 w-100">Rubah</button>
           </form>
         `;
     })
-    .catch(err => {
+    .catch((err) => {
       alert(err + " kembali ke tampilan awal");
       home();
-    })
-}
-
+    });
+};
 
 // function data yang akan di print ke html
 const isDataPwPrintToHtml = (category, data) => {
@@ -188,13 +191,17 @@ const isDataPwPrintToHtml = (category, data) => {
   let isNotZero = 0;
 
   if ("passwords" in data) {
-    data["passwords"].forEach((element) =>{
+    data["passwords"].forEach((element) => {
       dataPrintHtml += `
         <div id="container-passwords" class="container-passwords">
           <div class="container-password">`;
       for (let key in element) {
         //jika elemnt mempunyai properti, bukan id dan bukan String kosong
-        if (element.hasOwnProperty(key) && key !== "id" && element[key] !== "") {
+        if (
+          element.hasOwnProperty(key) &&
+          key !== "id" &&
+          element[key] !== ""
+        ) {
           isNotZero++;
           if (key.toUpperCase() !== "PASSWORD" && key.toUpperCase() !== "PIN") {
             dataPrintHtml += `
@@ -202,8 +209,7 @@ const isDataPwPrintToHtml = (category, data) => {
                 <label>${key}</label>
                 <input autocomplete="off" id="${element[key]}" type="${key}" value="${element[key]}" readonly>
                 <button class="copy" onclick="copyText('${element[key]}')"></button>
-              </div>`
-
+              </div>`;
           } else {
             let uniqueId = Math.floor(Math.random() * 1000000);
             dataPrintHtml += `
@@ -242,24 +248,26 @@ const isDataPwPrintToHtml = (category, data) => {
   } else {
     dataPrintHtml += `<p>Tidak ada data pada kategori ini.</p>`;
   }
-  document.getElementById('printData').innerHTML = dataPrintHtml;
+  document.getElementById("printData").innerHTML = dataPrintHtml;
 };
 
-// function untuk menampilkan data ke html 
+// function untuk menampilkan data ke html
 const printDataCategory = async () => {
-  const category = document.getElementById('category').value;
+  const category = document.getElementById("category").value;
   const reqData = { title: category };
   // Menggunakan fetch untuk mengambil data terdekripsi
-  await fetch('getPasswords', {
+  await fetch("getPasswords", {
     method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(reqData)
-  }).then(res => res.json())
-    .then(data => {
+    body: JSON.stringify(reqData),
+  })
+    .then((res) => res.json())
+    .then((data) => {
       isDataPwPrintToHtml(category, data);
-    }).catch(error => {
+    })
+    .catch((error) => {
       alert(error);
     });
 };
@@ -267,7 +275,7 @@ const printDataCategory = async () => {
 // fungsi copy text
 function copyText(id) {
   // Membuat elemen textarea baru
-  let textarea = document.createElement('textarea');
+  let textarea = document.createElement("textarea");
   // Mengambil teks yang akan disalin
   let text = document.getElementById(`${id}`).value;
   // Mengatur nilai teks pada elemen textarea
@@ -277,14 +285,14 @@ function copyText(id) {
   // Memilih teks di dalam textarea
   textarea.select();
   // Menyalin teks ke clipboard
-  document.execCommand('copy');
+  document.execCommand("copy");
   // Menghapus elemen textarea
   document.body.removeChild(textarea);
   // Memberikan notifikasi
   alert(`Teks berhasil disalin (${text})`);
 }
 
-// // validasi input 
+// // validasi input
 // class ValidationInput {
 //   static isNotEmpty(input) {
 //     return input.trim() !== '';
@@ -336,6 +344,9 @@ function showPassword(id, buttonId) {
   let password = document.getElementById(`${id}`);
   let showButton = document.getElementById(`${buttonId}`);
   password.type = password.type === "password" ? "text" : "password";
-  showButton.innerHTML = password.type === "password" ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>' : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16"><path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/><path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/></svg>';
+  showButton.innerHTML =
+    password.type === "password"
+      ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>'
+      : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16"><path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/><path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/></svg>';
   console.log(showButton);
 }

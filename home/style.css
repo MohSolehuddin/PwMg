@@ -15,10 +15,15 @@
 
 body {
   background-color: white;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-size: 1.4rem;
   margin: 10px 0;
 }
@@ -31,7 +36,9 @@ h1, h2, h3, h4, h5, h6 {
   border: none;
 }
 
-.container a, input, .container form h4 {
+.container a,
+input,
+.container form h4 {
   color: aqua;
 }
 
@@ -49,7 +56,8 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 5px;
 }
 
-.container input, select {
+.container input,
+select {
   display: block;
   border-radius: 5px;
   height: 50px;
@@ -71,7 +79,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::placeholder {
-  color: rgba(255,255,255,.7);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .container button {
@@ -79,7 +87,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0 40px;
 }
 /* menghilangkan jarak margin h3 di output */
-.output h3{
+.output h3 {
   margin: 0;
 }
 
@@ -149,7 +157,7 @@ h1, h2, h3, h4, h5, h6 {
   background-position: center center;
 }
 
-.elementPw>button.showButton {
+.elementPw > button.showButton {
   padding: 0;
   width: 20px;
   bottom: 80px;
@@ -163,14 +171,14 @@ footer {
   width: 100vw;
   background-color: transparent;
 }
-footer .powerby{
+footer .powerby {
   background-color: white;
   border-top-right-radius: 10px;
   width: 250px;
   margin: 0;
   padding: 15px 10px;
 }
-footer .powerby a{
+footer .powerby a {
   background-color: var(--bcba);
   padding: 3px 10px;
   border-radius: 5px;
@@ -188,10 +196,10 @@ footer div {
 button {
   border-radius: 10px;
   border: none;
-  background-color: rgba(255, 255, 255, .07);
+  background-color: rgba(255, 255, 255, 0.07);
   color: aqua;
 }
-footer button{
+footer button {
   background-color: none;
 }
 .input-group {
@@ -214,7 +222,7 @@ button.back {
   font-size: 2rem;
 }
 
-@media(max-width: 650px) {
+@media (max-width: 650px) {
   button.showButton {
     left: 80%;
     padding: 0 21px;
@@ -228,7 +236,7 @@ button.back {
     left: 71%;
   }
 
-  .elementPw>button.showButton {
+  .elementPw > button.showButton {
     left: 70%;
   }
 
@@ -239,8 +247,8 @@ button.back {
   }
 }
 
-@media(min-width: 800px) {
-  .elementPw>button.showButton {
+@media (min-width: 800px) {
+  .elementPw > button.showButton {
     left: 92%;
   }
 

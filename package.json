@@ -14,6 +14,6 @@
   "author": "Moh Solehuddin",
   "license": "ISC",
   "dependencies": {
-    "nodemon": "^3.0.3"
+    "nodemon": "^3.1.2"
   }
 }

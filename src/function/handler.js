@@ -7,6 +7,7 @@ const updateData = require("./updateData");
 const sendToClient = require("./sendToClient");
 const { mySHA3, decr } = require("./cryptojs");
 const oldData = require("./oldData");
+const { log } = require("console");
 //API data
 function data(req, res) {
   const { method, url } = req;
@@ -101,7 +102,13 @@ function styleHome(req, res) {
 }
 // Fungsi untuk menangani request ke landing page
 function homePage(req, res) {
-  sendToClient("./home/index.html", "text/html", res);
+  if (global.isLogin === undefined) {
+    res.statusCode = 302;
+    res.setHeader("Location", "/");
+    res.end();
+  } else {
+    sendToClient("./home/index.html", "text/html", res);
+  }
 }
 function scriptHome(req, res) {
   sendToClient("./home/script.js", "text/javascript", res);
@@ -119,7 +126,7 @@ function scriptAbout(req, res) {
 // Fungsi untuk menangani request yang tidak dikenali
 function notFound(req, res) {
   res.writeHead(404, { "Content-Type": "text/plain" });
-  res.write("alamatt url tidak ditemukan");
+  res.write("Guhhh, Mak tager napak deknak ben, tadek url lah, belih belih");
   res.end();
 }
 // Fungsi untuk menangani request ke halaman utama
@@ -144,7 +151,7 @@ function handleLogin(req, res) {
 
       let sampleDataForLogin = oldData().passwords[0];
       if (sampleDataForLogin !== undefined) {
-        let isLogin = decr(
+        global.isLogin = decr(
           sampleDataForLogin.Password.encryptedData,
           global.username,
           global.password,

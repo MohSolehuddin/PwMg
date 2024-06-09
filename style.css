@@ -33,6 +33,9 @@ body {
   font-family: "Poppins", sans-serif;
   height: 100vh;
   width: 100vw;
+  display: flex;
+  justify-content: center;
+  place-items: center;
 }
 
 h1,
@@ -122,6 +125,8 @@ button {
   border: none;
   background-color: rgba(255, 255, 255, 0.07);
   color: aqua;
+  font-weight: bold;
+  width: 100%;
 }
 
 .input-group {
@@ -134,12 +139,6 @@ button.showButton {
   position: relative;
   color: white;
   bottom: 65px;
-  left: 90%;
-}
-
-@media (max-width: 650px) {
-  button.showButton {
-    left: 80%;
-    padding: 0 21px;
-  }
+  width: fit-content;
+  left: 75%;
 }

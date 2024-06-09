@@ -152,7 +152,7 @@ const updateForm = async (id) => {
               `;
           } else {
             let uniqueId = `${Math.floor(Math.random() * 1000000)}${key}${
-              element[key]
+              value[key]
             }`;
             result += `
             <div class="input-group ${key}">

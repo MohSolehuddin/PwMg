@@ -125,7 +125,10 @@ function notFound(req, res) {
 // Fungsi untuk menangani request ke halaman utama
 //login
 function loginPage(req, res) {
-  sendToClient("./index.html", "text/html", res);
+  let sampleDataForLogin = oldData().passwords[0];
+  sampleDataForLogin !== undefined
+    ? sendToClient("./login.html", "text/html", res)
+    : sendToClient("./register.html", "text/html", res);
 }
 
 function handleLogin(req, res) {

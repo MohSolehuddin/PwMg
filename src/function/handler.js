@@ -5,7 +5,7 @@ const addData = require("./addData");
 const deleteData = require("./deleteData");
 const updateData = require("./updateData");
 const sendToClient = require("./sendToClient");
-const { mySHA3, decr } = require("./cryptojs");
+const { mySHA3, decr } = require("./crypto");
 const oldData = require("./oldData");
 const { log } = require("console");
 //API data
@@ -102,7 +102,7 @@ function styleHome(req, res) {
 }
 // Fungsi untuk menangani request ke landing page
 function homePage(req, res) {
-  if (global.isLogin === undefined) {
+  if (global.username === undefined) {
     res.statusCode = 302;
     res.setHeader("Location", "/");
     res.end();
@@ -133,7 +133,7 @@ function notFound(req, res) {
 //login
 function loginPage(req, res) {
   let sampleDataForLogin = oldData().passwords[0];
-  sampleDataForLogin !== undefined
+  global.isLogin !== undefined
     ? sendToClient("./login.html", "text/html", res)
     : sendToClient("./register.html", "text/html", res);
 }

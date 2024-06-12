@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { encr } = require("./cryptojs");
+const { encr } = require("./crypto");
 
 function addData(res, newData, oldDataObj) {
   // Dapatkan waktu saat ini untuk digunakan sebagai ID dalam data

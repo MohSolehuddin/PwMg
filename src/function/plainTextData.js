@@ -1,5 +1,5 @@
 const fs = require("fs").promises;
-const { encr, decr, mySHA3 } = require("./cryptojs");
+const { encr, decr, mySHA3 } = require("./crypto");
 
 //function menampilkan data json
 async function plainTextData(title) {

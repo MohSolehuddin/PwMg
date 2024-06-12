@@ -1,6 +1,6 @@
 const fs = require("fs");
 const oldData = require("./oldData");
-const { encr } = require("./cryptojs");
+const { encr } = require("./crypto");
 
 // function untuk update data berdasarkan id
 async function updateData(res, newData, OldData) {

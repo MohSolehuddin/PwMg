@@ -132,8 +132,8 @@ function notFound(req, res) {
 // Fungsi untuk menangani request ke halaman utama
 //login
 function loginPage(req, res) {
-  let sampleDataForLogin = oldData().passwords[0];
-  global.isLogin !== undefined
+  global.sampleDataForLogin = oldData().passwords[0];
+  sampleDataForLogin !== undefined
     ? sendToClient("./login.html", "text/html", res)
     : sendToClient("./register.html", "text/html", res);
 }
@@ -149,7 +149,7 @@ function handleLogin(req, res) {
       global.username = mySHA3(data.username);
       global.password = mySHA3(data.password);
 
-      let sampleDataForLogin = oldData().passwords[0];
+      global.sampleDataForLogin = oldData().passwords[0];
       if (sampleDataForLogin !== undefined) {
         global.isLogin = decr(
           sampleDataForLogin.Password.encryptedData,

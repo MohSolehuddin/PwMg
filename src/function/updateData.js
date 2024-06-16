@@ -16,12 +16,17 @@ async function updateData(res, newData, OldData) {
   Object.keys(newData).forEach((property) => {
     // Lewati properti 'id' selama proses enkripsi
     if (property !== "title" && property !== "id") {
-      // Enkripsi nilai properti
-      newData[property] = encr(
-        `${newData[property]}`,
-        global.username,
-        global.password
-      );
+      // enkripsi hanya jika datanya ada
+      if (newData[property].trim() !== "") {
+        // Enkripsi nilai properti
+        newData[property] = encr(
+          `${newData[property]}`,
+          global.username,
+          global.password
+        );
+      } else {
+        delete newData[property];
+      }
     }
   });
 

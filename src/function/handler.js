@@ -159,12 +159,11 @@ function handleLogin(req, res) {
         );
         if (isLogin !== undefined) {
           res.statusCode = 302;
-          res.setHeader("Location", "/home");
-          res.end();
+          res.setHeader("Location", "/home").end();
           console.log("Login success");
         } else {
-          res.setHeader("Content-Type", "text/html");
-          res.write(`<!DOCTYPE html>
+          res.setHeader("Content-Type", "text/html").write(
+            `<!DOCTYPE html>
                             <html lang="en">
                             <head>
                                 <meta charset="UTF-8">
@@ -203,15 +202,15 @@ function handleLogin(req, res) {
                                     }
                                 </script>
                             </body>
-                            </html>`);
+                            </html>`
+          );
           res.end();
           console.log("username atau password salah");
         }
       } else {
-        console.log("Create account!!!");
         res.statusCode = 302;
-        res.setHeader("Location", "/home");
-        res.end();
+        res.setHeader("Location", "/home").end();
+        console.log("Create account!!!");
       }
     });
   } else {

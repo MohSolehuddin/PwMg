@@ -11,13 +11,19 @@ function addData(res, newData, oldDataObj) {
   // Enkripsi data sensitif secara dinamis
   Object.keys(encryptedData).forEach((property) => {
     // Lewati properti 'id' selama proses enkripsi
+    console.log(property);
     if (property !== "title" && property !== "id") {
-      // Enkripsi nilai properti
-      encryptedData[property] = encr(
-        `${encryptedData[property]}`,
-        global.username,
-        global.password
-      );
+      // jika datanya ada enkripsi
+      if (encryptedData[property].trim() !== "") {
+        // Enkripsi nilai properti
+        encryptedData[property] = encr(
+          `${encryptedData[property]}`,
+          global.username,
+          global.password
+        );
+      } else {
+        delete encryptedData[property];
+      }
     }
   });
 

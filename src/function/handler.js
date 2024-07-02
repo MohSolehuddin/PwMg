@@ -7,7 +7,6 @@ const updateData = require("./updateData");
 const sendToClient = require("./sendToClient");
 const { mySHA3, decr } = require("./crypto");
 const oldData = require("./oldData");
-const { log } = require("console");
 //API data
 function data(req, res) {
   const { method, url } = req;
@@ -17,8 +16,7 @@ function data(req, res) {
       body += chunk.toString();
     });
     req.on("end", () => {
-      const data = querystring.parse(body);
-      console.log(data);
+      let data = JSON.parse(body);
       addData(res, data, oldData());
     });
   }
@@ -27,10 +25,21 @@ function data(req, res) {
     req.on("data", (chunk) => {
       body += chunk.toString();
     });
-    req.on("end", () => {
+    req.on("end", async () => {
       const data = JSON.parse(body);
       const { id } = data;
-      deleteData(res, id);
+      let result = await deleteData(id);
+
+      if (!result.status) {
+        res.writeHead(200, { "Content-Type": "text/json" });
+        res.write(JSON.stringify(result));
+        res.end();
+      }
+      if (result.status) {
+        res.writeHead(200, { "Content-Type": "text/json" });
+        res.write(JSON.stringify(result));
+        res.end();
+      }
     });
   }
   if (method === "POST" && url === "/getPasswords") {
@@ -78,7 +87,6 @@ function updatePw(req, res) {
   });
   req.on("end", async () => {
     const data = querystring.parse(body);
-    console.log(data);
     let result = await updateData(res, data, oldData());
   });
 }

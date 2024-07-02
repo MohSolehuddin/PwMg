@@ -4,11 +4,10 @@ const { encr, decr, mySHA3 } = require("./crypto");
 //function menampilkan data json
 async function plainTextData(title) {
   try {
-    // mengambil data passwords dari file pw.json
+    // mengambil data
     const data = await fs.readFile(`./private/pw.json`, "utf8");
-    // rubah data ke format objek
     let parseData = JSON.parse(data);
-    // dekripsi dan filter data berdasarkan judul
+    // decrypt dan filter data berdasarkan judul
     let decryptedData = parseData.passwords
       .filter(
         (password) => password.title.toUpperCase() === title.toUpperCase()
@@ -38,7 +37,6 @@ async function plainTextData(title) {
       });
     let obj = {};
     obj["passwords"] = decryptedData;
-    console.log("Data berhasil di tampilkan");
     return JSON.stringify(obj);
   } catch (e) {
     console.error(e);

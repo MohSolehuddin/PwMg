@@ -1,5 +1,5 @@
-const getData = async (data) => {
-  const response = await fetch(data, {
+const getData = async (dataInputs) => {
+  const response = await fetch(dataInputs, {
     method: "GET",
   });
   const result = await response.json();
@@ -7,15 +7,17 @@ const getData = async (data) => {
 };
 //tampilan default
 const home = async () => {
-  let dataPw;
   getData("category")
-    .then((data) => {
+    .then((dataInputs) => {
       let optValue = `<option value="none">Pilih kategori</option>`;
-      data.titles.sort().forEach((data) => {
+
+      // sorting dataInputs titles lalu tampilkan
+      dataInputs.titles.sort().map((dataInputs) => {
         optValue += `
-          <option value="${data}">${data.toUpperCase()}</option>
+          <option value="${dataInputs}">${dataInputs.toUpperCase()}</option>
         `;
       });
+
       document.getElementById("output").innerHTML = `
          <div id="categoryForm">
             <div class="input-group">
@@ -24,9 +26,7 @@ const home = async () => {
               </select>
             </div>
           </div>
-          <div id="printData">
-            
-          <div/>
+          <div id="printData"><div/>
         `;
     })
     .catch((err) => {
@@ -34,9 +34,11 @@ const home = async () => {
     });
 };
 
-// hapus data berdasarkan id
+// hapus dataInputs berdasarkan id
 async function deleteData(id) {
-  const confirmation = confirm("Apakah Anda yakin ingin menghapus data ini?");
+  const confirmation = confirm(
+    "Apakah Anda yakin ingin menghapus dataInputs ini?"
+  );
   const reqData = { id: id };
   if (confirmation) {
     const url = `deletePassword`;
@@ -52,30 +54,99 @@ async function deleteData(id) {
         if (response.ok) {
           home();
         } else {
-          alert("Failed to delete data");
+          alert("Failed to delete dataInputs");
         }
       })
       .catch((error) => {
-        alert("Error deleting data:", error);
+        alert("Error deleting dataInputs:", error);
       });
   } else {
-    alert("Penghapusan data dibatalkan");
+    alert("Penghapusan dataInputs dibatalkan");
   }
 }
+// const validated = new ValidationInput();
 
-// form menambahkan data password
+const sendDataForm = async (url, option) => {
+  let inputs = addPass.querySelectorAll("input");
+  let success = document.getElementById("successMessage");
+  success.style.color = "aqua";
+  let dataInputs = {};
+
+  inputs.forEach((input) => {
+    input.required
+      ? (dataInputs[input.name] = { value: input.value, required: true })
+      : (dataInputs[input.name] = { value: input.value, required: false });
+  });
+  let valid = true;
+  for (const key in dataInputs) {
+    let id = `validate${key}`;
+    let errorMessage = document.getElementById(id);
+    errorMessage.style.color = "red";
+
+    if (dataInputs[key].value === "" && dataInputs[key].required) {
+      errorMessage.innerText = "please this input required";
+      valid = false;
+    } else if (
+      ValidationInput.isNotEmail(dataInputs[key].value) &&
+      key === "Email" &&
+      dataInputs[key].value.trim() !== ""
+    ) {
+      errorMessage.innerText =
+        "Invalid email, please use example@example.example";
+      valid = false;
+    } else if (
+      !ValidationInput.isStrongPassword(dataInputs[key].value) &&
+      (key === "Pin" || key === "Password") &&
+      dataInputs[key].value.trim() !== ""
+    ) {
+      errorMessage.innerText =
+        "password is don`t strong, please required combine Lower case, upeer case, number, simbol, and min 8 char";
+      valid = false;
+    } else {
+      errorMessage.innerText = "";
+    }
+  }
+
+  if (valid) {
+    let data = {};
+    for (const key in dataInputs) {
+      if (Object.hasOwnProperty.call(dataInputs, key)) {
+        if (dataInputs[key].value.trim() !== "") {
+          data[key] = dataInputs[key].value;
+        }
+      }
+    }
+    const response = await fetch(url, {
+      method: option,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    success.innerText = result.message;
+    if (result.success) {
+      setTimeout(() => {
+        home();
+      }, 1000);
+    }
+  }
+};
+// form menambahkan dataInputs password
 const addForm = () => {
   document.getElementById("output").innerHTML = `
-      <form id="addPass" class="formInput" action="/addPassword" method="post">
+      <form id="addPass" class="formInput">
         <h4>Tambahkan Password</h4>
         
         <div class="input-group">
           <input autocomplete="on" type="text" id="category" name="title" placeholder="kategori" required>
         </div>
+        <span id="validatetitle"></span>
+
         
         <div class="input-group">
           <input autocomplete="off" type="text" id="username" name="Username" placeholder="username" required>
         </div>
+        <span id="validateUsername"></span>
+
         
         <div class="input-group">
           <input autocomplete="off" type="password" id="password" name="Password" placeholder="password" required>
@@ -86,6 +157,8 @@ const addForm = () => {
             </svg>
           </button>
         </div>
+        <span id="validatePassword"></span>
+
         
         <div class="input-group">
           <input autocomplete="off" type="password" id="pin" name="Pin" placeholder="Pin (opsional)">
@@ -96,20 +169,24 @@ const addForm = () => {
             </svg>
           </button>
         </div>
+        <span id="validatePin"></span>
+
         
         <div class="input-group">
           <input autocomplete="off" class="email" type="text" id="email" name="Email" placeholder="email (opsional)">
         </div>
-        <button type="submit">Tambahkan</button>
+        <span id="validateEmail"></span>
+        <button type="button" onclick="sendDataForm('addPassword', 'POST')">Tambahkan</button>
+        <p id="successMessage"></p>
     </form>
   `;
 };
-//form update data
+//form update dataInputs
 const updateForm = async (id) => {
   // mendapatkan category
   let category = document.getElementById("category").value;
   const reqData = { title: category };
-  // Menggunakan fetch untuk mengambil data terdekripsi
+  // Menggunakan fetch untuk mengambil dataInputs terdekripsi
   await fetch("getPasswords", {
     method: "POST",
     headers: {
@@ -118,9 +195,9 @@ const updateForm = async (id) => {
     body: JSON.stringify(reqData),
   })
     .then((res) => res.json())
-    .then((data) => {
-      // mencari data dengan id tertentu
-      let value = data.passwords.find((item) => item.id == id);
+    .then((dataInputs) => {
+      // mencari dataInputs dengan id tertentu
+      let value = dataInputs.passwords.find((item) => item.id == id);
       //var result untuk menampung hasil looping objek
       let result = `
           <button type="submit" class="back" onclick="home()">
@@ -172,7 +249,7 @@ const updateForm = async (id) => {
             </div>`;
         }
       }
-      // mengganti tampilan ke update form dan mengisi nilai sebelumnya agar pengguna tidak mengisi data yang sama  2 kali
+      // mengganti tampilan ke update form dan mengisi nilai sebelumnya agar pengguna tidak mengisi dataInputs yang sama  2 kali
       document.getElementById("output").innerHTML = `
             ${result}
             <button type="submit" class="mt-3 w-100">Rubah</button>
@@ -185,13 +262,13 @@ const updateForm = async (id) => {
     });
 };
 
-// function data yang akan di print ke html
-const isDataPwPrintToHtml = (category, data) => {
+// function dataInputs yang akan di print ke html
+const isDataPwPrintToHtml = (category, dataInputs) => {
   let dataPrintHtml = `<h3>Data password ${category}</h3>`;
   let isNotZero = 0;
 
-  if ("passwords" in data) {
-    data["passwords"].forEach((element) => {
+  if ("passwords" in dataInputs) {
+    dataInputs["passwords"].forEach((element) => {
       dataPrintHtml += `
         <div id="container-passwords" class="container-passwords">
           <div class="container-password">`;
@@ -246,16 +323,15 @@ const isDataPwPrintToHtml = (category, data) => {
       isNotZero = 0;
     });
   } else {
-    dataPrintHtml += `<p>Tidak ada data pada kategori ini.</p>`;
+    dataPrintHtml += `<p>Tidak ada dataInputs pada kategori ini.</p>`;
   }
   document.getElementById("printData").innerHTML = dataPrintHtml;
 };
 
-// function untuk menampilkan data ke html
+// function untuk menampilkan dataInputs ke html
 const printDataCategory = async () => {
   const category = document.getElementById("category").value;
   const reqData = { title: category };
-  // Menggunakan fetch untuk mengambil data terdekripsi
   await fetch("getPasswords", {
     method: "POST",
     headers: {
@@ -264,8 +340,8 @@ const printDataCategory = async () => {
     body: JSON.stringify(reqData),
   })
     .then((res) => res.json())
-    .then((data) => {
-      isDataPwPrintToHtml(category, data);
+    .then((dataInputs) => {
+      isDataPwPrintToHtml(category, dataInputs);
     })
     .catch((error) => {
       alert(error);
@@ -274,68 +350,68 @@ const printDataCategory = async () => {
 
 // fungsi copy text
 function copyText(id) {
-  // Membuat elemen textarea baru
   let textarea = document.createElement("textarea");
-  // Mengambil teks yang akan disalin
   let text = document.getElementById(`${id}`).value;
-  // Mengatur nilai teks pada elemen textarea
   textarea.value = text;
-  // Menambahkan elemen textarea ke dalam dokumen
   document.body.appendChild(textarea);
-  // Memilih teks di dalam textarea
   textarea.select();
-  // Menyalin teks ke clipboard
   document.execCommand("copy");
-  // Menghapus elemen textarea
   document.body.removeChild(textarea);
-  // Memberikan notifikasi
   alert(`Teks berhasil disalin (${text})`);
 }
 
-// // validasi input
-// class ValidationInput {
-//   static isNotEmpty(input) {
-//     return input.trim() !== '';
-//   }
+// validasi input
+class ValidationInput {
+  static isNotEmpty(input) {
+    return input.trim() !== "";
+  }
 
-//   static isSafeInput(charInput) {
-//     const dangerousChars = ["<", ">", "&", "'", "\""];
-//     return !dangerousChars.some(char => charInput.includes(char));
-//   }
+  static isSafeInput(charInput) {
+    const dangerousChars = ["<", ">", "&", "'", '"'];
+    return !dangerousChars.some((char) => charInput.includes(char));
+  }
 
-//   static isNotNumber(input) {
-//     return isNaN(input);
-//   }
+  static isNotNumber(input) {
+    return isNaN(input);
+  }
 
-//   static isNotEmail(input) {
-//     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-//     return !emailRegex.test(input);
-//   }
+  static isNotEmail(input) {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return !emailRegex.test(input);
+  }
 
-//   static isStrongPassword(password) {
-//     // ... implementasi yang sebelumnya
-//   }
+  static isStrongPassword(password) {
+    if (password.length < 8) {
+      return false;
+    }
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasDigit = /\d/.test(password);
+    const hasSymbol = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(password);
 
-//   static isValidPhoneNumber(phoneNumber) {
-//     const phoneRegex = /^[0-9]{10}$/;
-//     return phoneRegex.test(phoneNumber);
-//   }
+    return hasUpperCase && hasLowerCase && hasDigit && hasSymbol;
+  }
 
-//   static isNumericInRange(input, min, max) {
-//     if (isNaN(input)) {
-//       return false;
-//     }
-//     const numericInput = parseFloat(input);
-//     return numericInput >= min && numericInput <= max;
-//   }
+  static isValidPhoneNumber(phoneNumber) {
+    const phoneRegex = /^[0-9]{10}$/;
+    return phoneRegex.test(phoneNumber);
+  }
 
-//   static isValidInputRange(input, min, max) {
-//     if (isNaN(input)) {
-//       return false;
-//     }
-//     return input >= min && input <= max;
-//   }
-// }
+  static isNumericInRange(input, min, max) {
+    if (isNaN(input)) {
+      return false;
+    }
+    const numericInput = parseFloat(input);
+    return numericInput >= min && numericInput <= max;
+  }
+
+  static isValidInputRange(input, min, max) {
+    if (isNaN(input)) {
+      return false;
+    }
+    return input >= min && input <= max;
+  }
+}
 
 function showPassword(id, buttonId) {
   if (buttonId === undefined) {
@@ -348,5 +424,4 @@ function showPassword(id, buttonId) {
     password.type === "password"
       ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>'
       : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16"><path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/><path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/></svg>';
-  console.log(showButton);
 }

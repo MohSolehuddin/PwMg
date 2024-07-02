@@ -43,10 +43,10 @@ function dec(encryptedData, key, savedIv) {
   }
 }
 
-// Function untuk mengenkripsi lanjutan
+// Enkripsi lanjutan
 function encr(msg, key1, key2) {
   try {
-    // Gabungkan kunci key1 dan key2 dengan separator yang sesuai
+    // Gabungkan kunci key1 dan key2
     let myKey = `${key1}${uniqueCode}${key2}`;
     // Konversi kunci menjadi panjang yang sesuai untuk AES-256-CBC (32 byte)
     myKey = mySHA3(myKey).substring(0, 64); // Gunakan SHA3 untuk menghasilkan kunci 256-bit
@@ -61,17 +61,17 @@ function encr(msg, key1, key2) {
   }
 }
 
-// Function untuk mendekripsi lanjutan
+// dekripsi lanjutan
 function decr(encryptedData, key1, key2, savedIv) {
   try {
-    // Gabungkan kunci key1 dan key2 dengan separator yang sesuai
+    // Gabungkan kunci key1 dan key2
     let myKey = `${key1}${uniqueCode}${key2}`;
     // Konversi kunci menjadi panjang yang sesuai untuk AES-256-CBC (32 byte)
     myKey = mySHA3(myKey).substring(0, 64); // Gunakan SHA3 untuk menghasilkan kunci 256-bit
     return dec(encryptedData, myKey, savedIv);
   } catch (e) {
     console.error(e);
-    return "dekripsi gagal, tolong login dengan benar";
+    return "decrypt data gagal, tolong login dengan benar";
   }
 }
 

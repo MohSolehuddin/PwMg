@@ -2,20 +2,16 @@ const fs = require("fs");
 const { encr } = require("./crypto");
 
 function addData(res, newData, oldDataObj) {
-  // Dapatkan waktu saat ini untuk digunakan sebagai ID dalam data
   newData.id = new Date().getTime();
 
-  // Buat salinan newData untuk mengenkripsi data tanpa memodifikasi newData asli
+  //Buat salinan
   const encryptedData = { ...newData };
 
-  // Enkripsi data sensitif secara dinamis
   Object.keys(encryptedData).forEach((property) => {
-    // Lewati properti 'id' selama proses enkripsi
-    console.log(property);
+    // Lewati id
     if (property !== "title" && property !== "id") {
-      // jika datanya ada enkripsi
+      // encrypt jika bukan string kosong
       if (encryptedData[property].trim() !== "") {
-        // Enkripsi nilai properti
         encryptedData[property] = encr(
           `${encryptedData[property]}`,
           global.username,
@@ -27,20 +23,23 @@ function addData(res, newData, oldDataObj) {
     }
   });
 
-  // Perbarui objek data yang ada
+  // Perbarui objek
   oldDataObj.passwords.push(encryptedData);
 
-  // Tulis objek data yang diperbarui ke file
+  // Tulis objek data
   fs.writeFile("../PwMg/private/pw.json", JSON.stringify(oldDataObj), (err) => {
     if (err) {
-      console.error("Error menambahkan password:", err);
-      res.statusCode = 500; // Internal Server Error
-      res.end("Internal Server Error");
-    } else {
-      res.statusCode = 302;
-      res.setHeader("Location", "/home");
+      res.writeHead(302, { "Content-Type": "text/json" });
+      res.write(
+        JSON.stringify({ success: false, message: "Gagal menambahkan data" })
+      );
       res.end();
-      console.log("Password berhasil ditambahkan");
+    } else {
+      res.writeHead(200, { "Content-Type": "text/json" });
+      res.write(
+        JSON.stringify({ success: true, message: "Berhasil menambahkan data" })
+      );
+      res.end();
     }
   });
 }

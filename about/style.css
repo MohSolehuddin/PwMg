@@ -4,50 +4,28 @@
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  background-color: black;
-  text-align: center;
+  color: darkslategrey;
+  background-color: azure;
 }
 
 .container {
-  max-width: 500px;
-  background-color: pink;
   text-align: center;
-  border: 0.1px solid white;
-  border-radius: 25px;
-  padding: 50px;
+  display: flex;
+  justify-content: center;
+  place-items: center;
+  flex-direction: column;
+  gap: 40px;
+  width: 100vw;
+  height: 100vh;
 }
-
-.profil {
-  background-color: black;
-  border-radius: 25px;
-  padding: 20px;
-}
-
 .container-ket {
-  background-color: black;
-  border-radius: 25px;
-  border: 0.1px solid blue;
-  padding: 50px;
+  font-size: large;
+  padding: 0 40px;
 }
-
 .container p {
-  color: aqua;
   font-weight: bold;
 }
 
 .container div h3 {
   font-weight: bold;
-  color: aqua;
-}
-
-.container blockquote {
-  background-color: black;
-  border-radius: 25px;
-  border: 0.1px solid aqua;
-}
-
-.container blockquote h3 {
-  color: aqua;
 }

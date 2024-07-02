@@ -14,9 +14,9 @@ async function updateData(res, newData, OldData) {
   }
   // Enkripsi data sensitif secara dinamis
   Object.keys(newData).forEach((property) => {
-    // Lewati properti 'id' selama proses enkripsi
+    // Lewati id
     if (property !== "title" && property !== "id") {
-      // enkripsi hanya jika datanya ada
+      // enkripsi hanya jika ada data
       if (newData[property].trim() !== "") {
         // Enkripsi nilai properti
         newData[property] = encr(
@@ -41,7 +41,7 @@ async function updateData(res, newData, OldData) {
       console.log("Data berhasil diupdate");
       res.statusCode = 302;
       res.setHeader("Location", "/home");
-      res.end(); // Hanya perlu mengarahkan ulang tanpa pesan tambahan
+      res.end();
     }
   });
 }

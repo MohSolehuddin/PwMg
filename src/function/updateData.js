@@ -1,5 +1,4 @@
 const fs = require("fs");
-const oldData = require("./oldData");
 const { encr } = require("./crypto");
 
 // function untuk update data berdasarkan id
@@ -34,13 +33,16 @@ async function updateData(res, newData, OldData) {
 
   fs.writeFile("./private/pw.json", JSON.stringify(OldData), (err) => {
     if (err) {
-      console.error("Gagal menulis ke file:", err);
-      res.statusCode = 500;
-      res.end("Gagal mengupdate data");
+      res.writeHead(302, { "Content-Type": "text/json" });
+      res.write(
+        JSON.stringify({ success: false, message: "Gagal menambahkan data" })
+      );
+      res.end();
     } else {
-      console.log("Data berhasil diupdate");
-      res.statusCode = 302;
-      res.setHeader("Location", "/home");
+      res.writeHead(200, { "Content-Type": "text/json" });
+      res.write(
+        JSON.stringify({ success: true, message: "Berhasil menambahkan data" })
+      );
       res.end();
     }
   });

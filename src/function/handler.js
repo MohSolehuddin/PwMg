@@ -86,8 +86,8 @@ function updatePw(req, res) {
     body += chunk.toString();
   });
   req.on("end", async () => {
-    const data = querystring.parse(body);
-    let result = await updateData(res, data, oldData());
+    const data = JSON.parse(body);
+    updateData(res, data, oldData());
   });
 }
 

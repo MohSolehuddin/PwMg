@@ -94,6 +94,7 @@ async function deleteData(id) {
 }
 
 const sendDataForm = async (url, option) => {
+  let addPass = document.getElementById("addPass");
   let inputs = addPass.querySelectorAll("input");
   let success = document.getElementById("successMessage");
   success.style.color = "aqua";
@@ -214,9 +215,6 @@ const addForm = () => {
         <button id="sendButton" type="button" onclick="sendDataForm('addPassword', 'POST')">Tambahkan</button>
         <p id="successMessage"></p>
     </form>
-    <script>
-   
-    </script>
   `;
 };
 
@@ -242,13 +240,15 @@ const updateForm = async (id) => {
             </svg>
           </button>
           
-          <form id="updateForm" class="formInput" action="/update" method="POST">
+          <form id="addPass" class="formInput" action="/update" method="POST">
             <h4>Edit password</h4>
-            
+            <section id="input-container">
             <div class="input-group">
               <label>Kategori</label>
               <input autocomplete="off" type="text" id="category" value="${category}" placeholder="Masukkan kategori, contoh ${category}" name="title" required>
-            </div>`;
+            </div>
+            <span id="validatetitle"></span>
+            `;
       for (let key in value) {
         if (value.hasOwnProperty(key) && key !== "email") {
           if (key.toUpperCase() !== "PASSWORD" && key.toUpperCase() !== "PIN") {
@@ -257,13 +257,17 @@ const updateForm = async (id) => {
                 ? `<div class="input-group none">
                     <label>${key}</label>
                     <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" readonly hidden>
-                  </div>`
+                  </div>
+                  <span id="validate${key}"></span>
+                  `
                 : `<div class="input-group">
                     <label>${key}</label>
                     <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${
                     value[key]
                   }" name="${key}" placeholder="Masukkan ${key.toLowerCase()}">
-                  </div>`;
+                  </div>
+                  <span id="validate${key}"></span>
+                  `;
           } else {
             let uniqueId = `${Math.floor(Math.random() * 1000000)}${key}${
               value[key]
@@ -279,18 +283,25 @@ const updateForm = async (id) => {
                           <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
                           </svg>
                         </button>
-                      </div>`;
+                      </div>
+                  <span id="validate${key}"></span>
+                      `;
           }
         } else {
           result += `<div class="input-group">
                       <label>${key}</label>
                       <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" required>
-                    </div>`;
+                    </div>
+                  <span id="validate${key}"></span>
+                    `;
         }
       }
       document.getElementById("output").innerHTML = `
             ${result}
-            <button type="submit" class="mt-3 w-100">Rubah</button>
+            </section>
+            <button id="addInput" type="button" onclick="newInput()">input baru</button>
+            <button type="button" onclick="sendDataForm('update', 'POST')">Rubah</button>
+            <p id="successMessage"></p>
           </form>
         `;
     })

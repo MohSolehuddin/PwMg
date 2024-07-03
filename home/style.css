@@ -72,7 +72,6 @@ select {
   margin: 15px 0;
   background-color: rgba(0, 0, 0, 0.7);
 }
-
 .container input:focus {
   border: none;
   outline: none;
@@ -80,6 +79,7 @@ select {
 
 ::placeholder {
   color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
 }
 
 .container button {
@@ -103,6 +103,9 @@ select {
 .container form button {
   color: aqua;
   cursor: pointer;
+}
+#sendButton {
+  width: 100%;
 }
 /* input group */
 .formInput {
@@ -138,7 +141,7 @@ select {
   position: relative;
   bottom: 65px;
   left: 90%;
-  background-image: url(http://localhost:3000/src/icons/clipboard.svg);
+  background-image: url(../src/icons/clipboard.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-color: transparent;
@@ -152,7 +155,7 @@ select {
 }
 
 .elementPw button.copy:active {
-  background-image: url(http://localhost:3000/src/icons/clipboard-check.svg);
+  background-image: url(../src/icons/clipboard-check.svg);
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -203,15 +206,27 @@ footer button {
   background-color: none;
 }
 .input-group {
-  height: 70px;
+  height: 73px;
   overflow: hidden;
+  position: relative;
+  margin-top: 15px;
+}
+.input-group label {
+  color: aliceblue;
+  position: relative;
+  font-size: 1rem;
+  padding: 0px;
+}
+.input-group input {
+  position: relative;
+  bottom: 12px;
 }
 
 button.showButton {
   background-color: transparent;
   position: relative;
   color: white;
-  bottom: 65px;
+  bottom: 77px;
   left: 90%;
 }
 
@@ -222,6 +237,31 @@ button.back {
   font-size: 2rem;
 }
 
+.new-input-group {
+  width: 100%;
+  display: flex;
+  place-items: center;
+  flex-wrap: wrap;
+  height: max-content;
+}
+.new-input-group label {
+  color: antiquewhite;
+  width: 100%;
+}
+.new-input-group input {
+  width: 80%;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.new-input-group button {
+  width: 15%;
+  background-color: transparent;
+  padding: 0;
+}
+#addInput {
+  margin-bottom: 10px;
+  width: 100%;
+}
 @media (max-width: 650px) {
   button.showButton {
     left: 80%;
@@ -241,7 +281,7 @@ button.back {
   }
 
   .elementPw button.copy:hover {
-    background-image: url(http://localhost:3000/src/icons/clipboard-check.svg);
+    background-image: url(../src/icons/clipboard-check.svg);
     background-repeat: no-repeat;
     background-position: center center;
   }

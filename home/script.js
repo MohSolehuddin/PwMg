@@ -1,10 +1,11 @@
-const getData = async (dataInputs) => {
-  const response = await fetch(dataInputs, {
+const getData = async (data) => {
+  const response = await fetch(data, {
     method: "GET",
   });
   const result = await response.json();
   return result;
 };
+
 //tampilan default
 const home = async () => {
   getData("category")
@@ -33,8 +34,35 @@ const home = async () => {
       alert(err);
     });
 };
+function createNewInput() {
+  let inputContainer = document.getElementById("input-container");
+  let inputGroupContainer = document.getElementById("new-input-group");
+  let newInputGroupContainer = document.createElement("div");
+  newInputGroupContainer.classList.add("input-group");
+  let inputFromNewInput = document.getElementById("new-input");
 
-// hapus dataInputs berdasarkan id
+  let label = `<label>${inputFromNewInput.value}</label>`;
+  let input = `<input placeholder="Masukkan ${inputFromNewInput.value}" name="${inputFromNewInput.value}"></input>`;
+  let span = document.createElement("span");
+  span.setAttribute("id", `validate${inputFromNewInput.value}`);
+  newInputGroupContainer.innerHTML = label + input;
+  inputGroupContainer.remove();
+  inputContainer.appendChild(newInputGroupContainer);
+  inputContainer.appendChild(span);
+}
+function newInput() {
+  let inputContainer = document.getElementById("input-container");
+  let inputGroupContainer = document.createElement("div");
+
+  inputGroupContainer.classList.add("new-input-group");
+  inputGroupContainer.setAttribute("id", "new-input-group");
+  inputContainer.appendChild(inputGroupContainer);
+
+  let label = `<label>judul</label>`;
+  let input = `<input id="new-input" placeholder="Masukkan judul untuk input baru"></input>`;
+  let button = "<button type='button' onclick='createNewInput()'>+</button>";
+  inputGroupContainer.innerHTML = label + input + button;
+}
 async function deleteData(id) {
   const confirmation = confirm(
     "Apakah Anda yakin ingin menghapus dataInputs ini?"
@@ -64,7 +92,6 @@ async function deleteData(id) {
     alert("Penghapusan dataInputs dibatalkan");
   }
 }
-// const validated = new ValidationInput();
 
 const sendDataForm = async (url, option) => {
   let inputs = addPass.querySelectorAll("input");
@@ -130,63 +157,72 @@ const sendDataForm = async (url, option) => {
     }
   }
 };
-// form menambahkan dataInputs password
+
 const addForm = () => {
   document.getElementById("output").innerHTML = `
       <form id="addPass" class="formInput">
         <h4>Tambahkan Password</h4>
         
-        <div class="input-group">
-          <input autocomplete="on" type="text" id="category" name="title" placeholder="kategori" required>
-        </div>
-        <span id="validatetitle"></span>
+        <section id="input-container">
+          <div class="input-group">
+            <label>Kategori</label>
+            <input autocomplete="on" type="text" id="category" name="title" placeholder="Masukkan kategori, contoh instagram" required>
+          </div>
+          <span id="validatetitle"></span>
+          
+          <div class="input-group">
+            <label>Username</label>
+            <input autocomplete="off" type="text" id="username" name="Username" placeholder="masukkan username, contoh msytc213" required>
+            </div>
+            <span id="validateUsername"></span>
 
-        
-        <div class="input-group">
-          <input autocomplete="off" type="text" id="username" name="Username" placeholder="username" required>
-        </div>
-        <span id="validateUsername"></span>
+          
+          <div class="input-group">
+            <label>Password</label>
+            <input autocomplete="off" type="password" id="password" name="Password" placeholder="********" required>
+            <button id="showButton" class="showButton" type="button" onclick="showPassword('password')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+              </svg>
+            </button>
+            </div>
+            <span id="validatePassword"></span>
 
-        
-        <div class="input-group">
-          <input autocomplete="off" type="password" id="password" name="Password" placeholder="password" required>
-          <button id="showButton" class="showButton" type="button" onclick="showPassword('password')">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-              <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-            </svg>
-          </button>
-        </div>
-        <span id="validatePassword"></span>
+          
+          <div class="input-group">
+            <label>Pin</label>
+            <input autocomplete="off" type="password" id="pin" name="Pin" placeholder="****** (opsional)">
+            <button id="showPin" class="showButton" type="button" onclick="showPassword('pin','showPin')">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+              </svg>
+            </button>
+            </div>
+            <span id="validatePin"></span>
 
-        
-        <div class="input-group">
-          <input autocomplete="off" type="password" id="pin" name="Pin" placeholder="Pin (opsional)">
-          <button id="showPin" class="showButton" type="button" onclick="showPassword('pin','showPin')">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-              <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-            </svg>
-          </button>
-        </div>
-        <span id="validatePin"></span>
+          
+          <div class="input-group">
+            <label>Email</label>
+            <input autocomplete="off" class="email" type="text" id="email" name="Email" placeholder="example@gmail.com (opsional)">
+            </div>
+            <span id="validateEmail"></span>
+        </section>
 
-        
-        <div class="input-group">
-          <input autocomplete="off" class="email" type="text" id="email" name="Email" placeholder="email (opsional)">
-        </div>
-        <span id="validateEmail"></span>
-        <button type="button" onclick="sendDataForm('addPassword', 'POST')">Tambahkan</button>
+        <button id="addInput" type="button" onclick="newInput()">input baru</button>
+        <button id="sendButton" type="button" onclick="sendDataForm('addPassword', 'POST')">Tambahkan</button>
         <p id="successMessage"></p>
     </form>
+    <script>
+   
+    </script>
   `;
 };
-//form update dataInputs
+
 const updateForm = async (id) => {
-  // mendapatkan category
   let category = document.getElementById("category").value;
   const reqData = { title: category };
-  // Menggunakan fetch untuk mengambil dataInputs terdekripsi
   await fetch("getPasswords", {
     method: "POST",
     headers: {
@@ -195,61 +231,63 @@ const updateForm = async (id) => {
     body: JSON.stringify(reqData),
   })
     .then((res) => res.json())
-    .then((dataInputs) => {
-      // mencari dataInputs dengan id tertentu
-      let value = dataInputs.passwords.find((item) => item.id == id);
+    .then((data) => {
+      // mencari data dengan id tertentu
+      let value = data.passwords.find((item) => item.id == id);
       //var result untuk menampung hasil looping objek
       let result = `
           <button type="submit" class="back" onclick="home()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
-          <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1"/>
-          </svg></button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#242a49" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+              <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1"/>
+            </svg>
+          </button>
           
           <form id="updateForm" class="formInput" action="/update" method="POST">
-            <h4>Rubah Password</h4>
+            <h4>Edit password</h4>
             
             <div class="input-group">
-              <input autocomplete="off" type="text" id="category" value="${category}" name="title" required>
-            </div>
-            
-        `;
+              <label>Kategori</label>
+              <input autocomplete="off" type="text" id="category" value="${category}" placeholder="Masukkan kategori, contoh ${category}" name="title" required>
+            </div>`;
       for (let key in value) {
         if (value.hasOwnProperty(key) && key !== "email") {
           if (key.toUpperCase() !== "PASSWORD" && key.toUpperCase() !== "PIN") {
             result +=
               key == "id"
-                ? `
-            <div class="input-group none">
-              <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" readonly hidden>
-            </div>
-              `
+                ? `<div class="input-group none">
+                    <label>${key}</label>
+                    <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" readonly hidden>
+                  </div>`
                 : `<div class="input-group">
-                <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
-              </div>
-              `;
+                    <label>${key}</label>
+                    <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${
+                    value[key]
+                  }" name="${key}" placeholder="Masukkan ${key.toLowerCase()}">
+                  </div>`;
           } else {
             let uniqueId = `${Math.floor(Math.random() * 1000000)}${key}${
               value[key]
             }`;
-            result += `
-            <div class="input-group ${key}">
-              <input autocomplete="off" type="password" id="inputId${uniqueId}${key}" value="${value[key]}" name="${key}" placeholder="${key} (opsional)">
-              <button id="showButton${uniqueId}${key}" class="showButton" type="button" onclick="showPassword('inputId${uniqueId}${key}', 'showButton${uniqueId}${key}')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
-                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
-                </svg>
-              </button>
-            </div>
-            `;
+            result += `<div class="input-group ${key}">
+                        <label>${key}</label>
+                        <input autocomplete="off" type="password" id="inputId${uniqueId}${key}" value="${
+              value[key]
+            }" name="${key}" placeholder=" Masukkan ${key.toLowerCase()}">
+                        <button id="showButton${uniqueId}${key}" class="showButton" type="button" onclick="showPassword('inputId${uniqueId}${key}', 'showButton${uniqueId}${key}')">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                          </svg>
+                        </button>
+                      </div>`;
           }
         } else {
           result += `<div class="input-group">
-              <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" required>
-            </div>`;
+                      <label>${key}</label>
+                      <input autocomplete="off" class="${key}" type="${key}" id="${key}" value="${value[key]}" name="${key}" placeholder="${key}" required>
+                    </div>`;
         }
       }
-      // mengganti tampilan ke update form dan mengisi nilai sebelumnya agar pengguna tidak mengisi dataInputs yang sama  2 kali
       document.getElementById("output").innerHTML = `
             ${result}
             <button type="submit" class="mt-3 w-100">Rubah</button>
@@ -262,13 +300,12 @@ const updateForm = async (id) => {
     });
 };
 
-// function dataInputs yang akan di print ke html
-const isDataPwPrintToHtml = (category, dataInputs) => {
+const isDataPwPrintToHtml = (category, data) => {
   let dataPrintHtml = `<h3>Data password ${category}</h3>`;
   let isNotZero = 0;
 
-  if ("passwords" in dataInputs) {
-    dataInputs["passwords"].forEach((element) => {
+  if ("passwords" in data) {
+    data["passwords"].forEach((element) => {
       dataPrintHtml += `
         <div id="container-passwords" class="container-passwords">
           <div class="container-password">`;
@@ -323,12 +360,11 @@ const isDataPwPrintToHtml = (category, dataInputs) => {
       isNotZero = 0;
     });
   } else {
-    dataPrintHtml += `<p>Tidak ada dataInputs pada kategori ini.</p>`;
+    dataPrintHtml += `<p>Tidak ada data pada kategori ini.</p>`;
   }
   document.getElementById("printData").innerHTML = dataPrintHtml;
 };
 
-// function untuk menampilkan dataInputs ke html
 const printDataCategory = async () => {
   const category = document.getElementById("category").value;
   const reqData = { title: category };
@@ -340,15 +376,14 @@ const printDataCategory = async () => {
     body: JSON.stringify(reqData),
   })
     .then((res) => res.json())
-    .then((dataInputs) => {
-      isDataPwPrintToHtml(category, dataInputs);
+    .then((data) => {
+      isDataPwPrintToHtml(category, data);
     })
     .catch((error) => {
       alert(error);
     });
 };
 
-// fungsi copy text
 function copyText(id) {
   let textarea = document.createElement("textarea");
   let text = document.getElementById(`${id}`).value;
@@ -360,7 +395,6 @@ function copyText(id) {
   alert(`Teks berhasil disalin (${text})`);
 }
 
-// validasi input
 class ValidationInput {
   static isNotEmpty(input) {
     return input.trim() !== "";

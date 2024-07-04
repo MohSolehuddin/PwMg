@@ -42,7 +42,7 @@ function createNewInput() {
   let inputFromNewInput = document.getElementById("new-input");
 
   let label = `<label>${inputFromNewInput.value}</label>`;
-  let input = `<input placeholder="Masukkan ${inputFromNewInput.value}" name="${inputFromNewInput.value}"></input>`;
+  let input = `<input placeholder="Masukkan ${inputFromNewInput.value}" name="${inputFromNewInput.value}" autofocus></input>`;
   let span = document.createElement("span");
   span.setAttribute("id", `validate${inputFromNewInput.value}`);
   newInputGroupContainer.innerHTML = label + input;
@@ -59,7 +59,7 @@ function newInput() {
   inputContainer.appendChild(inputGroupContainer);
 
   let label = `<label>judul</label>`;
-  let input = `<input id="new-input" placeholder="Masukkan judul untuk input baru"></input>`;
+  let input = `<input id="new-input" placeholder="Masukkan judul untuk input baru" autofocus></input>`;
   let button = "<button type='button' onclick='createNewInput()'>+</button>";
   inputGroupContainer.innerHTML = label + input + button;
 }
@@ -167,7 +167,7 @@ const addForm = () => {
         <section id="input-container">
           <div class="input-group">
             <label>Kategori</label>
-            <input autocomplete="on" type="text" id="category" name="title" placeholder="Masukkan kategori, contoh instagram" required>
+            <input autocomplete="on" type="text" id="category" name="title" placeholder="Masukkan kategori, contoh instagram" required autofocus>
           </div>
           <span id="validatetitle"></span>
           
@@ -235,7 +235,7 @@ const updateForm = async (id) => {
       //var result untuk menampung hasil looping objek
       let result = `
           <button type="submit" class="back" onclick="home()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#242a49" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#fff" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
               <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1"/>
             </svg>
           </button>
@@ -245,7 +245,7 @@ const updateForm = async (id) => {
             <section id="input-container">
             <div class="input-group">
               <label>Kategori</label>
-              <input autocomplete="off" type="text" id="category" value="${category}" placeholder="Masukkan kategori, contoh ${category}" name="title" required>
+              <input autocomplete="off" type="text" id="category" value="${category}" placeholder="Masukkan kategori, contoh ${category}" name="title" required autofocus>
             </div>
             <span id="validatetitle"></span>
             `;
@@ -300,7 +300,7 @@ const updateForm = async (id) => {
             ${result}
             </section>
             <button id="addInput" type="button" onclick="newInput()">input baru</button>
-            <button type="button" onclick="sendDataForm('update', 'POST')">Rubah</button>
+            <button id="sendButton" type="button" onclick="sendDataForm('update', 'POST')">Rubah</button>
             <p id="successMessage"></p>
           </form>
         `;
@@ -313,7 +313,7 @@ const updateForm = async (id) => {
 
 const isDataPwPrintToHtml = (category, data) => {
   let dataPrintHtml = `<h3>Data password ${category}</h3>`;
-  let isNotZero = 0;
+  let ifNotZeroPrintExecutionButton = 0;
 
   if ("passwords" in data) {
     data["passwords"].forEach((element) => {
@@ -322,18 +322,15 @@ const isDataPwPrintToHtml = (category, data) => {
           <div class="container-password">`;
       for (let key in element) {
         //jika elemnt mempunyai properti, bukan id dan bukan String kosong
-        if (
-          element.hasOwnProperty(key) &&
-          key !== "id" &&
-          element[key] !== ""
-        ) {
-          isNotZero++;
+        if (element.hasOwnProperty(key) && key !== "id") {
+          ifNotZeroPrintExecutionButton++;
           if (key.toUpperCase() !== "PASSWORD" && key.toUpperCase() !== "PIN") {
             dataPrintHtml += `
               <div class="elementPw">
                 <label>${key}</label>
                 <input autocomplete="off" id="${element[key]}" type="${key}" value="${element[key]}" readonly>
-                <button class="copy" onclick="copyText('${element[key]}')"></button>
+                <button class="copy" onclick="copyText('${element[key]}', 'messageDataPassword${ifNotZeroPrintExecutionButton}')"></button>
+                <span class="messageDataPassword" id="messageDataPassword${ifNotZeroPrintExecutionButton}"></span>
               </div>`;
           } else {
             let uniqueId = Math.floor(Math.random() * 1000000);
@@ -341,6 +338,7 @@ const isDataPwPrintToHtml = (category, data) => {
               <div class="elementPw">
                 <label>${key}</label>
                 <input autocomplete="off" class="${key}" id="inputId${uniqueId}" type="password" value="${element[key]}" readonly>
+                <span class="messageDataPassword" id="messageDataPassword${ifNotZeroPrintExecutionButton}"></span>
                 <button class="showButton" id="showButton${uniqueId}"
                 type="button" onclick="showPassword('inputId${uniqueId}',
                 'showButton${uniqueId}')">
@@ -350,12 +348,12 @@ const isDataPwPrintToHtml = (category, data) => {
                   </svg>
                 </button>
                 <button class="copy password"
-                onclick="copyText('inputId${uniqueId}')"></button>
+                onclick="copyText('inputId${uniqueId}', 'messageDataPassword${ifNotZeroPrintExecutionButton}')"></button>
               </div>`;
           }
         }
       }
-      if (isNotZero !== 0) {
+      if (ifNotZeroPrintExecutionButton !== 0) {
         dataPrintHtml += `
           </div>
             <button type="submit" onclick="updateForm('${element.id}')">
@@ -368,7 +366,7 @@ const isDataPwPrintToHtml = (category, data) => {
           </div>
           </div>`;
       }
-      isNotZero = 0;
+      ifNotZeroPrintExecutionButton = 0;
     });
   } else {
     dataPrintHtml += `<p>Tidak ada data pada kategori ini.</p>`;
@@ -395,7 +393,7 @@ const printDataCategory = async () => {
     });
 };
 
-function copyText(id) {
+function copyText(id, elementMessageId) {
   let textarea = document.createElement("textarea");
   let text = document.getElementById(`${id}`).value;
   textarea.value = text;
@@ -403,7 +401,11 @@ function copyText(id) {
   textarea.select();
   document.execCommand("copy");
   document.body.removeChild(textarea);
-  alert(`Teks berhasil disalin (${text})`);
+  let message = document.getElementById(elementMessageId);
+  message.textContent = `Teks berhasil disalin (${text})`;
+  setTimeout(() => {
+    message.textContent = "";
+  }, 3000);
 }
 
 class ValidationInput {

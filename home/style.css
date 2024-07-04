@@ -122,36 +122,34 @@ select {
 }
 
 .elementPw {
-  height: 100px;
+  height: 80px;
   margin: 10px 0;
   color: var(--bca);
+  position: relative;
 }
 
 .elementPw label {
-  margin-bottom: -10px;
+  padding-left: 5px;
 }
 
 .elementPw input {
   height: 50px;
+  margin-top: -9px;
 }
 
 .elementPw button.copy {
   margin: 0;
   padding: 0;
-  position: relative;
-  bottom: 65px;
-  left: 90%;
+  position: absolute;
+  top: 10px;
+  right: 0;
   background-image: url(../src/icons/clipboard.svg);
   background-repeat: no-repeat;
   background-position: center center;
   background-color: transparent;
-  width: 50px;
   height: 50px;
+  width: 50px;
   cursor: pointer;
-}
-
-.elementPw button.copy.password {
-  left: 86%;
 }
 
 .elementPw button.copy:active {
@@ -160,11 +158,24 @@ select {
   background-position: center center;
 }
 
-.elementPw > button.showButton {
+button.showButton {
   padding: 0;
-  width: 20px;
-  bottom: 80px;
-  left: 85%;
+  width: 50px;
+  background-color: transparent;
+  color: aliceblue;
+  position: absolute;
+  top: 20px;
+  right: 0;
+}
+.elementPw > button.showButton {
+  width: 30px;
+  top: 10px;
+  right: 50px;
+}
+.elementPw .messageDataPassword {
+  position: absolute;
+  bottom: 4px;
+  color: aqua;
 }
 
 footer {
@@ -222,18 +233,12 @@ footer button {
   bottom: 12px;
 }
 
-button.showButton {
-  background-color: transparent;
-  position: relative;
-  color: white;
-  bottom: 77px;
-  left: 90%;
-}
-
 button.back {
   background-color: transparent;
+  position: absolute;
+  z-index: 10;
   padding: 0;
-  margin: 0;
+  margin-top: -1px;
   font-size: 2rem;
 }
 
@@ -263,40 +268,9 @@ button.back {
   width: 100%;
 }
 @media (max-width: 650px) {
-  button.showButton {
-    left: 80%;
-    padding: 0 21px;
-  }
-
-  .elementPw button.copy {
-    left: 80%;
-  }
-
-  .elementPw button.copy.password {
-    left: 71%;
-  }
-
-  .elementPw > button.showButton {
-    left: 70%;
-  }
-
   .elementPw button.copy:hover {
     background-image: url(../src/icons/clipboard-check.svg);
     background-repeat: no-repeat;
     background-position: center center;
-  }
-}
-
-@media (min-width: 800px) {
-  .elementPw > button.showButton {
-    left: 92%;
-  }
-
-  .elementPw button.copy {
-    left: 95%;
-  }
-
-  .elementPw button.copy.password {
-    left: 92.5%;
   }
 }

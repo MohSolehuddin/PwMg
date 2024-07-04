@@ -10,7 +10,8 @@ const getData = async (data) => {
 const home = async () => {
   getData("category")
     .then((dataInputs) => {
-      let optValue = `<option value="none">Pilih kategori</option>`;
+      let categoryIndex0 = dataInputs.titles[0];
+      let optValue = `<option value="${categoryIndex0}" hidden>Pilih kategori</option>`;
 
       // sorting dataInputs titles lalu tampilkan
       dataInputs.titles.sort().map((dataInputs) => {
@@ -29,6 +30,19 @@ const home = async () => {
           </div>
           <div id="printData"><div/>
         `;
+
+      fetch("getPasswords", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: categoryIndex0 }),
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          isDataPwPrintToHtml(categoryIndex0, result);
+        })
+        .catch((err) => {
+          alert(err);
+        });
     })
     .catch((err) => {
       alert(err);
@@ -312,7 +326,7 @@ const updateForm = async (id) => {
 };
 
 const isDataPwPrintToHtml = (category, data) => {
-  let dataPrintHtml = `<h3>Data password ${category}</h3>`;
+  let dataPrintHtml = `<h3 class="data-title">List password ${category}</h3>`;
   let ifNotZeroPrintExecutionButton = 0;
 
   if ("passwords" in data) {

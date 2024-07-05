@@ -279,10 +279,3 @@ button.back {
   margin-bottom: 10px;
   width: 100%;
 }
-@media (max-width: 650px) {
-  .elementPw button.copy:hover {
-    background-image: url(../src/icons/clipboard-check.svg);
-    background-repeat: no-repeat;
-    background-position: center center;
-  }
-}

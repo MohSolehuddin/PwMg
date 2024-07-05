@@ -90,6 +90,17 @@ select {
 .output h3 {
   margin: 0;
 }
+#randomPass {
+  position: absolute;
+  width: 50px;
+  height: 40px;
+  padding: 0;
+  top: 26px;
+  right: 0;
+  background-color: var(--bcba);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
 
 .none {
   display: none;
@@ -157,12 +168,6 @@ select {
   background-repeat: no-repeat;
   background-position: center center;
 }
-/* .data-title {
-  position: relative;
-  color: white;
-  top: 30px;
-  left: 10px;
-} */
 
 button.showButton {
   padding: 0;
@@ -171,8 +176,8 @@ button.showButton {
   background-color: transparent;
   color: aliceblue;
   position: absolute;
-  top: 22px;
-  right: 0;
+  top: 21px;
+  right: 50px;
 }
 .elementPw > button.showButton {
   width: 30px;

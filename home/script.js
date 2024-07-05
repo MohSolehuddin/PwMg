@@ -48,6 +48,7 @@ const home = async () => {
       alert(err);
     });
 };
+
 function createNewInput() {
   let inputContainer = document.getElementById("input-container");
   let inputGroupContainer = document.getElementById("new-input-group");
@@ -64,6 +65,7 @@ function createNewInput() {
   inputContainer.appendChild(newInputGroupContainer);
   inputContainer.appendChild(span);
 }
+
 function newInput() {
   let inputContainer = document.getElementById("input-container");
   let inputGroupContainer = document.createElement("div");
@@ -77,6 +79,7 @@ function newInput() {
   let button = "<button type='button' onclick='createNewInput()'>+</button>";
   inputGroupContainer.innerHTML = label + input + button;
 }
+
 async function deleteData(id) {
   const confirmation = confirm(
     "Apakah Anda yakin ingin menghapus dataInputs ini?"
@@ -201,6 +204,7 @@ const addForm = () => {
                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
               </svg>
             </button>
+            <button id="randomPass" type="button" onclick="randomPassword('password')">acak</button>
             </div>
             <span id="validatePassword"></span>
 
@@ -214,6 +218,7 @@ const addForm = () => {
                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
               </svg>
             </button>
+            <button id="randomPass" type="button" onclick="randomPassword('pin')">acak</button>
             </div>
             <span id="validatePin"></span>
 
@@ -297,6 +302,7 @@ const updateForm = async (id) => {
                           <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
                           </svg>
                         </button>
+                        <button id="randomPass" type="button" onclick="randomPassword('inputId${uniqueId}${key}')">acak</button>
                       </div>
                   <span id="validate${key}"></span>
                       `;
@@ -485,4 +491,44 @@ function showPassword(id, buttonId) {
     password.type === "password"
       ? '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/></svg>'
       : '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16"><path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/><path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/></svg>';
+}
+function randomPassword(id) {
+  let randomInputElement = document.getElementById(id);
+  let length = 20;
+  if (randomInputElement.value.trim() !== "") {
+    length = randomInputElement.value;
+  }
+  if (!parseInt(length)) {
+    length = 20;
+  }
+
+  let charUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let charLower = "abcdefghijklmnopqrstuvwxyz";
+  let char = charLower + charUpper;
+  let symbol = "!@#$%^&*()-+<>!@#$%^&*()-+<>";
+  let number = "01234567890123456789";
+  let chars = char + symbol + number;
+
+  let includeSymbol = /[!@#$%^&*()-+<>!@#$%^&*()-+<>]/;
+  let includeNumber = /[0-9]/;
+  let includeUpperChar = /[A-Z]/;
+  let includeLowerChar = /[a-z]/;
+  let pass = "";
+
+  pass += chars.charAt(Math.floor(Math.random() * chars.length));
+  pass += chars.charAt(Math.floor(Math.random() * chars.length));
+  for (let x = 0; x < length - 2; x++) {
+    if (!includeLowerChar.test(pass)) {
+      pass += charLower.charAt(Math.floor(Math.random() * charLower.length));
+    } else if (!includeUpperChar.test(pass)) {
+      pass += charUpper.charAt(Math.floor(Math.random() * charUpper.length));
+    } else if (!includeNumber.test(pass)) {
+      pass += number.charAt(Math.floor(Math.random() * number.length));
+    } else if (!includeSymbol.test(pass)) {
+      pass += symbol.charAt(Math.floor(Math.random() * symbol.length));
+    } else {
+      pass += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+  }
+  randomInputElement.value = pass;
 }
